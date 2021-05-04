@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //import sp5.sp5chapcboot.interceptor.AuthCheckInterceptor;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
 
 //	@Autowired

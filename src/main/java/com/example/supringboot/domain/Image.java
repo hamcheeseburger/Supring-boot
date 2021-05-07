@@ -1,6 +1,9 @@
 package com.example.supringboot.domain;
 
-public class Image {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Image implements Serializable {
 	private int image_id; // Image 테이블 기본키
 	private int post_id; // Post 테이블 기본키
 	private int item_id; // Item 테이블 기본키

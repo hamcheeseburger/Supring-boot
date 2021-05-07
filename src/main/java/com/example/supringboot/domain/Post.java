@@ -1,9 +1,11 @@
 package com.example.supringboot.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class Post {
+@SuppressWarnings("serial")
+public class Post implements Serializable {
 	private int post_id; // 기본키
 	private Account user; // Post를 작성한 사용자 객체
 	private Category category; // Post가 분류될 카테고리 객체

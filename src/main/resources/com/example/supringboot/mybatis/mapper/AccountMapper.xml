@@ -126,7 +126,6 @@
 		WHERE c.user_id=#{user_id} and c.post_id = p.post_id
 	</select>
 	
-
 	<resultMap id="itemResult" type="Item">
 		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
 		<result column="title" jdbcType="VARCHAR" property="title" />

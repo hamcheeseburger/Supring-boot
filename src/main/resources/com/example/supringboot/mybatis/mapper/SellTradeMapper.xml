@@ -4,35 +4,36 @@
 <mapper namespace="com.example.supringboot.mybatis.mapper.SellTradeMapper">
 	<cache />
 
-	<delete id="deleteComment" parameterType="String">
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment" parameterType="int">
 		DELETE FROM commt
-		WHERE
-		comment_id = #{comment_id}
+		WHERE comment_id = #{comment_id} AND user_id = #{user_id}
 	</delete>
 
+	<!-- 댓글 목록 가져오기 -->
 	<resultMap id="commentResult" type="Comment">
 		<id column="comment_id" jdbcType="NUMERIC" property="comment_id" />
-		<result column="user_id" jdbcType="NUMERIC" property="user_id" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
-		<result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
-		<result column="modified_at" jdbcType="TIMESTAMP" property="modified_at" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
 		<result column="secret" jdbcType="NUMERIC" property="secret" />
+		
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+			<result property="name" column="name" />
+		</association>
 	</resultMap>
 	
-	<select id="getAllComment" parameterType="String" resultMap="commentResult">
-		SELECT comment_id, user_id, content, created_at, modified_at, secret
-		FROM commt
-		WHERE post_id = #{post_id}
-	</select>
-	
-	<select id="getUser" parameterType="int"
-		resultType="com.example.supringboot.domain.Account">
-		SELECT * FROM Account WHERE user_id=#{user_id}
+	<select id="getAllComment" parameterType="int" resultMap="commentResult">
+		SELECT comment_id, content, created_dt, modified_dt, secret, c.user_id, a.name
+		FROM commt c, account a
+		WHERE c.user_id = a.user_id AND post_id = #{post_id}
 	</select>
 
-	<select id="numOfComment" parameterType="String"> 
+	<!-- 댓글 개수 가져오기 -->
+	<select id="numOfComment" parameterType="int" resultType="int"> 
 		SELECT COUNT(comment_id) 
-		FROM commt 
+		FROM commt
 		WHERE post_id = #{post_id} 
 	</select> 
 

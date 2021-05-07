@@ -1,6 +1,9 @@
 package com.example.supringboot.domain;
 
-public class Food {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Food implements Serializable {
 	private int food_id; // food 테이블 기본키
 	private int cat_id; // Category 테이블 기본키
 	private String name; // 식품 이름

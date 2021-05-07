@@ -1,14 +1,16 @@
 package com.example.supringboot.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 // 공동구매
-public class Item {
+@SuppressWarnings("serial")
+public class Item implements Serializable {
 	private int item_id; // 기본키
 	private Food food; // 등록할 식품 객체
 	private int user_id; // 게시한 관리자 기본키
-	private int price; // 식품 가격
+	private int item_price; // 식품 가격
 	private int ship_price; // 배송 가격
 	private String title; // 게시글 제목
 	private String content; // 게시글 내용
@@ -31,7 +33,7 @@ public class Item {
 		this.item_id = item_id;
 		this.food = food;
 		this.user_id = user_id;
-		this.price = price;
+		this.item_price = price;
 		this.ship_price = ship_price;
 		this.title = title;
 		this.content = content;
@@ -61,12 +63,15 @@ public class Item {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	public int getPrice() {
-		return price;
+	
+	public int getItem_price() {
+		return item_price;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+
+	public void setItem_price(int item_price) {
+		this.item_price = item_price;
 	}
+
 	public int getShip_price() {
 		return ship_price;
 	}

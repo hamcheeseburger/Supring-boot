@@ -1,6 +1,9 @@
 package com.example.supringboot.domain;
 
-public class Category {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Category implements Serializable {
 	private int cat_id; // 기본키
 	private String cat_name; // 카테고리 명
 	

@@ -1,8 +1,10 @@
 package com.example.supringboot.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Comment {
+@SuppressWarnings("serial")
+public class Comment implements Serializable {
 	private int comment_id; // 기본키
 	private Post post; // 댓글이 달린 게시글 객체
 	private Account user; // 댓글을 게시한 사용자 객체

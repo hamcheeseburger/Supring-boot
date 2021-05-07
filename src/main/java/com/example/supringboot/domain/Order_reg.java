@@ -1,8 +1,10 @@
 package com.example.supringboot.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Order_reg {
+@SuppressWarnings("serial")
+public class Order_reg implements Serializable {
 	private int order_reg_id; // 기본키 (주문번호)
 	private Item item; // 구매신청한 식품 객체
 	private Account user; // 구매 신청한 사용자 객체 
@@ -13,7 +15,7 @@ public class Order_reg {
 	private String ship_addr1; // 배송주소1
 	private String ship_addr2; // 배송주소2
 	private String card_type; // 카드 타입 (visa, master)
-	private String card_number; // 카드번호
+	private String card_num; // 카드번호
 	private Timestamp card_exp_dt; // 카드 만료기간
 	
 	public Order_reg() {
@@ -34,7 +36,7 @@ public class Order_reg {
 		this.ship_addr1 = ship_addr1;
 		this.ship_addr2 = ship_addr2;
 		this.card_type = card_type;
-		this.card_number = card_number;
+		this.card_num = card_number;
 		this.card_exp_dt = card_exp_dt;
 	}
 	
@@ -98,12 +100,14 @@ public class Order_reg {
 	public void setCard_type(String card_type) {
 		this.card_type = card_type;
 	}
-	public String getCard_number() {
-		return card_number;
+	public String getCard_num() {
+		return card_num;
 	}
-	public void setCard_number(String card_number) {
-		this.card_number = card_number;
+
+	public void setCard_num(String card_num) {
+		this.card_num = card_num;
 	}
+
 	public Timestamp getCard_exp_dt() {
 		return card_exp_dt;
 	}

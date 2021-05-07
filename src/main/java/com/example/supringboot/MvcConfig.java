@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //import sp5.sp5chapcboot.interceptor.AuthCheckInterceptor;
 
 @Configuration
-//@EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
 
 //	@Autowired
@@ -27,5 +26,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //				.addPathPatterns("/edit/**")
 //				.excludePathPatterns("/edit/help/**");
 //	}
+	
+	
 
 }

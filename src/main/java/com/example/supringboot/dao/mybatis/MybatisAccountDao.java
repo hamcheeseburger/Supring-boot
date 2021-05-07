@@ -19,6 +19,36 @@ public class MybatisAccountDao implements AccountDao {
 		// TODO Auto-generated method stub
 		return accountMapper.getAccountByLoginId(login_id);
 	}
+
+	@Override
+	public void insertAccount(Account account) {
+		// TODO Auto-generated method stub
+		accountMapper.insertAccount(account);
+		
+	}
+
+	@Override
+	public boolean loginCheck(String login_id, String password) {
+		// TODO Auto-generated method stub
+		Account acc = accountMapper.accountLoginCheck(login_id, password);
+		if(acc == null) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public boolean updateAccount(Account account) {
+		// TODO Auto-generated method stub
+		int result = accountMapper.updateAccount(account);
+		
+		if(result == 1) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	
 }

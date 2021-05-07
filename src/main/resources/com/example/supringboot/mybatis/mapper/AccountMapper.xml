@@ -7,5 +7,27 @@
   <select id="getAccountByLoginId" parameterType="String" resultType="com.example.supringboot.domain.Account">
     SELECT * FROM Account WHERE login_id=#{login_id}
   </select>
-
+	
+ <insert id="insertAccount" parameterType="Account">
+  	INSERT INTO ACCOUNT (user_id, login_id, password, email, name, addr1, addr2, zip, phone, admin)
+    VALUES (ACCOUNT_SEQ.NEXTVAL, #{login_id}, #{password}, #{email}, #{name}, #{addr1}, #{addr2}, #{zip}, #{phone}, #{admin})
+ </insert>
+ 
+ <select id="accountLoginCheck" resultType="Account">
+		SELECT *
+		FROM ACCOUNT
+		WHERE login_id = #{login_id} and password = #{password}
+ </select>
+ 
+ <update id="updateAccount" parameterType="Account">
+	UPDATE ACCOUNT SET 
+	password=#{password},
+	email=#{email},
+	name=#{name},
+	addr1=#{addr1},
+	addr2=#{addr2},
+	zip=#{zip},
+	phone=#{phone}
+	WHERE user_id=#{user_id}
+ </update>
 </mapper>

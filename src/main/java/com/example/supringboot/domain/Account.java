@@ -15,6 +15,25 @@ public class Account implements Serializable {
 	private String phone;
 	private boolean admin;
 	
+	public Account() {
+		super();
+	}
+	
+	public Account(int user_id, String login_id, String password, String email, String name, String addr1, String addr2,
+			String zip, String phone, boolean admin) {
+		super();
+		this.user_id = user_id;
+		this.login_id = login_id;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.zip = zip;
+		this.phone = phone;
+		this.admin = admin;
+	}
+	
 	public int getUser_id() {
 		return user_id;
 	}

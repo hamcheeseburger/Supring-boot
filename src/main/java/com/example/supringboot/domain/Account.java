@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Account implements Serializable {
-	private int user_id;
-	private String login_id;
-	private String password;
-	private String email;
-	private String name;
-	private String addr1;
-	private String addr2;
-	private String zip;
-	private String phone;
-	private boolean admin;
+	private int user_id; // 기본키
+	private String login_id; // 로그인 아이디
+	private String password; // 비밀번호
+	private String email; // 이메일 주소
+	private String name; // 사용자 이름
+	private String addr1; // 주소1 (서울특별시 ㅁㅁ구)
+	private String addr2; // 주소2 (ㅇㅇ동)
+	private String zip; // 우편번호
+	private String phone; // 핸드폰 번호
+	private boolean admin; // 관리자 여부 (true: 관리자, false: 일반 사용자)
 	
 	public Account() {
 		super();

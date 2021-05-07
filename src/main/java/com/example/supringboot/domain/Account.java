@@ -1,6 +1,9 @@
 package com.example.supringboot.domain;
 
-public class Account {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Account implements Serializable {
 	private int user_id;
 	private String login_id;
 	private String password;

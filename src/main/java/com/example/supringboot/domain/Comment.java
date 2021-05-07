@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 public class Comment {
 	private int comment_id; // 기본키
 	private Post post; // 댓글이 달린 게시글 객체
+	private int post_id;
+	private int user_id;
 	private Account user; // 댓글을 게시한 사용자 객체
 	private String content; // 댓글 내용
 	private Timestamp created_dt; // 댓글 게시일
@@ -68,4 +70,22 @@ public class Comment {
 	public void setSecret(int secret) {
 		this.secret = secret;
 	}
+
+	public int getPost_id() {
+		return post_id;
+	}
+
+	public void setPost_id(int post_id) {
+		this.post_id = post_id;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	
+	
 }

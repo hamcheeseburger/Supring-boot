@@ -1,5 +1,7 @@
 package com.example.supringboot.dao.mybatis;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.supringboot.mybatis.mapper.AccountMapper;
 import com.example.supringboot.dao.AccountDao;
 import com.example.supringboot.domain.Account;
+import com.example.supringboot.domain.Item;
 
 @Repository
 public class MybatisAccountDao implements AccountDao {
@@ -48,6 +51,13 @@ public class MybatisAccountDao implements AccountDao {
 		}
 		
 		return false;
+	}
+
+	// 찜한 식품 확인
+	@Override
+	public List<Item> getWishItem(int user_id) {
+		// TODO Auto-generated method stub
+		return accountMapper.getWishItem(user_id);
 	}
 	
 	

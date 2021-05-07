@@ -14,18 +14,18 @@ import com.example.supringboot.domain.Account;
 
 @Component
 public class TestRunner implements ApplicationRunner {
-	  @Autowired
-	  DataSource dataSource;
-	  
-	  @Autowired
-	  MybatisAccountDao dao;
-	  
+//	  @Autowired
+//	  DataSource dataSource;
+//	  
+//	  @Autowired
+//	  MybatisAccountDao dao;
+//	  
 	  @Override
 	  public void run(ApplicationArguments args) throws Exception {
 
-//	      Connection connection = dataSource.getConnection();
-//	      System.out.println("Url: " + connection.getMetaData().getURL());
-		  Account acc = dao.getAccountByLoginId("y77hj");
-		  System.out.println(acc.getPassword());
+////	      Connection connection = dataSource.getConnection();
+////	      System.out.println("Url: " + connection.getMetaData().getURL());
+//		  Account acc = dao.getAccountByLoginId("y77hj");
+//		  System.out.println(acc.getPassword());
 	  }
 }

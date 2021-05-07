@@ -38,8 +38,8 @@ class SupringbootApplicationTests {
 //		System.out.println("getAccountByLoginIdTest - " + acc.getName());
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void insertAccount_test() {
 		Account account = new Account();
 		account.setLogin_id("aaa");
@@ -62,8 +62,8 @@ class SupringbootApplicationTests {
 		assertEquals(result, true);
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void updateAccount_test() {
 		Account account = new Account();
 		account.setUser_id(61);
@@ -80,8 +80,8 @@ class SupringbootApplicationTests {
 		assertEquals(result, true);
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectOrderReg_test() {
 		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(61);
 		for(Order_reg oReg : reg) {
@@ -91,8 +91,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectOrder_test() {
 		ArrayList<Order_reg> reg = dao.selectMyOrders(61);
 		for(Order_reg oReg : reg) {
@@ -102,8 +102,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectPosts_test() {
 		ArrayList<Post> posts = dao.selectMyPosts(61);
 		for(Post p: posts) {
@@ -113,8 +113,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectMyComments_test() {
 		ArrayList<Comment> commts = dao.selectMyComments(41);
 		for(Comment c : commts) {
@@ -124,8 +124,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectAdminItems_test() {
 		ArrayList<Item> items = adDao.selectAdminItems(41);
 		for(Item i : items) {

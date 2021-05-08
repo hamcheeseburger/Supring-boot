@@ -3,9 +3,11 @@ package com.example.supringboot.controller;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.example.supringboot.service.AccountFormValidator;
+import com.example.supringboot.service.SupringBootFacade;
 
 
 @Controller
@@ -26,6 +31,12 @@ public class AccountFormController {
 	
 	@Value("index")
 	private String successViewName;
+	
+	@Autowired
+	private SupringBootFacade supringService;
+	
+	@Autowired
+	private AccountFormValidator formValidator;
 	
 	@ModelAttribute("accountForm")
 	public AccountForm formBackingObject() {
@@ -55,12 +66,22 @@ public class AccountFormController {
 	
 	@PostMapping
 	public String onSubmit(HttpServletRequest request,
-			@ModelAttribute("accountForm") AccountForm accountForm,
+			@Valid @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result) {
 		logger.info("onSubmit()");
 		
 		logger.info("account.login_id : " + accountForm.getAccount().getLogin_id());
 		logger.info("newAccount : " + accountForm.isNewAccount());
+		
+		formValidator.validate(accountForm, result);
+		
+		if(result.hasErrors()) return formViewName;
+		
+		logger.info("Errors : " + result.getErrorCount());
+		
+		if(accountForm.isNewAccount()) {
+			supringService.insertAccount(accountForm.getAccount());
+		}
 		
 		return successViewName;
 	}

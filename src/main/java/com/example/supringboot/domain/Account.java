@@ -1,9 +1,17 @@
 package com.example.supringboot.domain;
 
 import java.io.Serializable;
+//
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.validation.constraints.Email;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.Pattern;
 
 @SuppressWarnings("serial")
 public class Account implements Serializable {
+
 	private int user_id; // 기본키
 	private String login_id; // 로그인 아이디
 	private String password; // 비밀번호

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
-import com.example.supringboot.dao.mybatis.MybatisSellTradeDao;
 import com.example.supringboot.domain.Account;
 
 @Service
@@ -19,9 +18,6 @@ public class SupringBootImpl implements SupringBootFacade{
 	
 	@Autowired
 	private MybatisAdminDao adminDao;
-	
-	@Autowired
-	private MybatisSellTradeDao sellTradeDao;
 	
 	@Override
 	public void insertAccount(Account account) {

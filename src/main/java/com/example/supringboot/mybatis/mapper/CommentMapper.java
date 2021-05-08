@@ -1,6 +1,7 @@
 package com.example.supringboot.mybatis.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,4 +15,8 @@ public interface CommentMapper {
 	ArrayList<Comment> selectCommentByPostId(@Param("post_id")int post_id) throws DataAccessException;
 	int updateComment(Comment comment) throws DataAccessException;
 	
+	// 댓글 삭제
+	int deleteComment(@Param("comment_id") int comment_id, @Param("user_id") int user_id) throws DataAccessException;	
+	// 댓글 개수 가져오기
+	int numOfComment(@Param("post_id") int post_id) throws DataAccessException;
 }

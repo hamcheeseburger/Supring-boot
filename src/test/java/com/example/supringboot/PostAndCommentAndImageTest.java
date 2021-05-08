@@ -21,7 +21,6 @@ import com.example.supringboot.dao.mybatis.MybatisAdminDao;
 import com.example.supringboot.dao.mybatis.MybatisCommentDao;
 import com.example.supringboot.dao.mybatis.MybatisImageDao;
 import com.example.supringboot.dao.mybatis.MybatisPostDao;
-import com.example.supringboot.dao.mybatis.MybatisSellTradeDao;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Image;

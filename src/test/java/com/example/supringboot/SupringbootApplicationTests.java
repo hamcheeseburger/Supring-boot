@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
-import com.example.supringboot.dao.mybatis.MybatisSellTradeDao;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Item;
@@ -32,11 +31,8 @@ class SupringbootApplicationTests {
 	@Autowired(required=true)
 	MybatisAdminDao adDao;
 	
-	@Autowired(required=true)
-	MybatisSellTradeDao sellTradeDao;
-	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void selectAccount_test() {
 		Account acc = dao.getAccountByLoginId("y77hj");
 		assertEquals(acc.getName(),"유현지");
@@ -85,8 +81,8 @@ class SupringbootApplicationTests {
 		assertEquals(result, true);
 	}
 	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void selectOrderReg_test() {
 		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(61);
 		for(Order_reg oReg : reg) {
@@ -168,41 +164,5 @@ class SupringbootApplicationTests {
 			System.out.println("image: " + i.getImages().get(0) + "\n");
 		}
 	}
-	
-//	@Test
-	@Ignore
-	void deleteComment_test() {
-		boolean result = sellTradeDao.deleteComment(3, 61);
-		
-		if (result) {
-			System.out.println("댓글 삭제 완료");
-		} else {
-			System.out.println("댓글 작성자가 아님 -> 삭제 불가");
-		}
-	}
-	
-//	@Test
-	@Ignore
-	void selectCommentList_test() {
-		List<Comment> list = sellTradeDao.getAllCommentList(1);
-		
-		for (Comment c : list) {
-			System.out.println("comment_id: " + c.getComment_id());
-			System.out.println("user_id: " + c.getUser().getUser_id());
-			System.out.println("name: " + c.getUser().getName());
-			System.out.println("content: " + c.getContent());
-			System.out.println("created_dt: " + c.getCreated_dt());
-			System.out.println("modified_dt: " + c.getModified_dt());
-			System.out.println("secret: " + c.getSecret() + "\n");
-		}
-		
-		System.out.println("11 댓글 개수: " + list.size());
-	}
-	
-//	@Test
-	@Ignore
-	void getNumOfComment_test() {
-		int result = sellTradeDao.numOfComment(1);
-		System.out.println("22 댓글 개수: " + result);
-	}
+
 }

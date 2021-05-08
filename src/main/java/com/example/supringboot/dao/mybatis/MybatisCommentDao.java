@@ -29,5 +29,20 @@ public class MybatisCommentDao implements CommentDao{
 	public int updateComment(Comment comment) {
 		return commentMapper.updateComment(comment);
 	}
-
+	
+	@Override
+	public boolean deleteComment(int comment_id, int user_id) {
+		int result = commentMapper.deleteComment(comment_id, user_id);
+		
+		if(result == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public int numOfComment(int post_id) {
+		return commentMapper.numOfComment(post_id);
+	}
 }

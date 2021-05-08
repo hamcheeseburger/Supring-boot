@@ -3,57 +3,70 @@
 
 <mapper namespace="com.example.supringboot.mybatis.mapper.CommentMapper">
 
-<!-- comment에는 post_id만 필요하므로.. -->
-<resultMap id="commentResultMap" type="Comment">
-	<id column="comment_id" jdbcType="NUMERIC" property="comment_id" />
-	<result column="content" jdbcType="VARCHAR" property="content" />
-	<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
-	<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
-	<result column="secret" jdbcType="NUMERIC" property="secret" />
-	<association property="user" column="user_id" javaType="Account">
-		<id property="user_id" column="user_id" />
-		<result property="login_id" column="login_id" />
-		<result property="password" column="password" />
-		<result property="email" column="email" />
-		<result property="name" column="name" />
-		<result property="addr1" column="addr1" />
-		<result property="addr2" column="addr2" />
-		<result property="zip" column="zip" />
-		<result property="phone" column="phone" />
-		<result property="admin" column="admin" />
-	</association>
-	<association property="post" column="post_id" javaType="Post">
-		<id property="post_id" column="post_id" />
-	</association>
-</resultMap>
+	<!-- comment에는 post_id만 필요하므로.. -->
+	<resultMap id="commentResultMap" type="Comment">
+		<id column="comment_id" jdbcType="NUMERIC" property="comment_id" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+		<result column="secret" jdbcType="NUMERIC" property="secret" />
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+			<result property="login_id" column="login_id" />
+			<result property="password" column="password" />
+			<result property="email" column="email" />
+			<result property="name" column="name" />
+			<result property="addr1" column="addr1" />
+			<result property="addr2" column="addr2" />
+			<result property="zip" column="zip" />
+			<result property="phone" column="phone" />
+			<result property="admin" column="admin" />
+		</association>
+		<association property="post" column="post_id" javaType="Post">
+			<id property="post_id" column="post_id" />
+		</association>
+	</resultMap>
 
-<!-- commt 테이블 관련 sql문 -->
-<!-- sequence_comment.nextval가 있다는 가정 -->
-<!-- createComment -->
-<!-- 비밀 댓글 기능 구현전까지는 모두 0으로 삽입! -->
-<insert id="insertComment" parameterType="Comment">
-	<selectKey keyProperty="comment_id" resultType="int"
-		order="BEFORE">
-		SELECT COMMT_SEQ.nextval AS comment_id FROM DUAL
-	</selectKey>
-	insert into commt (comment_id, post_id, user_id, content, created_dt, modified_dt, secret)
-	values (#{comment_id}, #{post_id}, #{user_id}, #{content}, SYSDATE, SYSDATE, 0)
-</insert>
+	<!-- commt 테이블 관련 sql문 -->
+	<!-- sequence_comment.nextval가 있다는 가정 -->
+	<!-- createComment -->
+	<!-- 비밀 댓글 기능 구현전까지는 모두 0으로 삽입! -->
+	<insert id="insertComment" parameterType="Comment">
+		<selectKey keyProperty="comment_id" resultType="int"
+			order="BEFORE">
+			SELECT COMMT_SEQ.nextval AS comment_id FROM DUAL
+		</selectKey>
+		insert into commt (comment_id, post_id, user_id, content, created_dt, modified_dt, secret)
+		values (#{comment_id}, #{post.post_id}, #{user.user_id}, #{content}, SYSDATE, SYSDATE, 0)
+	</insert>
 
-<!-- 해당 게시글에 달린 댓글 목록 가져오기 -->
-<select id="selectCommentByPostId" resultType="commentResultMap" parameterType="int">
-	select *
-	from commt c, account a
-	where
-		c.post_id=#{post_id} and
-		c.user_id=a.user_id
-</select>
+	<!-- 해당 게시글에 달린 댓글 목록 가져오기 -->
+	<select id="selectCommentByPostId" resultMap="commentResultMap" parameterType="int">
+		select *
+		from commt c, account a
+		where
+			c.post_id=#{post_id} and
+			c.user_id=a.user_id
+	</select>
 
-<!-- updateComment -->
-<update id="updateComment" parameterType="Comment">
-	UPDATE COMMT 
-	SET content = #{content}, modified_dt=SYSDATE
-	WHERE comment_id = #{comment_id}
-</update>
+	<!-- updateComment -->
+	<update id="updateComment" parameterType="Comment">
+		UPDATE COMMT 
+		SET content = #{content}, modified_dt=SYSDATE
+		WHERE comment_id = #{comment_id}
+	</update>
+
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM commt
+		WHERE comment_id = #{comment_id} AND user_id = #{user_id}
+	</delete>
+	
+	<!-- 댓글 개수 가져오기 -->
+	<select id="numOfComment" parameterType="int" resultType="int"> 
+		SELECT COUNT(comment_id) 
+		FROM commt
+		WHERE post_id = #{post_id} 
+	</select> 
 
 </mapper>

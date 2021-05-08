@@ -1,6 +1,7 @@
 package com.example.supringboot.dao.mybatis;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -87,8 +88,15 @@ public class MybatisAccountDao implements AccountDao {
 	// 찜한 식품 확인
 	@Override
 	public List<Item> getWishItem(int user_id) {
-		// TODO Auto-generated method stub
-		return accountMapper.getWishItem(user_id);
+		List<Item> wishList = new ArrayList<Item>();
+		wishList = accountMapper.getWishItem(user_id);
+		
+		if (wishList.isEmpty()) {
+			return Collections.emptyList();
+		}
+		else {
+			return wishList;
+		}
 	}
 	
 	

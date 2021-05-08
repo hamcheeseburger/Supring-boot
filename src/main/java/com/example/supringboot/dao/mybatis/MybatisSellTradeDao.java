@@ -12,14 +12,14 @@ import com.example.supringboot.domain.Comment;
 import com.example.supringboot.mybatis.mapper.SellTradeMapper;
 
 @Repository
-public class MyBatisSellTradeDao implements SellTradeDao {
+public class MybatisSellTradeDao implements SellTradeDao {
 
 	@Autowired
 	private SellTradeMapper sellTradeMapper;
 	
 	@Override
-	public boolean deleteComment(int comment_id) {
-		int result = sellTradeMapper.deleteComment(comment_id);
+	public boolean deleteComment(int comment_id, int user_id) {
+		int result = sellTradeMapper.deleteComment(comment_id, user_id);
 		
 		if(result == 1) {
 			return true;
@@ -31,6 +31,7 @@ public class MyBatisSellTradeDao implements SellTradeDao {
 	@Override
 	public List<Comment> getAllCommentList(int post_id) {
 		List<Comment> commentList = new ArrayList<Comment>();
+		commentList = sellTradeMapper.getAllComment(post_id);
 		
 		if (commentList.isEmpty()) {
 			return Collections.emptyList();

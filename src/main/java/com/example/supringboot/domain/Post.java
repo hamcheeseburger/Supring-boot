@@ -153,4 +153,9 @@ public class Post implements Serializable {
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
 	}
+	
+	public String toString() {
+		return 
+				"게시글 id" + getPost_id() + "/n";
+	}
 }

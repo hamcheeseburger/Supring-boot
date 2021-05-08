@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.PostMapper">
+
+<!-- Post 테이블 관련 sql문 -->
+<resultMap id="postResultMap" type="Post">
+	<id column="post_id" jdbcType="NUMERIC" property="post_id" />
+	<result column="title" jdbcType="VARCHAR" property="title" />
+	<result column="content" jdbcType="VARCHAR" property="content" />
+	<result column="food_name" jdbcType="VARCHAR" property="food_name" />
+	<result column="price" jdbcType="NUMERIC" property="price" />
+	<result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+	<result column="trade_status" jdbcType="NUMERIC" property="trade_status" />
+	<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+	<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+	<result column="quantity" jdbcType="NUMERIC" property="quantity" />
+	<result column="unit" jdbcType="VARCHAR" property="unit" />
+	<result column="exp_dt" jdbcType="TIMESTAMP" property="exp_dt" />
+	<result column="ship_type" jdbcType="NUMERIC" property="ship_type" />
+	<!--  
+	<association property="category" column="cat_id" javaType="Category">
+		<id property="cat_id" column="cat_id" />
+		<result property="cat_name" column="cat_name" />
+	</association>
+	-->
+	<association property="user" column="user_id" javaType="Account">
+		<id property="user_id" column="user_id" />
+		<result property="login_id" column="login_id" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="name" column="name" />
+		<result property="addr1" column="addr1" />
+		<result property="addr2" column="addr2" />
+		<result property="zip" column="zip" />
+		<result property="phone" column="phone" />
+		<result property="admin" column="admin" />
+	</association>
+	<collection property="images" ofType="Image">
+		<id property="image_id" column="image_id" />
+		<result property="post_id" column="post_id" />
+		<result property="item_id" column="item_id" />
+		<result property="image" column="image" />
+	</collection>
+	<!-- 댓글은 post 정보 가져올때 한번에 가져오지는 않는게 좋을듯 하다. post정보 따로, commt 정보 따로 가져와서 합치는게 나을듯 -->
+	<collection property="comments" ofType="Comment">
+		<id property="comment_id" column="comment_id" />
+		<result property="content" column="content" />
+		<result property="created_dt" column="created_dt" />
+		<result property="modified_dt" column="modified_dt" />
+		<result property="secret" column="secret" />
+		<association property="post" column="post_id" javaType="Post">
+			<result property="post_id" column="post_id" />
+		</association>
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+			<result property="login_id" column="login_id" />
+			<result property="password" column="password" />
+			<result property="email" column="email" />
+			<result property="name" column="name" />
+			<result property="addr1" column="addr1" />
+			<result property="addr2" column="addr2" />
+			<result property="zip" column="zip" />
+			<result property="phone" column="phone" />
+		</association>
+	</collection>
+</resultMap>
+
+<!-- 게시글 목록만 가져오게 하기 위해 다른 테이블과 조인하지 않음 -->
+<select id="getAllPost" resultMap="postResultMap">
+	select *
+	from post
+</select>
+
+<!-- 게시글 목록과 유저정보만 가져오게 하기 위해 그 외 다른 테이블과 조인하지 않음 -->
+<select id="getPostListByTitle" resultMap="postResultMap" parameterType="String">
+	select *
+	from post p, account a
+	where
+		p.title like '%' || #{title} || '%' and
+		p.user_id=a.user_id
+</select>
+
+<!-- db 삽입 후 예상대로 해당 post_id와 연관된 테이블 정보를 다 가져오는지 테스트 필요할 듯 -->
+<!-- 각 테이블에서 중복되는 이름의 컬럼들이 존재..(comment 작성자 정보와 post 작성자 정보 같은..) -->
+<!-- COMMENT 테이블의 정보는 따로 가져와서 삽입하던가 해야할듯 -->
+<select id="getOnePostById" resultMap="postResultMap" parameterType="int">
+	
+	select *
+	from post p, account a, image i
+	where
+		p.post_id=#{post_id} and
+		p.user_id=a.user_id and
+        p.post_id=i.post_id 
+  
+    
+	<!--  
+	select *
+	from post p, account a, commt c, image i
+	where
+		p.post_id=#{post_id} and
+		p.user_id=a.user_id and
+        p.post_id=i.post_id and
+        p.post_id=c.post_id
+     --> 
+    <!--
+    select *
+	from post p, account a, commt c, image i, account a2
+	where
+		p.post_id=#{post_id} and
+		p.user_id=a.user_id and
+        p.post_id=i.post_id and
+        p.post_id=c.post_id and
+        c.user_id=a2.user_id
+          -->
+</select>
+
+<!-- sequence_post.nextval가 있다는 가정 -->
+<!-- post insert후 해당 post_id를 가지고 image 테이블에 insert 해야함 -->
+<insert id="insertPost" parameterType="Post">
+	<selectKey keyProperty="post_id" resultType="int" order="BEFORE">
+			SELECT POST_SEQ.nextval AS post_id FROM DUAL
+	</selectKey>
+	insert into post (post_id, user_id, title, content, food_name, trade_type,
+	trade_status, created_dt, modified_dt, price, quantity, unit, exp_dt, ship_type)
+	values (#{post_id}, #{user.user_id}, #{title}, #{content}, #{food_name},
+	#{trade_type}, #{trade_status}, SYSDATE, SYSDATE, #{price}, #{quantity}, #{unit}, #{exp_dt},
+	#{ship_type})
+</insert>
+
+<!-- Post객체의 이미지 객체를 가지고 image 테이블 또한 수정해야함.. 기존 image를 모두 삭제하고 다시 다 삽입해야 할지는 고민해야.. -->
+<insert id="updatePost" parameterType="Post">
+	update post
+	set title=#{title}, content=#{content}, food_name=#{food_name},
+	trade_type=#{trade_type}, trade_status=#{trade_status}, modified_dt=SYSDATE, price=#{price}, quantity=#{quantity}, unit=#{unit}, exp_dt=#{exp_dt},
+	ship_type=#{ship_type}, modified_dt=SYSDATE
+	where post_id=#{post_id}
+</insert>
+
+<delete id="deletePost" parameterType="int">
+	delete from post
+	where post_id=#{post_id}
+</delete>
+
+<select id="getPostCount" resultType="int">
+	SELECT count(*) as count
+	FROM post
+</select>
+
+</mapper>

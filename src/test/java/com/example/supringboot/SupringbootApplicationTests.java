@@ -3,6 +3,7 @@ package com.example.supringboot;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
+import com.example.supringboot.dao.mybatis.MybatisSellTradeDao;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Item;
@@ -30,12 +32,15 @@ class SupringbootApplicationTests {
 	@Autowired(required=true)
 	MybatisAdminDao adDao;
 	
+	@Autowired(required=true)
+	MybatisSellTradeDao sellTradeDao;
+	
 //	@Test
 	@Ignore
 	void selectAccount_test() {
 		Account acc = dao.getAccountByLoginId("y77hj");
 		assertEquals(acc.getName(),"유현지");
-//		System.out.println("getAccountByLoginIdTest - " + acc.getName());
+		System.out.println("getAccountByLoginIdTest - " + acc.getName());
 	}
 	
 //	@Test
@@ -55,8 +60,8 @@ class SupringbootApplicationTests {
 		dao.insertAccount(account);
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void loginCheck_test() {
 		boolean result = dao.loginCheck("y77hj", "1234");
 		assertEquals(result, true);
@@ -135,7 +140,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
+//	@Test
+	@Ignore
 	void selectAdminOrderRegs_test() {
 		ArrayList<Order_reg> regs = adDao.selectItemOrderRegs(1);
 		for(Order_reg r: regs) {
@@ -145,5 +151,58 @@ class SupringbootApplicationTests {
 			System.out.println("REG_ADD : " + r.getShip_addr1() + ", " + r.getShip_addr2());
 			System.out.println("REG_CARD_NUM : " + r.getCard_num());
 		}
+	}
+	
+//	@Test
+	@Ignore
+	void selectLikedItem_test() {
+		List<Item> list = dao.getWishItem(61);
+		
+		for (Item i : list) {
+			System.out.println("item_id: " + i.getItem_id());
+			System.out.println("title: " + i.getTitle());
+			System.out.println("end_dt: " + i.getEnd_dt());
+			System.out.println("item_price: " + i.getItem_price());
+			System.out.println("ship_price: " + i.getShip_price());
+			System.out.println("item_status: " + i.getItem_status());
+			System.out.println("image: " + i.getImages().get(0) + "\n");
+		}
+	}
+	
+//	@Test
+	@Ignore
+	void deleteComment_test() {
+		boolean result = sellTradeDao.deleteComment(3, 61);
+		
+		if (result) {
+			System.out.println("댓글 삭제 완료");
+		} else {
+			System.out.println("댓글 작성자가 아님 -> 삭제 불가");
+		}
+	}
+	
+//	@Test
+	@Ignore
+	void selectCommentList_test() {
+		List<Comment> list = sellTradeDao.getAllCommentList(1);
+		
+		for (Comment c : list) {
+			System.out.println("comment_id: " + c.getComment_id());
+			System.out.println("user_id: " + c.getUser().getUser_id());
+			System.out.println("name: " + c.getUser().getName());
+			System.out.println("content: " + c.getContent());
+			System.out.println("created_dt: " + c.getCreated_dt());
+			System.out.println("modified_dt: " + c.getModified_dt());
+			System.out.println("secret: " + c.getSecret() + "\n");
+		}
+		
+		System.out.println("11 댓글 개수: " + list.size());
+	}
+	
+//	@Test
+	@Ignore
+	void getNumOfComment_test() {
+		int result = sellTradeDao.numOfComment(1);
+		System.out.println("22 댓글 개수: " + result);
 	}
 }

@@ -40,7 +40,7 @@ class SupringbootApplicationTests {
 	void selectAccount_test() {
 		Account acc = dao.getAccountByLoginId("y77hj");
 		assertEquals(acc.getName(),"유현지");
-//		System.out.println("getAccountByLoginIdTest - " + acc.getName());
+		System.out.println("getAccountByLoginIdTest - " + acc.getName());
 	}
 	
 //	@Test

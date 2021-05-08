@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>회원가입 또는 정보수정 페이지</h1>
+<form action="#" th:action="@{/account/newAccount}" th:object="${accountForm}" method="post">
+		<p>
+	        아이디:<br>
+	        <input type="text" id="email" th:field="*{account.login_id}" />
+	    </p>
+	    <p>
+	        비밀번호:<br>
+	        <input type="password" id="password" th:field="*{account.password}" />
+	    </p>
+	    <p>
+	        비밀번호 재입력:<br>
+	        <input type="password" th:field="*{repeatedPassword}" /> 
+	    </p>
+	    <p>
+	        이름:<br>
+	        <input type="text" th:field="*{account.name}" /> 
+	    </p>
+	    <p>
+	        이메일:<br>
+	        <input type="email" th:field="*{account.email}" th:placeholder="#{term}"/>
+	        <!-- <select th:field="*{emailDomain}">
+	        	<option th:each="domain: ${emailDomains}"
+	        	 th:value="${domain}"
+	        	 th:text="${domain}">
+	        	
+	        	</option>
+	        </select> -->
+	        
+	    </p>
+	    <p>
+	        주소1:<br>
+	        <input type="text" th:field="*{account.addr1}" /> 
+	    </p>
+	    <p>
+	        주소2:<br>
+	        <input type="text" th:field="*{account.addr2}" /> 
+	    </p>
+	    <p>
+	        우편번호:<br>
+	        <input type="text" th:field="*{account.zip}" /> 
+	    </p>
+	    <p>
+	        핸드폰 번호:<br>
+	        <input type="text" th:field="*{account.phone}" th:placeholder="#{a}"/> 
+	    </p>
+	    
+	    <input type="submit" value="로그인" >
+</form>
+</body>
+</html>

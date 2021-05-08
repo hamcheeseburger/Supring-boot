@@ -35,8 +35,8 @@ class SupringbootApplicationTests {
 	@Autowired(required=true)
 	MybatisSellTradeDao sellTradeDao;
 	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void selectAccount_test() {
 		Account acc = dao.getAccountByLoginId("y77hj");
 		assertEquals(acc.getName(),"유현지");
@@ -85,8 +85,8 @@ class SupringbootApplicationTests {
 		assertEquals(result, true);
 	}
 	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void selectOrderReg_test() {
 		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(61);
 		for(Order_reg oReg : reg) {

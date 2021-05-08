@@ -25,7 +25,7 @@
 	    </p>
 	    <p>
 	        이메일:<br>
-	        <input type="email" th:field="*{account.email}" th:placeholder="#{term}"/>
+	        <input type="email" th:field="*{account.email}" th:placeholder="#{emailPlaceHolder}"/>
 	        <!-- <select th:field="*{emailDomain}">
 	        	<option th:each="domain: ${emailDomains}"
 	        	 th:value="${domain}"
@@ -49,7 +49,7 @@
 	    </p>
 	    <p>
 	        핸드폰 번호:<br>
-	        <input type="text" th:field="*{account.phone}" th:placeholder="#{a}"/> 
+	        <input type="text" th:field="*{account.phone}" th:placeholder="#{phonePlaceHolder}"/> 
 	    </p>
 	    
 	    <input type="submit" value="로그인" >

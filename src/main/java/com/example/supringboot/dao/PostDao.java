@@ -12,4 +12,5 @@ public interface PostDao {
 	public int updatePost(Post post);
 	public int removePost(int post_id);
 	public int getPostCount();
+	public int insertPost(Post post);
 }

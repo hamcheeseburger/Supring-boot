@@ -15,8 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
+import com.example.supringboot.dao.mybatis.MybatisItemDao;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
+import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.Post;
@@ -31,8 +33,8 @@ class SupringbootApplicationTests {
 	@Autowired(required=true)
 	MybatisAdminDao adDao;
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectAccount_test() {
 		Account acc = dao.getAccountByLoginId("y77hj");
 		assertEquals(acc.getName(),"유현지");

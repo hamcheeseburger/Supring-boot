@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.supringboot.mybatis.mapper.ItemMapper">
-	
 	<!-- 공구식품 찜하기 -->
 	<insert id="likedItem" parameterType="int">
 		INSERT INTO liked (liked_id, user_id, item_id)
@@ -85,5 +84,54 @@
 		DELETE FROM order_reg
 		WHERE order_reg_id = #{order_reg_id} AND user_id = #{user_id}
 	</delete>
+
+	<!-- <resultMap type="Item" id="itemResultMap"> <result column="item_id" 
+		property="item_id"/> <result column="food_id" property="Food객체" /> <result 
+		column="user_id" property="user_id" /> <result column="title" property="" 
+		/> <result column="content" property="" /> <result column="end_dt" property="" 
+		/> <result column="min_quantity" property="" /> <result column="created_dt" 
+		property="" /> <result column="modified_dt" property="" /> <result column="item_price" 
+		property="" /> <result column="item_status" property="" /> <result column="ship_price" 
+		property="" /> </resultMap> -->
+
+	<insert id="insertItem" parameterType="Item">
+		<selectKey keyProperty="item_id" resultType="int" order="BEFORE">
+			SELECT ITEM_SEQ.nextval AS item_id FROM DUAL
+		</selectKey>
+		insert into item (item_id, food_id, user_id, title, content, end_dt,
+		min_quantity, created_dt, modified_dt,
+		item_price, item_status, ship_price)
+		values (#{item_id}, #{food.food_id}, #{user_id}, #{title}, #{content},
+		#{end_dt}, #{min_quantity}, #{created_dt}, #{modified_dt},
+		#{item_price}, #{item_status}, #{ship_price})
+	</insert>
+
+	<select id="searchFoodList" resultType="com.example.supringboot.domain.Food" parameterType="String">
+		SELECT *
+		FROM food
+		WHERE name like '%' || #{keyword} || '%'
+	</select>
+
+	<delete id="deleteItem" parameterType="int">
+		delete from item
+		where item_id = #{item_id}
+	</delete>
+
+	<insert id="updateItem" parameterType="Item">
+		UPDATE item
+		SET food_id=#{food.food_id}, title=#{title}, content=#{content},
+		end_dt=#{end_dt},
+		min_quantity=#{min_quantity},
+		created_dt=#{created_dt}, modified_dt=#{modified_dt},
+		item_price=#{item_price}, item_status=#{item_status},
+		ship_price=#{ship_price}
+		WHERE item_id=#{item_id}
+	</insert>
+
+	<select id="progressItem" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM order_reg
+		WHERE item_id=#{item_id}
+	</select>
 
 </mapper>

@@ -26,6 +26,11 @@ public class MybatisImageDao implements ImageDao {
 	public Image selectImgage(int post_id) {
 		return imageMapper.getImageByPostId(post_id);
 	}
+
+	@Override
+	public Image selectImageByItemId(int item_id) {
+		return imageMapper.getImageByItemId(item_id);
+	}
 	
 	
 }

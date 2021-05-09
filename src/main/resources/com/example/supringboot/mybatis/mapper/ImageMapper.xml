@@ -33,4 +33,10 @@
 	where i.post_id=#{post_id}
 </select>
 
+<select id="getImageByItemId" resultMap="imageResultMap" parameterType="int">
+	select *
+	from image i
+	where i.item_id=#{item_id}
+</select>
+
 </mapper>

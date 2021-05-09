@@ -14,6 +14,7 @@ public class Order_reg implements Serializable {
 	private String receiver_name; // 수령인
 	private String ship_addr1; // 배송주소1
 	private String ship_addr2; // 배송주소2
+	private String ship_zip; // 배송지 우편번호
 	private String card_type; // 카드 타입 (visa, master)
 	private String card_num; // 카드번호
 	private Timestamp card_exp_dt; // 카드 만료기간
@@ -114,4 +115,13 @@ public class Order_reg implements Serializable {
 	public void setCard_exp_dt(Timestamp card_exp_dt) {
 		this.card_exp_dt = card_exp_dt;
 	}
+
+	public String getShip_zip() {
+		return ship_zip;
+	}
+
+	public void setShip_zip(String ship_zip) {
+		this.ship_zip = ship_zip;
+	}
+	
 }

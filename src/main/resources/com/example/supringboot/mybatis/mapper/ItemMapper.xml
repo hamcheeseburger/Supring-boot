@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.ItemMapper">
+	
+	<!-- 공구식품 찜하기 -->
+	<insert id="likedItem" parameterType="int">
+		INSERT INTO liked (liked_id, user_id, item_id)
+		VALUES (LIKE_SEQ.NEXTVAL, #{user_id}, #{item_id})
+	</insert>
+
+	<!-- 공구식품 목록 가져오기 -->
+	<resultMap id="itemResult" type="Item">
+		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="end_dt" jdbcType="TIMESTAMP" property="end_dt" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+		<result column="item_price" jdbcType="NUMERIC" property="item_price" />
+		<result column="ship_price" jdbcType="NUMERIC" property="ship_price" />
+		<result column="item_status" jdbcType="VARCHAR" property="item_status" />
+		<collection property="images" ofType="Image">
+			<id property="image_id" column="image_id" />
+			<result property="image" column="image" />
+		</collection>
+	</resultMap>
+
+	<select id="getAllItem" resultMap="itemResult">
+		SELECT i.item_id, title, content, end_dt, created_dt, modified_dt, 
+			item_price, ship_price, item_status, im.image_id, im.image
+		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+	</select>
+	
+	<!-- 특정 공구식품 가져오기 -->
+	<resultMap id="datailItemResult" type="Item">
+		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
+		<result column="user_id" jdbcType="NUMERIC" property="user_id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="end_dt" jdbcType="TIMESTAMP" property="end_dt" />
+		<result column="min_quantity" jdbcType="NUMERIC" property="min_quantity" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+		<result column="item_price" jdbcType="NUMERIC" property="item_price" />
+		<result column="ship_price" jdbcType="NUMERIC" property="ship_price" />
+		<result column="item_status" jdbcType="VARCHAR" property="item_status" />
+		
+		<association property="food" column="food_id" javaType="Food">
+			<id property="food_id" column="food_id" />
+			<result property="cat_id" column="cat_id" />
+			<result property="name" column="name" />
+			<result property="serving_size" column="serving_size" />
+			<result property="serving_size_unit" column="serving_size_unit" />
+			<result property="calories" column="calories" />
+			<result property="protein" column="protein" />
+			<result property="grease" column="grease" />
+			<result property="carbohydrate" column="carbohydrate" />
+			<result property="sugars" column="sugars" />
+		</association>
+		<collection property="images" ofType="Image">
+			<id property="image_id" column="image_id" />
+			<result property="image" column="image" />
+		</collection>
+	</resultMap>
+
+	<select id="getOneItemById" parameterType="int" resultMap="datailItemResult">
+		SELECT i.item_id, user_id, food_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+			item_price, ship_price, item_status, im.image_id, im.image
+		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+		WHERE i.item_id=#{item_id}
+	</select>
+
+	<!-- 공구 신청 -->
+	<insert id="applyItem" parameterType="Order_reg">
+		INSERT INTO Order_reg (order_reg_id, item_id, user_id, ord_reg_dt, receiver_name, 
+			ship_addr1, ship_addr2, ship_zip, card_type, card_num, card_exp_dt, quantity, ord_price)
+		VALUES (ORDER_REG_SEQ.NEXTVAL, #{item.item_id}, #{user.user_id}, #{ord_reg_dt}, 
+			#{receiver_name}, #{ship_addr1}, #{ship_addr2}, #{ship_zip}, 
+			#{card_type}, #{card_num}, #{card_exp_dt}, #{quantity}, #{ord_price})
+	</insert>
+	
+	<!-- 공구 신청 취소 -->
+	<delete id="cancelItem" parameterType="int">
+		DELETE FROM order_reg
+		WHERE order_reg_id = #{order_reg_id} AND user_id = #{user_id}
+	</delete>
+
+</mapper>

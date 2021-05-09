@@ -7,4 +7,5 @@ public interface ImageDao {
 	public int insertImage(Image image);
 	public int deleteImage(int image_id);
 	public Image selectImgage(int post_id);
+	public Image selectImageByItemId(int item_id);
 }

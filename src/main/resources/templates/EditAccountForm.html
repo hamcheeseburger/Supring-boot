@@ -34,14 +34,7 @@
 	        이메일:<br>
 	        <input type="email" th:field="*{account.email}" th:placeholder="#{emailPlaceHolder}"/>
 	        <a th:if="${#fields.hasErrors('account.email')}" th:errorclass="error" th:errors="*{account.email}" />
-	        <!-- <select th:field="*{emailDomain}">
-	        	<option th:each="domain: ${emailDomains}"
-	        	 th:value="${domain}"
-	        	 th:text="${domain}">
-	        	
-	        	</option>
-	        </select> -->
-	        
+
 	    </p>
 	    <p>
 	        주소1:<br>

@@ -1,7 +1,6 @@
 package com.example.supringboot.controller;
 
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -40,10 +39,7 @@ public class AccountFormController {
 	
 	@ModelAttribute("accountForm")
 	public AccountForm formBackingObject() {
-		AccountForm acc = new AccountForm();
-		acc.getAccount().setLogin_id("test");
-		
-		return acc;
+		return new AccountForm();
 	}
 	
 //	@ModelAttribute("emailDomains")

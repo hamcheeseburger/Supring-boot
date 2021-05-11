@@ -1,6 +1,5 @@
 package com.example.supringboot.controller;
 
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -107,6 +106,7 @@ public class AccountFormController {
 		
 		step3Validator.validate(accountForm, result);
 		if(result.hasErrors()) return step3FormView;
+		
 		
 		// DB에 회원정보 Insert
 		if(accountForm.isNewAccount()) {

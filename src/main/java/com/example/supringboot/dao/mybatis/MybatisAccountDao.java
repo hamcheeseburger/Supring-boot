@@ -39,14 +39,9 @@ public class MybatisAccountDao implements AccountDao {
 	}
 
 	@Override
-	public boolean loginCheck(String login_id, String password) {
+	public Account getAccount(String login_id, String password) {
 		// TODO Auto-generated method stub
-		Account acc = accountMapper.accountLoginCheck(login_id, password);
-		if(acc == null) {
-			return false;
-		}
-		
-		return true;
+		return accountMapper.getAccount(login_id, password);
 	}
 
 	@Override

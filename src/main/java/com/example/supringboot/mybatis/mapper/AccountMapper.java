@@ -18,7 +18,7 @@ import com.example.supringboot.domain.Item;
 public interface AccountMapper {
 	Account getAccountByLoginId(String login_id) throws DataAccessException;
 	void insertAccount(Account account) throws DataAccessException;
-	Account accountLoginCheck(@Param("login_id") String login_id, @Param("password") String password) throws DataAccessException;
+	Account getAccount(@Param("login_id") String login_id, @Param("password") String password) throws DataAccessException;
 	int updateAccount(Account account) throws DataAccessException;
 
 //	진행중, 실패한 공구신청목록

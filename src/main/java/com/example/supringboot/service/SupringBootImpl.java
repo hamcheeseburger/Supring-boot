@@ -24,4 +24,10 @@ public class SupringBootImpl implements SupringBootFacade{
 		// TODO Auto-generated method stub
 		accountDao.insertAccount(account);
 	}
+
+	@Override
+	public Account getAccount(String login_id, String password) {
+		// TODO Auto-generated method stub
+		return accountDao.getAccount(login_id, password);
+	}
 }

@@ -15,7 +15,7 @@
  </insert>
 
 
- <select id="accountLoginCheck" resultType="Account">
+ <select id="getAccount" resultType="Account">
 	SELECT *
 	FROM ACCOUNT
 	WHERE login_id = #{login_id} and password = #{password}

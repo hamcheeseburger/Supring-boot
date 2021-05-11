@@ -61,8 +61,10 @@ class SupringbootApplicationTests {
 //	@Test
 	@Ignore
 	void loginCheck_test() {
-		boolean result = dao.loginCheck("y77hj", "1234");
-		assertEquals(result, true);
+		Account account = dao.getAccount("y77hj", "1234");
+		if(account == null) {
+			
+		}
 	}
 	
 //	@Test

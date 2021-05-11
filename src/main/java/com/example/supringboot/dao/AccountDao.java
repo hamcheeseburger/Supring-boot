@@ -12,7 +12,7 @@ import com.example.supringboot.domain.Item;
 public interface AccountDao {
 	public Account getAccountByLoginId(String login_id);
 	public void insertAccount(Account account);
-	public boolean loginCheck(String login_id, String password);
+	public Account getAccount(String login_id, String password);
 	public boolean updateAccount(Account account);
 //	진행중, 실패한 공구신청목록
 	public ArrayList<Order_reg> selectMyOrderRegs(int user_id);

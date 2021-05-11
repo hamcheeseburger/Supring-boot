@@ -15,70 +15,108 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
-import com.example.supringboot.service.AccountFormValidator;
+import com.example.supringboot.service.NewAccountFormValidator1;
+import com.example.supringboot.service.NewAccountFormValidator2;
+import com.example.supringboot.service.NewAccountFormValidator3;
 import com.example.supringboot.service.SupringBootFacade;
 
 
 @Controller
-@RequestMapping({"/account/newAccount", "/account/editAccount"})
+@RequestMapping({"/account/newAccount/*"})
 @SessionAttributes("accountForm")
 public class AccountFormController {
 	private static final Logger logger = LoggerFactory.getLogger(AccountFormController.class);
-	@Value("EditAccountForm")
-	private String formViewName;
+	@Value("Account/newAccountForm1")
+	private String step1FormView;
 	
-	@Value("index")
-	private String successViewName;
+	@Value("Account/newAccountForm2")
+	private String step2FormView;
+	
+	@Value("Account/newAccountForm3")
+	private String step3FormView;
+	
+	@Value("Account/successNewAccount")
+	private String successView;
 	
 	@Autowired
 	private SupringBootFacade supringService;
 	
 	@Autowired
-	private AccountFormValidator formValidator;
+	private NewAccountFormValidator1 step1Validator;
+	@Autowired
+	private NewAccountFormValidator2 step2Validator;
+	@Autowired
+	private NewAccountFormValidator3 step3Validator;
+	
 	
 	@ModelAttribute("accountForm")
 	public AccountForm formBackingObject() {
 		return new AccountForm();
 	}
 	
-//	@ModelAttribute("emailDomains")
-//	public ArrayList<String> emailDomainsObject() {
-//		ArrayList<String> emailDomains = new ArrayList<String>();
-//		emailDomains.add("@dongduk.ac.kr");
-//		emailDomains.add("@gmail.com");
-//		emailDomains.add("@naver.com");
-//		emailDomains.add("@daum.com");
-//		emailDomains.add("직접입력");
-//		
-//		return emailDomains;
-//	}
-	
-	@GetMapping
-	public String showForm() {
-		logger.info("showForm()");
-		return formViewName;
+	@GetMapping("/account/newAccount/step1")
+	public String step1Form() {
+		logger.info("step1Form()");
+		return step1FormView;
 	}
-	
-	@PostMapping
-	public String onSubmit(HttpServletRequest request,
+
+	@PostMapping("/account/newAccount/step1")
+	public String step1Submit(HttpServletRequest request,
 			@Valid @ModelAttribute("accountForm") AccountForm accountForm,
 			BindingResult result) {
-		logger.info("onSubmit()");
+		logger.info("step1Submit()");
 		
 		logger.info("account.login_id : " + accountForm.getAccount().getLogin_id());
-		logger.info("newAccount : " + accountForm.isNewAccount());
 		
-		formValidator.validate(accountForm, result);
+		step1Validator.validate(accountForm, result);
 		
-		if(result.hasErrors()) return formViewName;
+		if(result.hasErrors()) return step1FormView;
+		
+		logger.info("Errors : " + result.getErrorCount());
+			
+		return step2FormView;
+	}
+	
+	@PostMapping("/account/newAccount/step2")
+	public String step2Submit(HttpServletRequest request,
+			@Valid @ModelAttribute("accountForm") AccountForm accountForm,
+			BindingResult result) {
+		logger.info("step2Submit()");
+		logger.info("account.password : " + accountForm.getAccount().getPassword());
+		logger.info("repeatedPassword : " + accountForm.getRepeatedPassword());
+		
+		step2Validator.validate(accountForm, result);
+		
+		if(result.hasErrors()) return step2FormView;
 		
 		logger.info("Errors : " + result.getErrorCount());
 		
+		return step3FormView;
+	}
+	
+	@PostMapping("/account/newAccount/step3")
+	public String step3Submit(HttpServletRequest request,
+			@Valid @ModelAttribute("accountForm") AccountForm accountForm,
+			BindingResult result, SessionStatus sessionStatus) {
+		logger.info("step3Submit()");
+		logger.info("account.email : " + accountForm.getAccount().getEmail());
+		logger.info("account.name : " + accountForm.getAccount().getName());
+		
+		
+		step3Validator.validate(accountForm, result);
+		if(result.hasErrors()) return step3FormView;
+		
+		// DB에 회원정보 Insert
 		if(accountForm.isNewAccount()) {
 			supringService.insertAccount(accountForm.getAccount());
 		}
 		
-		return successViewName;
+		// session에서 객체 삭제..
+		sessionStatus.setComplete();
+		
+		return successView;
 	}
+	
 }

@@ -25,14 +25,13 @@
  <!-- 사용자 계정 수정 -->
  <update id="updateAccount" parameterType="Account">
 	UPDATE ACCOUNT SET 
-	password=#{password},
 	email=#{email},
 	name=#{name},
 	addr1=#{addr1},
 	addr2=#{addr2},
 	zip=#{zip},
 	phone=#{phone}
-	WHERE user_id=#{user_id}
+	WHERE login_id=#{login_id}
  </update>
  
  	<resultMap id="associItemOrderRegImage" type="Order_reg">

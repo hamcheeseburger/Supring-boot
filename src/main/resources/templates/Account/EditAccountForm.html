@@ -6,13 +6,13 @@
 </head>
 <body>
 <h1>회원가입 또는 정보수정 페이지</h1>
-<form action="#" th:action="@{/account/newAccount}" th:object="${accountForm}" method="post">		
+<form th:fragment="editAccountForm" action="#" th:action="@{/account/editAccount}" th:object="${accountForm}" method="post">		
 		<p>
-	         <label for="login_id">아이디</label>:<br>
-	        <input type="text" id="text" th:field="*{account.login_id}" />
+	         <label for="login_id">아이디</label>:<br />
+	        <input type="text" id="text" th:field="*{account.login_id}" readonly="readonly"/>
 	        <a th:if="${#fields.hasErrors('account.login_id')}" th:errorclass="error" th:errors="*{account.login_id}" />
 	    </p>
-	    <p>
+	<!--     <p>
 	        비밀번호:<br>
 	        <input type="password" id="password" th:field="*{account.password}" />
 	        <a th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}" />
@@ -21,7 +21,7 @@
 	        비밀번호 재입력:<br>
 	        <input type="password" th:field="*{repeatedPassword}" /> 
 	        <a th:if="${#fields.hasErrors('repeatedPassword')}" th:errorclass="error" th:errors="*{repeatedPassword}" />
-	    </p>
+	    </p> -->
 	    
 	    <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" />
 	    
@@ -57,7 +57,7 @@
 	        <a th:if="${#fields.hasErrors('account.phone')}" th:errorclass="error" th:errors="*{account.phone}" />
 	    </p>
 	    
-	    <input type="submit" value="로그인" >
+	    <input type="submit" value="수정하기" >
 </form>
 </body>
 </html>

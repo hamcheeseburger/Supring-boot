@@ -67,8 +67,8 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void updateAccount_test() {
 		Account account = new Account();
 		account.setUser_id(61);

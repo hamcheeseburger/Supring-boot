@@ -88,11 +88,13 @@ class SupringbootApplicationTests {
 	@Test
 //	@Ignore
 	void selectOrderReg_test() {
-		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(61);
+		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(41);
 		for(Order_reg oReg : reg) {
 			System.out.println("ITEM_ID : " + oReg.getItem().getItem_id());
 			System.out.println("ORDER_REG_ID : " + oReg.getOrder_reg_id());
 			System.out.println("ORDER_REG_DT : " + oReg.getOrd_reg_dt());
+			System.out.println("ITEM_TITLE : " + oReg.getItem().getTitle());
+			System.out.println("ITEM_TITLE : " + oReg.getItem().getFood().getName());
 		}
 	}
 	

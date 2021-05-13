@@ -13,62 +13,44 @@
 <body>
 <section th:fragment="myOrderList" class="py-5 bg-light">
             <div class="container">
-                <h2 class="mb-4">Portfolio Heading</h2>
+                <h2 class="mb-4">진행중 혹은 실패한 상품 목록</h2>
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 mb-4">
+                	<div th:if="${#lists.isEmpty(orderRegs)}">
+                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	</div>
+                    <div th:each="orderReg : ${orderRegs}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
+                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${orderReg.item.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project One</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+                                <h4 class="card-title"><a href="#!" th:text="${orderReg.item.food.name}"></a></h4>
+                                수량 : <strong class="card-text" th:text="${orderReg.quantity}" ></strong> <br/>
+                                총 금액 : <strong class="card-text" th:text="${orderReg.ord_price}"></strong> <br/>
+                                진행 상태 : <strong class="card-text" th:text="${orderReg.item.item_status}"></strong> <br/>
+                                신청일 : <strong class="card-text" th:text="${orderReg.ord_reg_dt}"></strong> <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="container">
+                <h2 class="mb-4">성공한 상품 목록</h2>
+                <div class="row">
+                	<div th:if="${#lists.isEmpty(orders)}">
+                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	</div>
+                    <div th:each="order : ${orders}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${order.item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="#!" th:text="${order.item.food.name}"></a></h4>
+                                수량 : <strong class="card-text" th:text="${order.quantity}" ></strong> <br/>
+                                총 금액 : <strong class="card-text" th:text="${order.ord_price}"></strong> <br/>
+                                진행 상태 : <strong class="card-text" th:text="${order.item.item_status}"></strong> <br/>
+                                신청일 : <strong class="card-text" th:text="${order.ord_reg_dt}"></strong> <br/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project Two</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project Three</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project Four</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project Five</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="#!">Project Six</a></h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>

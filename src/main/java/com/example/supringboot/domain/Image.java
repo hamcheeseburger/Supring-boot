@@ -1,6 +1,8 @@
 package com.example.supringboot.domain;
 
 import java.io.Serializable;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 @SuppressWarnings("serial")
 public class Image implements Serializable {
@@ -9,6 +11,7 @@ public class Image implements Serializable {
 	private int item_id; // Item 테이블 기본키
 	// 주의사항 : Image객체 1개당 post_id or item_id를 갖는다. 둘 다 가질 순 없다.
 	private byte[] image; // 이미지
+	private String base64Image;
 	
 	public Image() {
 		super();
@@ -45,5 +48,13 @@ public class Image implements Serializable {
 	}
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
 }

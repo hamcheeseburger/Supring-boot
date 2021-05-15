@@ -23,6 +23,9 @@ public class Post implements Serializable {
 	private int ship_type; // 거래 방법 (1: 배송, 0: 직거래)
 	private ArrayList<Image> images; // 식품 이미지
 	private ArrayList<Comment> comments; // Post에 달린 댓글들
+	/* post form에서만 사용하는 변수들 */
+	private String exp_dt_string; // 식품 유통기한 (from postForm)
+//	private int user_id; // user.user_id로 접근하면 html에서 항상 value가 0임.
 	
 	public Post() {
 		super();
@@ -152,6 +155,14 @@ public class Post implements Serializable {
 	}
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
+	}
+	
+	public String getExp_dt_string() {
+		return exp_dt_string;
+	}
+
+	public void setExp_dt_string(String exp_dt_String) {
+		this.exp_dt_string = exp_dt_String;
 	}
 	
 	public String toString() {

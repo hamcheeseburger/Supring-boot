@@ -1,123 +1,219 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
-	<th:block layout:fragment="title">
-		<title>thiThe page is a write page</title>
-	</th:block>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="post/layout/basic">
+<!-- header.html ÎåÄÏã† -->
+<head th:fragment="main-head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-	<th:block layout:fragment="content">
-		<div class="card-content">
-			<form class="form-horizontal" th:action="@{/post/createPost}" th:object="${postForm}" method="post" >
-				<!--/* update¿« ∞ÊøÏ º≠πˆ∑Œ ¿¸¥ﬁ«“ ∞‘Ω√±€ π¯»£ (PK) */-->
-				<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
-				
-				
-				<!-- ¿”Ω√∑Œ ªÁøÎ¿⁄ id∏¶ ¿‘∑¬ -->
-				<input type="hidden" value="41" th:field="*{user.user_id} />
-				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">¡¶∏Ò</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{title}" class="form-control" placeholder="¡¶∏Ò¿ª ¿‘∑¬«ÿ ¡÷ººø‰." />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="content" class="col-sm-2 control-label">≥ªøÎ</label>
-					<div class="col-sm-10">
-						<textarea th:field="*{content}" class="form-control" placeholder="≥ªøÎ¿ª ¿‘∑¬«ÿ ¡÷ººø‰."></textarea>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">Ωƒ«∞∏Ì</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{food_name}" class="form-control" placeholder="Ωƒ«∞∏Ì¿ª ¿‘∑¬«ÿ ¡÷ººø‰." />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">∞°∞›</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{price}" class="form-control" placeholder="∞°∞›¿ª ¿‘∑¬«ÿ ¡÷ººø‰." />
-					</div>
-				</div>
-				
-				<ul>
-					<li th:each="ty : ${trade_types}">
-						<input type="radio" th:field="*{trade_type}" th:value="${ty}" />
-						<label th:for="${#ids.prev('trade_type')}" th:text="${ty eq 'trade' ? '±≥»Ø' : '∆«∏≈' }">¿”Ω√</label>
-					</li>
-				</ul>
-				
-				<ul>
-					<li th:each="st : ${status}">
-						<input type="radio" th:field="*{trade_status}" th:value="${st}" />
-						<label th:for="${#ids.prev('trade_status')}" th:text="${st eq '0' ? '±≥»Ø π◊ ∞≈∑° ∞°¥…' : '±≥»Ø π◊ ∞≈∑° øœ∑·' }">¿”Ω√</label>
-					</li>
-				</ul>
-				
-				
-				<div class="form-group">
-					<label for="quantity" class="col-sm-2 control-label">ºˆ∑Æ</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{quantity}" class="form-control" placeholder="ºˆ∑Æ¿ª ¿‘∑¬«ÿ ¡÷ººø‰." />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="unit" class="col-sm-2 control-label">ºˆ∑Æ</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{unit}" class="form-control" placeholder="¥‹¿ß∏¶ ¿‘∑¬«ÿ ¡÷ººø‰." />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="unit" class="col-sm-2 control-label">¿Ø≈Î±‚«—</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{exp_dt}" class="form-control" placeholder="¿Ø≈Î±‚«—¿ª ¿‘∑¬«ÿ ¡÷ººø‰.(yyyy/MM/dd)" />
-					</div>
-				</div>
-				
-				<ul>
-					<li th:each="sh : ${ship_types}">
-						<input type="radio" th:field="*{ship_type}" th:value="${sh}" />
-						<label th:for="${#ids.prev('ship_type')}" th:text="${sh eq '0' ? '¡˜∞≈∑°' : 'πËº€' }">¿”Ω√</label>
-					</li>
-				</ul>
-				
-			
-				<div class="btn_wrap text-center">
-					<a th:href="@{/post/createPost}" class="btn btn-default waves-effect waves-light">µ⁄∑Œ∞°±‚</a>
-					<button type="submit" class="btn btn-primary waves-effect waves-light">¿˙¿Â«œ±‚</button>
-				</div>
-			</form>
+<th:block layout:fragment="title"></th:block>
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet"
+	th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	th:href="@{/adminLTE/plugins/fontawesome-free/css/all.min.css}">
+<!-- Theme style -->
+<link rel="stylesheet" th:href="@{/adminLTE/dist/css/adminlte.min.css}">
+
+<th:block layout:fragment="add-css"></th:block>
+</head>
+
+<!-- body.html ÎåÄÏã† -->
+<body th:fragment="main-body">
+	<div class="fixed-navbar">
+		<div class="pull-left">
+			<h1 class="page-title">POST</h1>
 		</div>
-		<!-- /.card-content -->
-	</th:block>
+	</div>
+	<!-- /.fixed-navbar -->
 
-	<th:block layout:fragment="script">
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-/*
-			function registerBoard(form) {
+	<div id="wrapper">
+		<div class="main-content">
+			<div class="row row-inline-block small-spacing">
+				<div class="col-xl-12">
+					<div class="box-content">
+						<div class="clearfix">
+							<h4 class="box-title pull-left"></h4>
+							<!-- /.box-title -->
 
-				form.noticeYn.value = form.noticeYn.checked == false ? 'N' : 'Y';
-				form.secretYn.value = form.secretYn.checked == false ? 'N' : 'Y';
+							<th:block layout:fragment="search"></th:block>
 
-				var result = (
-						   isValid(form.title, "¡¶∏Ò", null, null)
-						&& isValid(form.writer, "¿Ã∏ß", null, null)
-						&& isValid(form.content, "≥ªøÎ", null, null)
-				);
+						</div>
+						<!-- //.clearfix -->
 
-				if ( result == false ) {
-					return false;
-				}
-			}
-*/
-			/*[- end of function -]*/
+						<th:block layout:fragment="content">
+							<div class="card-content">
+								<form class="form-horizontal" th:action="@{/post/createPost}"
+									th:object="${postForm}" method="post">
+									<!--/* updateÏùò Í≤ΩÏö∞ ÏÑúÎ≤ÑÎ°ú Ï†ÑÎã¨Ìï† Í≤åÏãúÍ∏Ä Î≤àÌò∏ (PK) */-->
+									<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
 
-			/*]]>*/
-		</script>
-	</th:block>
+									<!-- th:fieldÎ•º ÏÇ¨Ïö©ÌïòÎ©¥ valueÎÇò th:value ÏßÄÏ†ïÏãú Î¨¥Ï°∞Í±¥ 0Ïù¥ÎÇò nullÏù¥ Îì§Ïñ¥Í∞ÄÎäî Í≤É Í∞ôÎã§.. -->
+									<!-- <input type="hidden" value="41" th:field="*{user.user_id}" /> -->
+									<!-- ÏûÑÏãúÎ°ú ÏÇ¨Ïö©Ïûê idÎ•º ÏûÖÎ†• -->
+									<input type="hidden" value="41" id="user.user_id" name="user.user_id" />
+									
+									<div class="form-group">
+										<label for="title" class="col-sm-2 control-label">Ï†úÎ™©</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{title}" class="form-control"
+												placeholder="Ï†úÎ™©ÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî." />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="content" class="col-sm-2 control-label">ÎÇ¥Ïö©</label>
+										<div class="col-sm-10">
+											<textarea th:field="*{content}" class="form-control"
+												placeholder="ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî."></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="title" class="col-sm-2 control-label">ÏãùÌíàÎ™Ö</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{food_name}"
+												class="form-control" placeholder="ÏãùÌíàÎ™ÖÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî." />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="title" class="col-sm-2 control-label">Í∞ÄÍ≤©</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{price}" class="form-control"
+												placeholder="Í∞ÄÍ≤©ÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî." />
+										</div>
+									</div>
+
+									<ul>
+										<li th:each="ty : ${trade_types}"><input type="radio"
+											th:field="*{trade_type}" th:value="${ty}" /> <label
+											th:for="${#ids.prev('trade_type')}"
+											th:text="${ty eq 'trade' ? 'ÍµêÌôò' : 'ÌåêÎß§' }">ÏûÑÏãú</label></li>
+									</ul>
+
+									<ul>
+										<li th:each="st : ${status}"><input type="radio"
+											th:field="*{trade_status}" th:value="${st}" /> <label
+											th:for="${#ids.prev('trade_status')}"
+											th:text="${st eq '0' ? 'ÍµêÌôò Î∞è Í±∞Îûò Í∞ÄÎä•' : 'ÍµêÌôò Î∞è Í±∞Îûò ÏôÑÎ£å' }">ÏûÑÏãú</label>
+										</li>
+									</ul>
+
+
+									<div class="form-group">
+										<label for="quantity" class="col-sm-2 control-label">ÏàòÎüâ</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{quantity}"
+												class="form-control" placeholder="ÏàòÎüâÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî." />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="unit" class="col-sm-2 control-label">ÏàòÎüâ</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{unit}" class="form-control"
+												placeholder="Îã®ÏúÑÎ•º ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî." />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="unit" class="col-sm-2 control-label">Ïú†ÌÜµÍ∏∞Ìïú</label>
+										<div class="col-sm-10">
+											<input type="text" th:field="*{exp_dt_string}" class="form-control"
+												placeholder="Ïú†ÌÜµÍ∏∞ÌïúÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî.(yyyy/MM/dd)" />
+										</div>
+									</div>
+
+									<ul>
+										<li th:each="sh : ${ship_types}"><input type="radio"
+											th:field="*{ship_type}" th:value="${sh}" /> <label
+											th:for="${#ids.prev('ship_type')}"
+											th:text="${sh eq '0' ? 'ÏßÅÍ±∞Îûò' : 'Î∞∞ÏÜ°' }">ÏûÑÏãú</label></li>
+									</ul>
+
+
+									<div class="btn_wrap text-center">
+										<a th:href="@{/post/createPost}"
+											class="btn btn-default waves-effect waves-light">Îí§Î°úÍ∞ÄÍ∏∞</a>
+										<button type="submit"
+											class="btn btn-primary waves-effect waves-light">Ï†ÄÏû•ÌïòÍ∏∞</button>
+
+									</div>
+								</form>
+							</div>
+
+						</th:block>
+
+						<th:block layout:fragment="paging"></th:block>
+					</div>
+					<!-- /.box-content -->
+
+					<th:block layout:fragment="add-content"></th:block>
+
+				</div>
+				<!-- /.col-xs-12 -->
+			</div>
+			<!-- /.row row-inline-block small-spacing -->
+			<footer class="footer">
+				<div class="float-right d-none d-sm-block">
+					<b>Version</b> 3.1.0-rc
+				</div>
+				<strong>Copyright &copy; 2014-2021 <a
+					href="https://adminlte.io">AdminLTE.io</a>.
+				</strong> All rights reserved.
+			</footer>
+		</div>
+		<!-- /.main-content -->
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script th:src="@{/adminLTE/plugins/jquery/jquery.min.js}"></script>
+	<!-- Bootstrap 4 -->
+	<script
+		th:src="@{/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- AdminLTE App -->
+	<script th:src="@{/adminLTE/dist/js/adminlte.min.js}"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script th:src="@{/adminLTE/dist/js/demo.js}"></script>
+
+	<th:block layout:fragment="script"></th:block>
+</body>
+
+
+
+
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		/*
+		 function registerBoard(form) {
+
+		 form.noticeYn.value = form.noticeYn.checked == false ? 'N' : 'Y';
+		 form.secretYn.value = form.secretYn.checked == false ? 'N' : 'Y';
+
+		 var result = (
+		 isValid(form.title, "Ï†úÎ™©", null, null)
+		 && isValid(form.writer, "Ïù¥Î¶Ñ", null, null)
+		 && isValid(form.content, "ÎÇ¥Ïö©", null, null)
+		 );
+
+		 if ( result == false ) {
+		 return false;
+		 }
+		 }
+		 */
+		/*[- end of function -]*/
+
+		/*]]>*/
+	</script>
+</th:block>
 </html>

@@ -30,7 +30,7 @@ public class InsertPostController {
 	private PostService postService;
 	
 	@ModelAttribute("postForm")
-	public Post formBacking(HttpServlet request) {
+	public Post formBacking() {
 		return new Post();
 	}
 	
@@ -49,7 +49,7 @@ public class InsertPostController {
 		return new String[] {"0", "1"};
 	}
 	
-	@GetMapping("/account/newAccount/step1")
+	@GetMapping
 	public String postForm() {
 		return postFormView;
 	}

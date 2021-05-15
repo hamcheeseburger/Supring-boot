@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
+	<th:block layout:fragment="title">
+		<title>thiThe page is a write page</title>
+	</th:block>
+
+	<th:block layout:fragment="content">
+		<div class="card-content">
+			<form class="form-horizontal" th:action="@{/post/createPost}" th:object="${postForm}" method="post" >
+				<!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
+				<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
+				
+				
+				<!-- 임시로 사용자 id를 입력 -->
+				<input type="hidden" value="41" th:field="*{user.user_id} />
+				
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력해 주세요." />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="content" class="col-sm-2 control-label">내용</label>
+					<div class="col-sm-10">
+						<textarea th:field="*{content}" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">식품명</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{food_name}" class="form-control" placeholder="식품명을 입력해 주세요." />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">가격</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{price}" class="form-control" placeholder="가격을 입력해 주세요." />
+					</div>
+				</div>
+				
+				<ul>
+					<li th:each="ty : ${trade_types}">
+						<input type="radio" th:field="*{trade_type}" th:value="${ty}" />
+						<label th:for="${#ids.prev('trade_type')}" th:text="${ty eq 'trade' ? '교환' : '판매' }">임시</label>
+					</li>
+				</ul>
+				
+				<ul>
+					<li th:each="st : ${status}">
+						<input type="radio" th:field="*{trade_status}" th:value="${st}" />
+						<label th:for="${#ids.prev('trade_status')}" th:text="${st eq '0' ? '교환 및 거래 가능' : '교환 및 거래 완료' }">임시</label>
+					</li>
+				</ul>
+				
+				
+				<div class="form-group">
+					<label for="quantity" class="col-sm-2 control-label">수량</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{quantity}" class="form-control" placeholder="수량을 입력해 주세요." />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="unit" class="col-sm-2 control-label">수량</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{unit}" class="form-control" placeholder="단위를 입력해 주세요." />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="unit" class="col-sm-2 control-label">유통기한</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{exp_dt}" class="form-control" placeholder="유통기한을 입력해 주세요.(yyyy/MM/dd)" />
+					</div>
+				</div>
+				
+				<ul>
+					<li th:each="sh : ${ship_types}">
+						<input type="radio" th:field="*{ship_type}" th:value="${sh}" />
+						<label th:for="${#ids.prev('ship_type')}" th:text="${sh eq '0' ? '직거래' : '배송' }">임시</label>
+					</li>
+				</ul>
+				
+			
+				<div class="btn_wrap text-center">
+					<a th:href="@{/post/createPost}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+					<button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.card-content -->
+	</th:block>
+
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+/*
+			function registerBoard(form) {
+
+				form.noticeYn.value = form.noticeYn.checked == false ? 'N' : 'Y';
+				form.secretYn.value = form.secretYn.checked == false ? 'N' : 'Y';
+
+				var result = (
+						   isValid(form.title, "제목", null, null)
+						&& isValid(form.writer, "이름", null, null)
+						&& isValid(form.content, "내용", null, null)
+				);
+
+				if ( result == false ) {
+					return false;
+				}
+			}
+*/
+			/*[- end of function -]*/
+
+			/*]]>*/
+		</script>
+	</th:block>
+</html>

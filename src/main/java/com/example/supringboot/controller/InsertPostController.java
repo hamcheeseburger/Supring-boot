@@ -2,6 +2,8 @@ package com.example.supringboot.controller;
 
 import javax.servlet.http.HttpServlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.example.supringboot.service.PostService;
 @RequestMapping({"/post/createPost"})
 @SessionAttributes({"postForm"})
 public class InsertPostController {
+	private static final Logger logger = LoggerFactory.getLogger(InsertPostController.class);
+
 	
 //	@Value("post/postInsertForm")
 	@Value("index")

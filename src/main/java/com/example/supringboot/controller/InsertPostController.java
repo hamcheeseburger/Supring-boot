@@ -49,7 +49,7 @@ public class InsertPostController {
 		return new String[] {"0", "1"};
 	}
 	
-	@GetMapping("/account/newAccount/step1")
+	@GetMapping("/post/createPost")
 	public String postForm() {
 		return postFormView;
 	}

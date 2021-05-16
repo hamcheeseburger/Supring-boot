@@ -26,16 +26,16 @@ public class LikedItemTest {
 	
 //	@Test
 //	@Ignore
-	public void insertLikedItem_test() {
-		boolean result = tmpDao.likedItem(61, 22);
+//	public void insertLikedItem_test() {
+//		boolean result = tmpDao.likedItem(61, 22);
 		
-		if (result) {
-			System.out.println("찜하기 성공");
-		} else {
-			System.out.println("찜하기 실패");
-		}
-		
-	}
+//		if (result) {
+//			System.out.println("찜하기 성공");
+//		} else {
+//			System.out.println("찜하기 실패");
+//		}
+//		
+//	}
 	
 //	@Test
 	@Ignore

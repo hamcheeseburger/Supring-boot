@@ -133,7 +133,7 @@
 	update post
 	set title=#{title}, content=#{content}, food_name=#{food_name},
 	trade_type=#{trade_type}, trade_status=#{trade_status}, modified_dt=SYSDATE, price=#{price}, quantity=#{quantity}, unit=#{unit}, exp_dt=#{exp_dt},
-	ship_type=#{ship_type} t
+	ship_type=#{ship_type} 
 	where post_id=#{post_id}
 </insert>
 

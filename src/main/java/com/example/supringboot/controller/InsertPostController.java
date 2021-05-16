@@ -1,8 +1,10 @@
 package com.example.supringboot.controller;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
@@ -19,9 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.service.PostService;
+
 
 
 
@@ -41,8 +46,8 @@ public class InsertPostController {
 	
 //	HttpServlet이 매개변수로 들어가면 오류남
 	@ModelAttribute("postForm")
-	public Post formBacking() {
-		return new Post();
+	public PostForm formBacking() {
+		return new PostForm();
 	}
 	
 	@ModelAttribute("trade_types")
@@ -69,23 +74,30 @@ public class InsertPostController {
 	
 	@PostMapping()
 	public String postInsert(HttpServletRequest request,
-			@ModelAttribute("postForm") Post newPost) {
+			@ModelAttribute("postForm") PostForm postForm) {
 		logger.info("postInsert()");
 		
 //		유효성 검사 추가
 		
-//		newPost의 날짜를 Timestamp로 변환
-		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		    Date parsedDate = (Date) dateFormat.parse(newPost.getExp_dt_string());
-		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-		    newPost.setExp_dt(timestamp);
-		} catch(Exception e) { //this generic but you can control another types of exception
-		    // look the origin of excption 
+//		이미지 처리
+		if (postForm.getFile() != null) {
+			MultipartFile imageFile = postForm.getFile();
+			try {
+				byte[] imageContentBytes = imageFile.getBytes();
+				Image image = new Image(); 
+				image.setImage(imageContentBytes);
+				
+				ArrayList<Image> imageList = new ArrayList<Image>();
+				imageList.add(image);
+				postForm.setImages(imageList);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+	
 		try {
-			boolean isRegistered = postService.registerPost(newPost);
+			boolean isRegistered = postService.registerPost(postForm);
 			if (isRegistered == false) {
 				// TODO => 게시글 등록에 실패하였다는 메시지를 전달
 			}

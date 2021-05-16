@@ -66,11 +66,11 @@ public class MybatisPostDao  implements PostDao{
 	public int insertPost(Post post) {
 //		게시글 삽입 후 생성되는 post_id를 이용하여 image 삽입 (일단 1장)
 		int result = postMapper.insertPost(post);
-		if (post.getImages() != null) {
+		if (result != 0 && post.getImages() != null) {
 			ArrayList<Image> images = post.getImages();
 			for (Image img: images) {
 				img.setPost_id(post.getPost_id());
-				imageMapper.insertImage(img);
+				imageMapper.insertImageWithPost(img);
 			}
 		}		
 		return result;

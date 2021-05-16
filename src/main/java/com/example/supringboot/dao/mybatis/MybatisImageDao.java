@@ -18,6 +18,11 @@ public class MybatisImageDao implements ImageDao {
 	}
 
 	@Override
+	public int insertImageWithPost(Image image) {
+		return imageMapper.insertImage(image);
+	}
+	
+	@Override
 	public int deleteImage(int image_id) {
 		return imageMapper.deleteImage(image_id);
 	}

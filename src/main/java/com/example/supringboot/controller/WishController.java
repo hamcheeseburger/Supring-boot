@@ -15,14 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.domain.WishItem;
-import com.example.supringboot.service.SupringBootFacade;
+import com.example.supringboot.service.WishServiceImpl;
 
 @Controller
 //@SessionAttributes({"userSession"})
 public class WishController {
 	
 	@Autowired
-	private SupringBootFacade supringService;
+	private WishServiceImpl wishService;
 	
 	// 공구식품 찜하기
 	@RequestMapping("/wish/add")
@@ -32,14 +32,14 @@ public class WishController {
 		int userId = userSession.getAccount().getUser_id();
 		wish.setUser_id(userId);
 		
-		boolean isWishItem = supringService.isWishItem(userId, wish.getItem().getItem_id());
+		boolean isWishItem = wishService.isWishItem(userId, wish.getItem().getItem_id());
 		
 		// 찜하기 목록에 추가하려는 식품이 있을 경우
 		if (isWishItem) {
-			supringService.updateQuantity(wish);
+			wishService.updateQuantity(wish);
 		} else {
 			// 없을 경우 새롭게 추가
-			supringService.likeItem(wish);
+			wishService.likeItem(wish);
 		}
 		
 		return "redirect:/wish/list";
@@ -56,9 +56,9 @@ public class WishController {
 		System.out.println("user_id: " + userId);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<WishItem> list = supringService.getLikedItem(userId);
+		List<WishItem> list = wishService.getLikedItem(userId);
 		// 찜한 식품 전체 금액
-		int totalPrice = supringService.totalMoney(userId);
+		int totalPrice = wishService.totalMoney(userId);
 		
 		if (list.isEmpty()) {
 			System.out.println("비어있음");
@@ -80,7 +80,7 @@ public class WishController {
 	// 찜한 식품 목록에서 삭제하기
 	@RequestMapping("/wish/remove")
 	public String deleteWishList(@RequestParam int likedId) {
-		supringService.cancelLikedItem(likedId);
+		wishService.cancelLikedItem(likedId);
 		return "redirect:/wish/list";
 	}
 	
@@ -90,7 +90,7 @@ public class WishController {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();
 		
-		supringService.cancelDetailLikedItem(userId, likedId);
+		wishService.cancelDetailLikedItem(userId, likedId);
 		return "redirect:/item/detail"; // 삭제 후 공구 식품 상세페이지로 이동
 	}
 	
@@ -99,7 +99,7 @@ public class WishController {
 	public String deleteAllWishList(HttpServletRequest request) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();
-		supringService.deleteAllLikedItem(userId);
+		wishService.deleteAllLikedItem(userId);
 		
 		return "redirect:/wish/list";
 	}
@@ -110,13 +110,13 @@ public class WishController {
 		int likedId = Integer.parseInt(request.getParameter("likedId"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		
-		WishItem wish = supringService.getOneWishItem(likedId);
+		WishItem wish = wishService.getOneWishItem(likedId);
 		wish.setAmount(amount);
 		
 //		System.out.println("wish_id: " + wish.getLiked_id());
 //		System.out.println("name: " + wish.getItem().getTitle());
 		
-		supringService.updateLikedItem(wish);
+		wishService.updateLikedItem(wish);
 		
 		return "redirect:/wish/list";
 		

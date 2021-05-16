@@ -2,6 +2,7 @@ package com.example.supringboot.service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,23 @@ public class PostServiceImpl implements PostService{
 		
 		return (result == 1) ? true : false;
 		
+	}
+
+	@Override
+	public boolean updatePost(PostForm post) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<Post> getPostList() {
+		ArrayList<Post> postList = new ArrayList<Post>();
+		int postCnt = postDao.getPostCount();
+		
+		if (postCnt > 0)
+			postList = postDao.getAllPostList();
+		
+		return postList;
 	}
 	
 	

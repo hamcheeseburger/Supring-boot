@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @SuppressWarnings("serial")
 public class Post implements Serializable {
 	private int post_id; // 기본키
@@ -15,6 +17,7 @@ public class Post implements Serializable {
 	private int price; // 거래 금액
 	private String trade_type; // 거래 타입 (교환, 거래) => (trade, payment)
 	private int trade_status; // 교환 상태 (1: 교환 또는 거래완료, 0: 교환 또는 거래가능)
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Timestamp created_dt; // Post 게시일
 	private Timestamp modified_dt; // Post 수정일
 	private int quantity; // 교환 또는 거래 할 식품 개수

@@ -11,7 +11,7 @@
 		<div id="wrapper">
 		<div class="main-content">
 			<div class="row row-inline-block small-spacing">
-				<div class="col-xs-12">
+				<div class="col-xl-12">
 					<div class="box-content">
 						<div class="clearfix">
 							<h4 class="box-title pull-left"></h4>
@@ -55,6 +55,15 @@
 		<script th:src="@{/adminLTE/dist/js/adminlte.min.js}"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script th:src="@{/adminLTE/dist/js/demo.js}"></script>
+		
+		<!-- board -->
+		
+		<script th:src="@{/board/scripts/jquery.min.js}"></script>
+		<script th:src="@{/board/plugin/bootstrap/js/bootstrap.min.js}"></script>
+		<script th:src="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+		<script th:src="@{/board/scripts/main.js}"></script>
+		<script th:src="@{/board/scripts/common.js}"></script>
 
 		<th:block layout:fragment="script"></th:block>
 	</body>

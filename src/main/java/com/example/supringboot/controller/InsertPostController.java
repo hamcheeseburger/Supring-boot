@@ -32,7 +32,7 @@ import com.example.supringboot.service.PostService;
 
 
 @Controller
-@RequestMapping({"/post/createPost"})
+//@RequestMapping({"/post/createPost"})
 @SessionAttributes({"postForm"})
 public class InsertPostController {
 	private static final Logger logger = LoggerFactory.getLogger(InsertPostController.class);
@@ -65,14 +65,14 @@ public class InsertPostController {
 		return new String[] {"0", "1"};
 	}
 
-	@GetMapping()
+	@GetMapping("/post/createPost")
 	public String postForm() {
 		logger.info("postForm()");
 		
 		return postFormView;
 	}
 	
-	@PostMapping()
+	@PostMapping("/post/createPost")
 	public String postInsert(HttpServletRequest request,
 			@ModelAttribute("postForm") PostForm postForm) {
 		logger.info("postInsert()");
@@ -108,6 +108,6 @@ public class InsertPostController {
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
 		}
 		//		게시글 확인하는 페이지로 리다이렉트할 것
-		return "index";
+		return "redirect:/post/getPostList";
 	}
 }

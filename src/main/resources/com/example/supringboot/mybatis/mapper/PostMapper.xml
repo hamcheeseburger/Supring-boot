@@ -69,7 +69,10 @@
 <!-- 게시글 목록만 가져오게 하기 위해 다른 테이블과 조인하지 않음 -->
 <select id="getAllPost" resultMap="postResultMap">
 	select *
-	from post
+	from post p , account a
+	where
+		p.user_id=a.user_id
+	order by p.created_dt desc
 </select>
 
 <!-- 게시글 목록과 유저정보만 가져오게 하기 위해 그 외 다른 테이블과 조인하지 않음 -->

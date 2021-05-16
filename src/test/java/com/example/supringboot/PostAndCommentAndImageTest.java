@@ -95,10 +95,11 @@ public class PostAndCommentAndImageTest {
 	}
 	
 	
-//	@Test
-	@Ignore
+	@Test
+//	@Ignore
 	void getAllPostList() {
 		ArrayList<Post> list = postdao.getAllPostList();
+		System.out.print(list.size());
 	}
 	
 //	@Test
@@ -134,8 +135,8 @@ public class PostAndCommentAndImageTest {
 		
 	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void updatePost() {
 //		try {
 //		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");

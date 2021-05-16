@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>공동구매 식품 목록</title>
+
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
+	crossorigin="anonymous"></script>
+
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" rel="stylesheet" />
+
+</head>
+<body>
+	<h2 align="center">공동구매 식품 목록</h2>
+	
+	<div align="center">
+			<p th:text="${'공동구매 식품 전체 개수: ' + map.allItemCount}">공동구매 식품 전체 개수</p>
+			<table border="1">
+				<tr>
+					<th>사진</th>
+					<th>제목</th>
+					<th>식품명</th>
+					<th>가격</th>
+					<th>최소 수량</th>
+					<th>진행 상황</th>
+					<th>신청자 수</th>
+					<th>마감일</th>
+				</tr>
+	
+				<tr th:each="item, iterStat:${map.allItemList}">
+					<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
+					<td th:if="${item.images.size == 0}">사진 없음</td>
+					<td th:if="${item.images.size != 0}">
+						<a href="#">
+							<img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+						</a>
+					</td>
+					<td>
+						<a href="#" th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a>
+					</td>
+					<td th:text="${item.food.name}"></td>
+					<td th:text="${item.item_price}"></td>
+					<td th:text="${item.min_quantity}"></td>
+					<td th:text="${item.item_status}"></td>
+					<td th:text="${item.numOfRegister}"></td>
+					<td th:text="${item.end_dt}"></td>
+				</tr>
+				
+			</table>
+	</div>
+	
+	<h2 align="center">진행중인 식품 목록</h2>
+	
+	<div align="center">
+			<p th:text="${'진행중인 공동구매 식품 개수: ' + map.goingItemCount}">진행중인 공동구매 식품 개수</p>
+			<table border="1">
+				<tr>
+					<th>사진</th>
+					<th>제목</th>
+					<th>식품명</th>
+					<th>가격</th>
+					<th>최소 수량</th>
+					<th>진행 상황</th>
+					<th>신청자 수</th>
+					<th>마감일</th>
+				</tr>
+	
+				<tr th:each="item, iterStat:${map.goingItemList}">
+					<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
+					<td th:if="${item.images.size == 0}">사진 없음</td>
+					<td th:if="${item.images.size != 0}">
+						<a href="#" >
+							<img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+						</a>
+					</td>
+					<td>
+						<a href="#" th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a>
+					</td>
+					<td th:text="${item.food.name}"></td>
+					<td th:text="${item.item_price}"></td>
+					<td th:text="${item.min_quantity}"></td>
+					<td th:text="${item.item_status}"></td>
+					<td th:text="${item.numOfRegister}"></td>
+					<td th:text="${item.end_dt}"></td>
+				</tr>
+				
+			</table>
+	</div>
+	
+	<h2 align="center">마감일 지난 공동구매 식품 목록</h2>
+	
+	<div align="center">
+			<p th:text="${'마감일 지난 공동구매 식품 개수: ' + map.endItemCount}">마감일 지난 공동구매 식품 개수</p>
+			<table border="1">
+				<tr>
+					<th>사진</th>
+					<th>제목</th>
+					<th>식품명</th>
+					<th>가격</th>
+					<th>최소 수량</th>
+					<th>진행 상황</th>
+					<th>신청자 수</th>
+					<th>마감일</th>
+				</tr>
+	
+				<tr th:each="item, iterStat:${map.endItemList}">
+					<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
+					<td th:if="${item.images.size == 0}">사진 없음</td>
+					<td th:if="${item.images.size != 0}">
+						<a href="#">
+							<img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+						</a>
+					</td>
+					<td>
+						<a href="#" th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a>
+					</td>
+					<td th:text="${item.food.name}"></td>
+					<td th:text="${item.item_price}"></td>
+					<td th:text="${item.min_quantity}"></td>
+					<td th:text="${item.item_status}"></td>
+					<td th:text="${item.numOfRegister}"></td>
+					<td th:text="${item.end_dt}"></td>
+				</tr>
+				
+			</table>
+	</div>
+
+</body>
+</html>

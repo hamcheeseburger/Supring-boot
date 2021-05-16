@@ -18,8 +18,12 @@ public interface ItemDao {
 	//공구진행률 조회
 	public int progressItem(int item_id);
 	
-	// 공구식품 목록 조회
+	// 공구식품 목록 조회 -> 
 	public List<Item> getAllItemList();
+	// 진행중인 공구식품 목록 조회
+	public List<Item> getGoingItemList();
+	// 성공 또는 실패한 공구식품 목록 조회 -> 마감일 지난 공구식품?
+	public List<Item> getEndItemList();
 	// 특정 공구식품 정보조회
 	public Item getDetailItem(int item_id);
 	// 공구 신청

@@ -88,6 +88,16 @@ public class MybatisItemDao implements ItemDao {
 		}
 	}
 
+	@Override
+	public List<Item> getGoingItemList() {
+		return itemMapper.getGoingItemList();
+	}
+
+	@Override
+	public List<Item> getEndItemList() {
+		return itemMapper.getEndItemList();
+	}
+
 
 	
 }

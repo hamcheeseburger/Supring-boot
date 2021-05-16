@@ -14,6 +14,12 @@
 		<result column="item_price" jdbcType="NUMERIC" property="item_price" />
 		<result column="ship_price" jdbcType="NUMERIC" property="ship_price" />
 		<result column="item_status" jdbcType="VARCHAR" property="item_status" />
+		
+		<association property="food" column="food_id" javaType="Food">
+			<id property="food_id" column="food_id" />
+			<result property="name" column="name" />
+		</association>
+		
 		<collection property="images" ofType="Image">
 			<id property="image_id" column="image_id" />
 			<result property="image" column="image" />
@@ -21,9 +27,26 @@
 	</resultMap>
 
 	<select id="getAllItem" resultMap="itemResult">
-		SELECT i.item_id, title, content, end_dt, created_dt, modified_dt, 
-			item_price, ship_price, item_status, im.image_id, im.image
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+			LEFT JOIN food f ON i.food_id = f.food_id
+	</select>
+
+	<select id="getGoingItemList" resultMap="itemResult">
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
+		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+			LEFT JOIN food f ON i.food_id = f.food_id
+		WHERE i.item_status = 'ongoing'
+	</select>
+	
+	<select id="getEndItemList" resultMap="itemResult">
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
+		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+			LEFT JOIN food f ON i.food_id = f.food_id
+		WHERE i.item_status != 'ongoing'
 	</select>
 	
 	<!-- 특정 공구식품 가져오기 -->

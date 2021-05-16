@@ -32,11 +32,12 @@
 				</tr>
 	
 				<tr th:each="wish, iterStat:${map.wishList}">
+					<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
 					<td th:text="${wish.item.food.name}"></td>
 					<td th:text="${wish.item.item_price}"></td>
 					<td>
 						<form name="update" id="updateWish" method="post" action="#" th:action="@{/wish/update}">
-							<input type="number" id="amount" name="amount" th:value="${wish.amount}" />
+							<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />
 							<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
 							<input type="submit" value="수정" />
 						</form>

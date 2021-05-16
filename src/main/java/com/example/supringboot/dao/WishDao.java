@@ -9,7 +9,7 @@ public interface WishDao {
 	public List<WishItem> getWishItem(int user_id);
 
 	// 공구식품 찜하기
-	public boolean likedItem(WishItem wish);
+	public boolean likedItem(int user_id, int item_id, int amount);
 
 	// 공구식품 찜하기 취소 -> 찜하기 목록 페이지에서 취소
 	public boolean cancelLikedItem(int liked_id);
@@ -24,7 +24,7 @@ public interface WishDao {
 	public boolean updateLikedItem(WishItem wish);
 	
 	// 찜한 식품 수량 변경 -> 식품 상세페이지에서 동일한 식품을 찜하기 했을때 사용
-	public boolean updateQuantity(WishItem wish);
+	public boolean updateQuantity(int user_id, int item_id, int amount);
 	
 	// 찜한 식품 전체 금액 가져오기
 	public int totalMoney(int user_id);

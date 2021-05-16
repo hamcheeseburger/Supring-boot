@@ -2,15 +2,25 @@ package com.example.supringboot.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.supringboot.dao.mybatis.MybatisItemDao;
 import com.example.supringboot.dao.mybatis.MybatisWishDao;
+import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.WishItem;
 
+@Service
+@Transactional
 public class WishServiceImpl implements WishService {
 	
 	@Autowired
 	private MybatisWishDao wishDao;
+	
+	@Autowired
+	private MybatisItemDao itemDao;
 	
 	@Override
 	public List<WishItem> getLikedItem(int user_id) {
@@ -18,8 +28,8 @@ public class WishServiceImpl implements WishService {
 	}
 
 	@Override
-	public boolean likeItem(WishItem wish) {
-		return wishDao.likedItem(wish);
+	public boolean likeItem(int user_id, int item_id, int amount) {
+		return wishDao.likedItem(user_id, item_id, amount);
 	}
 
 	@Override
@@ -43,8 +53,8 @@ public class WishServiceImpl implements WishService {
 	}
 
 	@Override
-	public boolean updateQuantity(WishItem wish) {
-		return wishDao.updateQuantity(wish);
+	public boolean updateQuantity(int user_id, int item_id, int amount) {
+		return wishDao.updateQuantity(user_id, item_id, amount);
 	}
 
 	@Override
@@ -60,5 +70,27 @@ public class WishServiceImpl implements WishService {
 	@Override
 	public WishItem getOneWishItem(int liked_id) {
 		return wishDao.getOneWishItem(liked_id);
+	}
+
+	
+	// 공구식품 관련 코드
+	@Override
+	public List<Item> getAllItem() {
+		return itemDao.getAllItemList();
+	}
+
+	@Override
+	public List<Item> getGoingItem() {
+		return itemDao.getGoingItemList();
+	}
+
+	@Override
+	public List<Item> getEndItem() {
+		return itemDao.getEndItemList();
+	}
+	
+	@Override
+	public Item getDetailItem(int item_id) {
+		return itemDao.getDetailItem(item_id);
 	}
 }

@@ -26,20 +26,22 @@ public class WishController {
 	
 	// 공구식품 찜하기
 	@RequestMapping("/wish/add")
-	public String insertWishItem(@ModelAttribute WishItem wish, HttpServletRequest request) {
+	public String insertWishItem(HttpServletRequest request) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
 		int userId = userSession.getAccount().getUser_id();
-		wish.setUser_id(userId);
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		int itemId = Integer.parseInt(request.getParameter("itemId"));
+		System.out.println("item_id: " + itemId);
 		
-		boolean isWishItem = wishService.isWishItem(userId, wish.getItem().getItem_id());
+		boolean isWishItem = wishService.isWishItem(userId, itemId);
 		
 		// 찜하기 목록에 추가하려는 식품이 있을 경우
 		if (isWishItem) {
-			wishService.updateQuantity(wish);
+			wishService.updateQuantity(userId, itemId, amount);
 		} else {
 			// 없을 경우 새롭게 추가
-			wishService.likeItem(wish);
+			wishService.likeItem(userId, itemId, amount);
 		}
 		
 		return "redirect:/wish/list";
@@ -48,7 +50,7 @@ public class WishController {
 	// 찜한 식품 목록 보기
 	@RequestMapping("/wish/list")
 	public ModelAndView wishList(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("/Wish/list");
+		ModelAndView mav = new ModelAndView("/Wish/wishList");
 		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		

@@ -18,8 +18,8 @@ public class MybatisWishDao implements WishDao {
 	private WishMapper wishMapper;
 
 	@Override
-	public boolean likedItem(WishItem wish) {
-		int result = wishMapper.likedItem(wish);
+	public boolean likedItem(int user_id, int item_id, int amount) {
+		int result = wishMapper.likedItem(user_id, item_id, amount);
 
 		if (result == 1) {
 			return true;
@@ -87,8 +87,8 @@ public class MybatisWishDao implements WishDao {
 	}
 
 	@Override
-	public boolean updateQuantity(WishItem wish) {
-		int result = wishMapper.updateQuantity(wish);
+	public boolean updateQuantity(int user_id, int item_id, int amount) {
+		int result = wishMapper.updateQuantity(user_id, item_id, amount);
 		
 		if (result == 1) {
 			return true;

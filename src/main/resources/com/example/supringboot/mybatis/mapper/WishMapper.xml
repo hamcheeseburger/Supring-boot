@@ -4,9 +4,9 @@
 <mapper namespace="com.example.supringboot.mybatis.mapper.WishMapper">
 
 	<!-- 공구식품 찜하기 -->
-	<insert id="likedItem" parameterType="WishItem">
+	<insert id="likedItem" parameterType="int">
 		INSERT INTO liked (liked_id, user_id, item_id, amount)
-		VALUES (LIKE_SEQ.NEXTVAL, #{user_id}, #{item.item_id}, #{amount})
+		VALUES (LIKE_SEQ.NEXTVAL, #{user_id}, #{item_id}, #{amount})
 	</insert>
 
 	<resultMap id="wishItemResult" type="WishItem">
@@ -70,7 +70,7 @@
 	</update>
 
 	<!-- 찜한 식품 수량 변경 -> 식품 상세페이지에서 동일한 식품을 찜하기 했을때 사용 -->
-	<update id="updateQuantity" parameterType="WishItem">
+	<update id="updateQuantity" parameterType="int">
 		UPDATE liked
 		SET amount = amount + #{amount}
 		WHERE user_id = #{user_id} AND item_id = #{item_id}

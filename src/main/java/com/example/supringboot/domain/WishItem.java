@@ -9,9 +9,8 @@ public class WishItem implements Serializable {
 	private int liked_id;
 	private int user_id;
 	private Item item;
-	private int quantity;
 	private int amount;
-	private int totalPrice;
+	private int likedPrice; // 특정 식품의 총 합계
 
 	/* JavaBeans Properties */
 
@@ -21,14 +20,6 @@ public class WishItem implements Serializable {
 
 	public void setItem(Item item) {
 		this.item = item;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public int getLiked_id() {
@@ -55,21 +46,17 @@ public class WishItem implements Serializable {
 		this.amount = amount;
 	}
 
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setLikedPrice(int likedPrice) {
+		this.likedPrice = likedPrice;
 	}
-	
-	public int getTotalPrice() {
+
+	public int getLikedPrice() {
 		if (item != null) {
-			totalPrice = item.getItem_price() * quantity;
-			return totalPrice;
+			likedPrice = item.getItem_price() * amount;
+			return likedPrice;
 		} else {
 			return 0;
 		}
-	}
-	
-	public void incrementQuantity() {
-		quantity++;
 	}
 
 }

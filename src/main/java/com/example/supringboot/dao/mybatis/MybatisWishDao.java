@@ -18,8 +18,8 @@ public class MybatisWishDao implements WishDao {
 	private WishMapper wishMapper;
 
 	@Override
-	public boolean likedItem(int user_id, int item_id) {
-		int result = wishMapper.likedItem(user_id, item_id);
+	public boolean likedItem(WishItem wish) {
+		int result = wishMapper.likedItem(wish);
 
 		if (result == 1) {
 			return true;
@@ -29,8 +29,19 @@ public class MybatisWishDao implements WishDao {
 	}
 
 	@Override
-	public boolean cancelLikedItem(int user_id, int item_id) {
-		int result = wishMapper.cancelLikedItem(user_id, item_id);
+	public boolean cancelLikedItem(int liked_id) {
+		int result = wishMapper.cancelLikedItem(liked_id);
+
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean cancelDetailLikedItem(int user_id, int item_id) {
+		int result = wishMapper.cancelDetailLikedItem(user_id, item_id);
 
 		if (result == 1) {
 			return true;
@@ -50,5 +61,60 @@ public class MybatisWishDao implements WishDao {
 		} else {
 			return wishList;
 		}
+	}
+
+	@Override
+	public boolean deleteAllLikedItem(int user_id) {
+		int result = wishMapper.deleteAllLikedItem(user_id);
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+	@Override
+	public boolean updateLikedItem(WishItem wish) {
+		int result = wishMapper.updateLikedItem(wish);
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateQuantity(WishItem wish) {
+		int result = wishMapper.updateQuantity(wish);
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int totalMoney(int user_id) {
+		return wishMapper.totalMoney(user_id);
+	}
+
+	@Override
+	public boolean isWishItem(int user_id, int item_id) {
+		int result = wishMapper.isWishItem(user_id, item_id);
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public WishItem getOneWishItem(int liked_id) {
+		return wishMapper.getOneWishItem(liked_id);
 	}
 }

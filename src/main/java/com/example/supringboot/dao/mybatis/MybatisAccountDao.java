@@ -1,12 +1,9 @@
 package com.example.supringboot.dao.mybatis;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.example.supringboot.mybatis.mapper.AccountMapper;
@@ -16,7 +13,6 @@ import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.Post;
-import com.example.supringboot.domain.Item;
 
 
 @Repository
@@ -78,20 +74,6 @@ public class MybatisAccountDao implements AccountDao {
 	public ArrayList<Comment> selectMyComments(int user_id) {
 		// TODO Auto-generated method stub
 		return accountMapper.selectCommentsWithUserId(user_id);
-	}
-
-	// 찜한 식품 확인
-	@Override
-	public List<Item> getWishItem(int user_id) {
-		List<Item> wishList = new ArrayList<Item>();
-		wishList = accountMapper.getWishItem(user_id);
-		
-		if (wishList.isEmpty()) {
-			return Collections.emptyList();
-		}
-		else {
-			return wishList;
-		}
 	}
 	
 	

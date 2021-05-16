@@ -128,26 +128,5 @@
 		FROM Commt c, Post p
 		WHERE c.user_id=#{user_id} and c.post_id = p.post_id
 	</select>
-	
-	<resultMap id="itemResult" type="Item">
-		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
-		<result column="title" jdbcType="VARCHAR" property="title" />
-		<result column="end_dt" jdbcType="NUMERIC" property="end_dt" />
-		<result column="item_price" jdbcType="NUMERIC"
-			property="item_price" />
-		<result column="ship_price" jdbcType="NUMERIC"
-			property="ship_price" />
-		<result column="item_status" jdbcType="VARCHAR"
-			property="item_status" />
-		<collection property="images" ofType="Image">
-			<id property="image_id" column="image_id" />
-			<result property="image" column="image" />
-		</collection>
-	</resultMap>
-	
-	<select id="getWishItem" parameterType="int" resultMap="itemResult">
-		SELECT i.item_id, title, end_dt, item_price, ship_price, item_status, im.image_id, im.image
-		FROM item i, image im, liked l
-		WHERE i.item_id=l.item_id AND i.item_id=im.item_id AND l.user_id=#{user_id}
-	</select>
+
 </mapper>

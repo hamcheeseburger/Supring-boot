@@ -2,17 +2,14 @@ package com.example.supringboot.mybatis.mapper;
 
 import java.util.ArrayList;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
-import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.Post;
-import com.example.supringboot.domain.Item;
 
 @Mapper
 public interface AccountMapper {
@@ -31,7 +28,5 @@ public interface AccountMapper {
 	ArrayList<Comment> selectCommentsWithUserId(@Param("user_id") int user_id) throws DataAccessException;
 
 	
-	// 찜한 식품 확인
-	List<Item> getWishItem(int user_id) throws DataAccessException;
 
 }

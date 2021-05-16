@@ -18,8 +18,6 @@ public interface ItemDao {
 	//공구진행률 조회
 	public int progressItem(int item_id);
 	
-	// 공구식품 찜하기
-	public boolean likedItem(int user_id, int item_id);
 	// 공구식품 목록 조회
 	public List<Item> getAllItemList();
 	// 특정 공구식품 정보조회

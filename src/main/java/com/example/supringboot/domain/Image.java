@@ -48,6 +48,7 @@ public class Image implements Serializable {
 	}
 	public void setImage(byte[] image) {
 		this.image = image;
+		base64Image = Base64.getEncoder().encodeToString(this.image);
 	}
 
 	public String getBase64Image() {

@@ -95,16 +95,8 @@ public class MyPageController {
 		HashMap<String, ArrayList<Order_reg>> hashMap = supringService.getMyOrderList(user_id);
 		logger.info("OrderRegs length : " + hashMap.get("orderRegs").size());
 		logger.info("Orders length : " + hashMap.get("orders").size());
-		logger.info("image byte [] : " + hashMap.get("orderRegs").get(0).getItem().getImages().get(0).getImage());
-//		logger.info("base64Image : " + hashMap.get("orderRegs").get(0).getItem().getImages().get(0).getBase64Image());
-	
 
-		String encodeBase64 = Base64.getEncoder().encodeToString(hashMap.get("orderRegs").get(0).getItem().getImages().get(0).getImage());
-		hashMap.get("orderRegs").get(0).getItem().getImages().get(0).setBase64Image(encodeBase64);
-		
-		System.out.println(hashMap.get("orderRegs").get(0).getItem().getImages().get(0).getBase64Image());
-		
-		logger.info("food name : " + hashMap.get("orderRegs").get(0).getItem().getFood().getName());
+
 		modelAndView.addObject("orderRegs", hashMap.get("orderRegs"))
 					.addObject("orders", hashMap.get("orders"));
 	

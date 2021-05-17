@@ -29,7 +29,8 @@ public class SupringBootImpl implements SupringBootFacade{
 		// TODO Auto-generated method stub
 		accountDao.insertAccount(account);
 	}
-
+	
+	
 	@Override
 	public Account getAccount(String login_id, String password) {
 		// TODO Auto-generated method stub
@@ -54,5 +55,12 @@ public class SupringBootImpl implements SupringBootFacade{
 		hashMap.put("orders", orders);
 		
 		return hashMap;
+	}
+
+
+	@Override
+	public Account getAccountById(int user_id) {
+		// TODO Auto-generated method stub
+		return accountDao.getAccountById(user_id);
 	}
 }

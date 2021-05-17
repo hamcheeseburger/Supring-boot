@@ -8,6 +8,7 @@ import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.Post;
 
 public interface AccountDao {
+	public Account getAccountById(int user_id);
 	public Account getAccountByLoginId(String login_id);
 	public void insertAccount(Account account);
 	public Account getAccount(String login_id, String password);

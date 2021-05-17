@@ -21,6 +21,8 @@ public class MybatisAccountDao implements AccountDao {
 	@Autowired
 	private AccountMapper accountMapper;
 	
+	
+	
 	@Override
 	public Account getAccountByLoginId(String login_id) {
 		// TODO Auto-generated method stub
@@ -74,6 +76,12 @@ public class MybatisAccountDao implements AccountDao {
 	public ArrayList<Comment> selectMyComments(int user_id) {
 		// TODO Auto-generated method stub
 		return accountMapper.selectCommentsWithUserId(user_id);
+	}
+
+	@Override
+	public Account getAccountById(int user_id) {
+		// TODO Auto-generated method stub
+		return accountMapper.getAccountById(user_id);
 	}
 	
 	

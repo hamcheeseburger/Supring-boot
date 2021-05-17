@@ -49,7 +49,8 @@ public class MyPageController {
 	public ModelAndView editAccountForm(HttpServletRequest request) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		AccountForm accountForm = new AccountForm();
-		accountForm.setAccount(userSession.getAccount());
+		int user_id = userSession.getAccount().getUser_id();
+		accountForm.setAccount(supringService.getAccountById(user_id));
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(myPageView);

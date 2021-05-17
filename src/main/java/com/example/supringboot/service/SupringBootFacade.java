@@ -13,4 +13,6 @@ public interface SupringBootFacade {
 	boolean updateAccount(Account account);
 	
 	HashMap<String, ArrayList<Order_reg>> getMyOrderList(int user_id);
+	
+	Account getAccountById(int user_id);
 }

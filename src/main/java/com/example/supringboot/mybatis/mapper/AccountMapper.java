@@ -13,6 +13,7 @@ import com.example.supringboot.domain.Post;
 
 @Mapper
 public interface AccountMapper {
+	Account getAccountById(int user_id) throws DataAccessException;
 	Account getAccountByLoginId(String login_id) throws DataAccessException;
 	void insertAccount(Account account) throws DataAccessException;
 	Account getAccount(@Param("login_id") String login_id, @Param("password") String password) throws DataAccessException;

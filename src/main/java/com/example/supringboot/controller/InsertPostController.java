@@ -22,8 +22,8 @@ import com.example.supringboot.service.PostService;
 @SessionAttributes({"postForm"})
 public class InsertPostController {
 	
-//	@Value("post/postInsertForm")
-	@Value("index")
+	@Value("/post/postInsertForm")
+//	@Value("index")
 	private String postFormView;
 	
 	@Autowired

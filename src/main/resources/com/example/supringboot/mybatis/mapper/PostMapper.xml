@@ -69,7 +69,10 @@
 <!-- 게시글 목록만 가져오게 하기 위해 다른 테이블과 조인하지 않음 -->
 <select id="getAllPost" resultMap="postResultMap">
 	select *
-	from post
+	from post p , account a
+	where
+		p.user_id=a.user_id
+	order by p.created_dt desc
 </select>
 
 <!-- 게시글 목록과 유저정보만 가져오게 하기 위해 그 외 다른 테이블과 조인하지 않음 -->
@@ -133,7 +136,7 @@
 	update post
 	set title=#{title}, content=#{content}, food_name=#{food_name},
 	trade_type=#{trade_type}, trade_status=#{trade_status}, modified_dt=SYSDATE, price=#{price}, quantity=#{quantity}, unit=#{unit}, exp_dt=#{exp_dt},
-	ship_type=#{ship_type} t
+	ship_type=#{ship_type} 
 	where post_id=#{post_id}
 </insert>
 

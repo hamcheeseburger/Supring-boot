@@ -1,123 +1,235 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
-	<th:block layout:fragment="title">
-		<title>thiThe page is a write page</title>
-	</th:block>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{post/layout/basic}">
 
 	<th:block layout:fragment="content">
 		<div class="card-content">
 			<form class="form-horizontal" th:action="@{/post/createPost}" th:object="${postForm}" method="post" >
-				<!--/* updateÀÇ °æ¿ì ¼­¹ö·Î Àü´ŞÇÒ °Ô½Ã±Û ¹øÈ£ (PK) */-->
+				<!--/* updateï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ (PK) */-->
 				<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
 				
 				
-				<!-- ÀÓ½Ã·Î »ç¿ëÀÚ id¸¦ ÀÔ·Â -->
+				<!-- ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ ï¿½Ô·ï¿½ -->
 <!-- 				<input type="text" th:field="*{user.user_id} /> -->
 				
 				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">Á¦¸ñ</label>
+					<label for="title" class="col-sm-2 control-label">ï¿½ï¿½ï¿½ï¿½</label>
 					<div class="col-sm-10">
-						<input type="text" th:field="*{title}" class="form-control" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." />
+						<input type="text" th:field="*{title}" class="form-control" placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½." />
 					</div>
+<head>
+    <!--    thymeleaf layout dialectê°€ contentsí˜ì´ì§€ì˜ headíƒœê·¸ë¥¼ layoutì˜ headíƒœê·¸ì— ìë™ìœ¼ë¡œ ì¶”ê°€í•´ì¤€ë‹¤. -->
+    <!--    í•„ìš”íŒ css, script ì¶”ê°€ì˜ì—­ -->
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<th:block layout:fragment="title"></th:block>
+
+		 <!-- Google Font: Source Sans Pro -->
+		 <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
+		 <!-- Font Awesome -->
+		 <link rel="stylesheet" th:href="@{/adminLTE/plugins/fontawesome-free/css/all.min.css}">
+		 <!-- Theme style -->
+		 <link rel="stylesheet" th:href="@{/adminLTE/dist/css/adminlte.min.css}">
+		 
+		 <!-- board -->
+		<link rel="stylesheet" th:href="@{/board/css/style.css}" />
+		<link rel="stylesheet" th:href="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" />
+		  
+		<th:block layout:fragment="add-css"></th:block>
+</head>
+  
+<th:block layout:fragment="content">
+	<div class="card-content">
+		<form class="form-horizontal" th:action="@{/post/createPost}"
+			enctype="multipart/form-data" th:object="${postForm}" method="post">
+			<!--/* updateì˜ ê²½ìš° ì„œë²„ë¡œ ì „ë‹¬í•  ê²Œì‹œê¸€ ë²ˆí˜¸ (PK) */-->
+			<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
+
+			<!-- th:fieldë¥¼ ì‚¬ìš©í•˜ë©´ valueë‚˜ th:value ì§€ì •ì‹œ ë¬´ì¡°ê±´ 0ì´ë‚˜ nullì´ ë“¤ì–´ê°€ëŠ” ê²ƒ ê°™ë‹¤.. -->
+			<!-- <input type="hidden" value="41" th:field="*{user.user_id}" /> -->
+			<!-- ì„ì‹œë¡œ ì‚¬ìš©ì idë¥¼ ì…ë ¥ -->
+			<input type="hidden" value="41" id="user.user_id" name="user.user_id" />
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">ì œëª©</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{title}" class="form-control"
+						placeholder="ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." />
 				</div>
-				
-				<div class="form-group">
-					<label for="content" class="col-sm-2 control-label">³»¿ë</label>
-					<div class="col-sm-10">
-						<textarea th:field="*{content}" class="form-control" placeholder="³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä."></textarea>
-					</div>
+			</div>
+
+			<div class="form-group">
+				<label for="content" class="col-sm-2 control-label">ë‚´ìš©</label>
+				<div class="col-sm-10">
+					<textarea th:field="*{content}" class="form-control"
+						placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”."></textarea>
 				</div>
-				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">½ÄÇ°¸í</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{food_name}" class="form-control" placeholder="½ÄÇ°¸íÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." />
-					</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">ì‹í’ˆëª…</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{food_name}" class="form-control"
+						placeholder="ì‹í’ˆëª…ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." />
 				</div>
-				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">°¡°İ</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{price}" class="form-control" placeholder="°¡°İÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." />
-					</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">ê°€ê²©</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{price}" class="form-control"
+						placeholder="ê°€ê²©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." />
 				</div>
-				
-				<ul>
-					<li th:each="ty : ${trade_types}">
-						<input type="radio" th:field="*{trade_type}" th:value="${ty}" />
-						<label th:for="${#ids.prev('trade_type')}" th:text="${ty eq 'trade' ? '±³È¯' : 'ÆÇ¸Å' }">ÀÓ½Ã</label>
-					</li>
-				</ul>
-				
-				<ul>
-					<li th:each="st : ${status}">
-						<input type="radio" th:field="*{trade_status}" th:value="${st}" />
-						<label th:for="${#ids.prev('trade_status')}" th:text="${st eq '0' ? '±³È¯ ¹× °Å·¡ °¡´É' : '±³È¯ ¹× °Å·¡ ¿Ï·á' }">ÀÓ½Ã</label>
-					</li>
-				</ul>
-				
-				
-				<div class="form-group">
-					<label for="quantity" class="col-sm-2 control-label">¼ö·®</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{quantity}" class="form-control" placeholder="¼ö·®À» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." />
-					</div>
+			</div>
+
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">ê±°ë˜ë°©ì‹</label>
+				<div class="col-sm-10">
+					<ul>
+						<li th:each="ty : ${trade_types}"><input type="radio"
+							th:field="*{trade_type}" th:value="${ty}" /> <label
+							th:for="${#ids.prev('trade_type')}"
+							th:text="${ty eq 'trade' ? 'êµí™˜' : 'íŒë§¤' }">ì„ì‹œ</label></li>
+					</ul>
 				</div>
-				
-				<div class="form-group">
-					<label for="unit" class="col-sm-2 control-label">¼ö·®</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{unit}" class="form-control" placeholder="´ÜÀ§¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä." />
-					</div>
+			</div>
+	
+	
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">ê±°ë˜ìƒíƒœ</label>
+				<div class="col-sm-10">		
+					<ul>
+						<li th:each="st : ${status}"><input type="radio"
+							th:field="*{trade_status}" th:value="${st}" /> <label
+							th:for="${#ids.prev('trade_status')}"
+							th:text="${st eq '0' ? 'êµí™˜ ë° ê±°ë˜ ê°€ëŠ¥' : 'êµí™˜ ë° ê±°ë˜ ì™„ë£Œ' }">ì„ì‹œ</label></li>
+					</ul>
 				</div>
-				
-				<div class="form-group">
-					<label for="unit" class="col-sm-2 control-label">À¯Åë±âÇÑ</label>
-					<div class="col-sm-10">
-						<input type="text" th:field="*{exp_dt}" class="form-control" placeholder="À¯Åë±âÇÑÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä.(yyyy/MM/dd)" />
-					</div>
-				</div>
-				
-				<ul>
-					<li th:each="sh : ${ship_types}">
-						<input type="radio" th:field="*{ship_type}" th:value="${sh}" />
-						<label th:for="${#ids.prev('ship_type')}" th:text="${sh eq '0' ? 'Á÷°Å·¡' : '¹è¼Û' }">ÀÓ½Ã</label>
-					</li>
-				</ul>
-				
-			
-				<div class="btn_wrap text-center">
-					<a th:href="@{/post/createPost}" class="btn btn-default waves-effect waves-light">µÚ·Î°¡±â</a>
-					<button type="submit" class="btn btn-primary waves-effect waves-light">ÀúÀåÇÏ±â</button>
-				</div>
-			</form>
 		</div>
-		<!-- /.card-content -->
-	</th:block>
 
-	<th:block layout:fragment="script">
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-/*
-			function registerBoard(form) {
+			<div class="form-group">
+				<label for="quantity" class="col-sm-2 control-label">ìˆ˜ëŸ‰</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{quantity}" class="form-control"
+						placeholder="ìˆ˜ëŸ‰ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." />
+				</div>
+			</div>
 
-				form.noticeYn.value = form.noticeYn.checked == false ? 'N' : 'Y';
-				form.secretYn.value = form.secretYn.checked == false ? 'N' : 'Y';
+			<div class="form-group">
+				<label for="unit" class="col-sm-2 control-label">ë‹¨ìœ„</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{unit}" class="form-control"
+						placeholder="ë‹¨ìœ„ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”." />
+				</div>
+			</div>
 
-				var result = (
-						   isValid(form.title, "Á¦¸ñ", null, null)
-						&& isValid(form.writer, "ÀÌ¸§", null, null)
-						&& isValid(form.content, "³»¿ë", null, null)
-				);
+			<div class="form-group">
+				<label for="unit" class="col-sm-2 control-label">ìœ í†µê¸°í•œ</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{exp_dt_string}" class="form-control"
+						placeholder="ìœ í†µê¸°í•œì„ ì…ë ¥í•´ ì£¼ì„¸ìš”.(yyyy/MM/dd)" />
+				</div>
+			</div>
 
-				if ( result == false ) {
-					return false;
-				}
-			}
-*/
-			/*[- end of function -]*/
+			<div class="form-group">
+				<label for="file" class="col-sm-2 control-label">ì´ë¯¸ì§€ ì²¨ë¶€</label>
+				<div class="col-sm-10">
+					<input type="file" accept="image/*" th:field="*{file}"
+						class="form-control" />
+				</div>
+			</div>
 
-			/*]]>*/
-		</script>
-	</th:block>
+			<div class="form-group">
+				<label for="preview" class="col-sm-2 control-label">ë¯¸ë¦¬ë³´ê¸°</label>
+				<div class="col-sm-10" id="preview">
+				</div>
+			</div>
+
+	
+					
+			<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">ê±°ë˜ìƒíƒœ</label>
+				<div class="col-sm-10">		
+					<ul>
+						<li th:each="sh : ${ship_types}">
+							<input type="radio"
+								th:field="*{ship_type}" th:value="${sh}" />
+							<label
+								th:for="${#ids.prev('ship_type')}"
+								th:text="${sh eq '0' ? 'ì§ê±°ë˜' : 'ë°°ì†¡' }">ì„ì‹œ</label>
+						</li>
+					</ul>
+				</div>
+			</div>	
+			
+
+
+			<div class="btn_wrap text-center">
+				<a th:href="@{/post/createPost}"
+					class="btn btn-default waves-effect waves-light">ë’¤ë¡œê°€ê¸°</a>
+				<button type="submit"
+					class="btn btn-primary waves-effect waves-light">ì €ì¥í•˜ê¸°</button>
+
+			</div>
+		</form>
+	</div>
+	<!--  <button id="ch"
+					class="btn btn-primary waves-effect waves-light">alert</button> -->
+</th:block>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	 
+	//$("#ch").click(function(){
+     //    alert('Test1 ë²„íŠ¼ í´ë¦­');
+     //});
+	 
+		var upload = document.querySelector('#file');
+		var preview = document.querySelector('#preview');
+		
+		upload.addEventListener('change',function (e) {
+			var pre_img = preview.childNodes[0];
+		    var get_file = e.target.files;
+		    var image = document.createElement('img');
+		
+		    while(preview.hasChildNodes())
+		    {
+		 		preview.removeChild(preview.firstChild);		   	
+		  	}
+		    
+		    /* FileReader ê°ì²´ ìƒì„± */
+		    var reader = new FileReader();
+		
+		    /* reader ì‹œì‘ì‹œ í•¨ìˆ˜ êµ¬í˜„ */
+		    reader.onload = (function (aImg) {
+		        console.log(1);
+		
+		        return function (e) {
+		            console.log(3);
+		            /* base64 ì¸ì½”ë”© ëœ ìŠ¤íŠ¸ë§ ë°ì´í„° */
+		            aImg.src = e.target.result
+		        }
+		    })(image)
+		
+		    if(get_file){
+		        /* 
+		            get_file[0] ì„ ì½ì–´ì„œ read í–‰ìœ„ê°€ ì¢…ë£Œë˜ë©´ loadend ì´ë²¤íŠ¸ê°€ íŠ¸ë¦¬ê±° ë˜ê³  
+		            onload ì— ì„¤ì •í–ˆë˜ return ìœ¼ë¡œ ë„˜ì–´ê°„ë‹¤.
+		            ì´ì™€ í•¨ê²Œ base64 ì¸ì½”ë”© ëœ ìŠ¤íŠ¸ë§ ë°ì´í„°ê°€ result ì†ì„±ì— ë‹´ê²¨ì§„ë‹¤.
+		        */
+		        reader.readAsDataURL(get_file[0]);
+		        console.log(2);
+		    }
+			image.style.cssText = 'width: auto; height: auto; max-width: 200px; max-height: 200px;'
+		    preview.appendChild(image);
+			//preview.replaceChild(image, pre_img);
+		})
+	
+	</script>
+</th:block>
 </html>

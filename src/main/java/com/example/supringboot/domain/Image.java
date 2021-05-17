@@ -7,8 +7,8 @@ import java.util.Base64.Encoder;
 @SuppressWarnings("serial")
 public class Image implements Serializable {
 	private int image_id; // Image 테이블 기본키
-	private int post_id; // Post 테이블 기본키
-	private int item_id; // Item 테이블 기본키
+	private Integer post_id = null; // Post 테이블 기본키 (null 값이 가능하려면 Integer형이여야 함)
+	private Integer item_id = null; // Item 테이블 기본키 (null 값이 가능하려면 Integer형이여야 함)
 	// 주의사항 : Image객체 1개당 post_id or item_id를 갖는다. 둘 다 가질 순 없다.
 	private byte[] image; // 이미지
 	private String base64Image;

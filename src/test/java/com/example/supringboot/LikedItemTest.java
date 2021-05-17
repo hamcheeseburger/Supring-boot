@@ -25,19 +25,6 @@ public class LikedItemTest {
 	MybatisItemDao tmpDao;
 	
 //	@Test
-//	@Ignore
-	public void insertLikedItem_test() {
-		boolean result = tmpDao.likedItem(61, 22);
-		
-		if (result) {
-			System.out.println("찜하기 성공");
-		} else {
-			System.out.println("찜하기 실패");
-		}
-		
-	}
-	
-//	@Test
 	@Ignore
 	public void selectAllItem_test() {
 		List<Item> list = tmpDao.getAllItemList();

@@ -16,10 +16,19 @@
 <insert id="insertImage" parameterType="Image">
 	<selectKey keyProperty="image_id" resultType="int"
 		order="BEFORE">
-		SELECT sequence_image.nextval AS image_id FROM DUAL
+		SELECT IMAGE_SEQ.nextval AS image_id FROM DUAL
 	</selectKey>
 	insert into image (image_id, post_id, item_id, image)
-	values (#{image_id}, #{post_id}, #{item_id}, #{image})
+	values (#{image_id}, #{post_id, jdbcType=NUMERIC}, #{item_id, jdbcType=NUMERIC}, #{image})
+</insert>
+
+<insert id="insertImageWithPost" parameterType="Image">
+	<selectKey keyProperty="image_id" resultType="int"
+		order="BEFORE">
+		SELECT IMAGE_SEQ.nextval AS image_id FROM DUAL
+	</selectKey>
+	insert into image (image_id, post_id, image)
+	values (#{image_id}, #{post_id, jdbcType=NUMERIC}, #{image})
 </insert>
 
 <delete id="deleteImage" parameterType="int">

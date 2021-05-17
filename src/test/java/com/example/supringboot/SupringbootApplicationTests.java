@@ -155,20 +155,5 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-//	@Test
-	@Ignore
-	void selectLikedItem_test() {
-		List<Item> list = dao.getWishItem(61);
-		
-		for (Item i : list) {
-			System.out.println("item_id: " + i.getItem_id());
-			System.out.println("title: " + i.getTitle());
-			System.out.println("end_dt: " + i.getEnd_dt());
-			System.out.println("item_price: " + i.getItem_price());
-			System.out.println("ship_price: " + i.getShip_price());
-			System.out.println("item_status: " + i.getItem_status());
-			System.out.println("image: " + i.getImages().get(0) + "\n");
-		}
-	}
 
 }

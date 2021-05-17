@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="board/fragments/header :: main-head"> </head>
-	<body th:replace="board/fragments/body :: main-body"> </body>
+	<!--  
+	<head th:replace="post/fragments/header :: main-head"> </head>
+	-->
+	<head th:fragment="main-head">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<th:block layout:fragment="title"></th:block>
+
+		 <!-- Google Font: Source Sans Pro -->
+		 <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
+		 <!-- Font Awesome -->
+		 <link rel="stylesheet" th:href="@{/adminLTE/plugins/fontawesome-free/css/all.min.css}">
+		 <!-- Theme style -->
+		 <link rel="stylesheet" th:href="@{/adminLTE/dist/css/adminlte.min.css}">
+		 
+		<!-- board -->
+		<link rel="stylesheet" th:href="@{/board/css/style.css}" />
+		<link rel="stylesheet" th:href="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" /> 
+		  
+		<th:block layout:fragment="add-css"></th:block>
+	</head>
+	<body th:replace="post/fragments/body :: main-body"></body>
 </html>

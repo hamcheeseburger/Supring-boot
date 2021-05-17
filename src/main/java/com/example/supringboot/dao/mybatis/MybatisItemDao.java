@@ -55,17 +55,6 @@ public class MybatisItemDao implements ItemDao {
 	public int progressItem(int item_id) {
 		return itemMapper.progressItem(item_id);
 	}
-	
-	@Override
-	public boolean likedItem(int user_id, int item_id) {
-		int result = itemMapper.likedItem(user_id, item_id);
-		
-		if (result == 1) {
-			return true;
-		} else {
-			return false;	
-		}
-	}
 
 	@Override
 	public List<Item> getAllItemList() {
@@ -98,5 +87,17 @@ public class MybatisItemDao implements ItemDao {
 			return false;	
 		}
 	}
+
+	@Override
+	public List<Item> getGoingItemList() {
+		return itemMapper.getGoingItemList();
+	}
+
+	@Override
+	public List<Item> getEndItemList() {
+		return itemMapper.getEndItemList();
+	}
+
+
 	
 }

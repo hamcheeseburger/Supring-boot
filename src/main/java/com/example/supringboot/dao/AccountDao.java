@@ -1,13 +1,11 @@
 package com.example.supringboot.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.Post;
-import com.example.supringboot.domain.Item;
 
 public interface AccountDao {
 	public Account getAccountByLoginId(String login_id);
@@ -22,7 +20,4 @@ public interface AccountDao {
 	public ArrayList<Post> selectMyPosts(int user_id);
 //	내가 게시한 댓글 목록 (User 객체 삽입 안됨)
 	public ArrayList<Comment> selectMyComments(int user_id);
-	
-	// 찜한 식품 확인
-	public List<Item> getWishItem(int user_id);
 }

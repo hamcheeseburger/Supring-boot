@@ -19,6 +19,9 @@ public interface ItemMapper {
 	//공구식품 등록을 위한 Food테이블 서치
 	public List<Food> searchFoodList(@Param("keyword") String keyword) throws DataAccessException;
 	
+	//Food객체 가져오기
+	public Food getFood(@Param("food_id") int food_id) throws DataAccessException;
+	
 	//공구식품 수정
 	public int updateItem(Item item) throws DataAccessException;
 	

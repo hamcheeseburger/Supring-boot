@@ -124,6 +124,12 @@
 		#{item_price}, #{item_status}, #{ship_price})
 	</insert>
 
+	<select id="getFood" resultType="Food" parameterType="Integer">
+		SELECT *
+		FROM food
+		WHERE food_id = #{food_id}
+	</select>
+	
 	<select id="searchFoodList" resultType="com.example.supringboot.domain.Food" parameterType="String">
 		SELECT *
 		FROM food

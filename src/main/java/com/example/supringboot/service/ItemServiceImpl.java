@@ -24,6 +24,11 @@ public class ItemServiceImpl implements ItemService{
 	public List<Food> searchFoodList(String keyword) {
 		return itemDao.searchFoodList(keyword);
 	}
+	
+	@Override
+	public Food getFood(int food_id) {
+		return itemDao.getFood(food_id);
+	}
 
 	@Override
 	public int updateItem(Item item) {

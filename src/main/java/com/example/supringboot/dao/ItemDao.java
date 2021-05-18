@@ -11,6 +11,8 @@ public interface ItemDao {
 	public int insertItem(Item item);
 	//공구식품 등록을 위한 Food테이블 서치
 	public List<Food> searchFoodList(String keyword);
+	//Food객체 가져오기
+	public Food getFood(int food_id);
 	//공구식품 수정
 	public int updateItem(Item item);
 	//공구식품 삭제

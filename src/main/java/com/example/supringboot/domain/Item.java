@@ -10,8 +10,6 @@ public class Item implements Serializable {
 	private int item_id; // 기본키
 	private Food food; // 등록할 식품 객체
 	private int user_id; // 게시한 관리자 기본키
-	private int item_price; // 식품 가격
-	private int ship_price; // 배송 가격
 	private String title; // 게시글 제목
 	private String content; // 게시글 내용
 	private Timestamp end_dt; // 공동구매 만료일
@@ -19,6 +17,8 @@ public class Item implements Serializable {
 	private Timestamp created_dt; // 공동구매 시작일
 	private Timestamp modified_dt; // 내용 수정일
 	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:failure, 성공:success)
+	private int item_price; // 식품 가격
+	private int ship_price; // 배송 가격
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
 	

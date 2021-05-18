@@ -98,6 +98,11 @@ public class MybatisItemDao implements ItemDao {
 		return itemMapper.getEndItemList();
 	}
 
+	@Override
+	public Food getFood(int food_id) {
+		return itemMapper.getFood(food_id);
+	}
+
 
 	
 }

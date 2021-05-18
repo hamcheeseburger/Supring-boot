@@ -10,6 +10,8 @@ public interface ItemService {
 	int insertItem(Item item);
 	//공구식품 등록을 위한 Food테이블 서치
 	List<Food> searchFoodList(String keyword);
+	//Food객체 가져오기
+	Food getFood(int food_id);
 	//공구식품 수정
 	int updateItem(Item item);
 	//공구식품 삭제

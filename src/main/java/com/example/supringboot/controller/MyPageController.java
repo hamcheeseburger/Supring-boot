@@ -3,6 +3,7 @@ package com.example.supringboot.controller;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,9 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.domain.Account;
+import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Order_reg;
+import com.example.supringboot.domain.Post;
+import com.example.supringboot.domain.WishItem;
 import com.example.supringboot.service.EditAccountFormValidator;
 import com.example.supringboot.service.SupringBootFacade;
+import com.example.supringboot.service.WishService;
 
 @Controller
 //@SessionAttributes("selection")
@@ -38,6 +43,9 @@ public class MyPageController {
 	
 	@Autowired
 	SupringBootFacade supringService;
+	
+	@Autowired
+	WishService wishService;
 	
 	@GetMapping("/account/myPage")
 	public String myPage() {
@@ -103,5 +111,76 @@ public class MyPageController {
 	
 		return modelAndView;
 	}
- 
+	
+	@GetMapping("/account/myPostList")
+	public ModelAndView myPostList(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(myPageView);
+		modelAndView.addObject("selection", 2);
+		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		int user_id = userSession.getAccount().getUser_id();
+		logger.info("user_id : " + user_id);
+		
+		ArrayList<Post> postList = supringService.getMyPostList(user_id);
+		
+		for(Post post: postList) {
+			System.out.println(post.getTitle());
+		}
+		
+		modelAndView.addObject("postList", postList);
+		
+		System.out.println("[myPostList]");
+		return modelAndView;
+	}
+	
+	@GetMapping("/account/myWishList")
+	public ModelAndView myWishList(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(myPageView);
+		modelAndView.addObject("selection", 3);
+		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		
+		int user_id = userSession.getAccount().getUser_id();
+		logger.info("user_id : " + user_id);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<WishItem> list = wishService.getLikedItem(user_id);
+		
+		// 찜한 식품 전체 금액
+		int totalPrice = wishService.totalMoney(user_id);
+		
+		if (list.isEmpty()) {
+			System.out.println("비어있음");
+		} else {
+			System.out.println("식품 이름: " + list.get(0).getItem().getFood().getName());	
+			System.out.println("totalPrice: " + totalPrice);
+		}
+		
+		map.put("wishList", list);
+		map.put("wishListCount", list.size());
+		map.put("totalPrice", totalPrice);
+		
+		modelAndView.addObject("map", map);
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/account/myCommentList")
+	public ModelAndView myCommentList(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(myPageView);
+		modelAndView.addObject("selection", 4);
+		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		int user_id = userSession.getAccount().getUser_id();
+		logger.info("user_id : " + user_id);
+		
+		ArrayList<Comment> commentList = supringService.getMyCommentList(user_id);
+		
+		modelAndView.addObject(commentList);
+		return modelAndView;
+	}
+	
+	
 }

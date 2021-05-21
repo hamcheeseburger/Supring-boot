@@ -95,6 +95,7 @@
 		<result column="quantity" jdbcType="NUMERIC" property="quantity" />
 		<result column="unit" jdbcType="VARCHAR" property="unit" />
 		<result column="exp_dt" jdbcType="TIMESTAMP" property="exp_dt" />
+		<result column="ship_type" jdbcType="NUMERIC" property="ship_type" />
 		
 		<association property="user" column="user_id" javaType="Account">
 			<id property="user_id" column="user_id" />
@@ -111,9 +112,9 @@
 	<select id="selectPostsWithUserId" parameterType="int" resultMap="associPostAccountImage">
 		SELECT p.post_id, p.title, p.food_name, p.trade_type, p.trade_status,
 		p.created_dt, p.modified_dt, p.price, p.quantity, p.unit, p.exp_dt,
-		a.user_id, a.name
-		FROM Post p, Account a
-		WHERE a.user_id = #{user_id} and p.user_id = a.user_id
+		a.user_id, a.name, i.image_id, i.image, p.ship_type
+		FROM Post p, Account a, Image i
+		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id
 	</select>
 	
 	<resultMap id="associCommtPostAccount" type="Comment">

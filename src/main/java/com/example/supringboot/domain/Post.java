@@ -30,6 +30,9 @@ public class Post implements Serializable {
 //	private String exp_dt_string; // 식품 유통기한 (from postForm)
 
 	
+	private String trade_status_string;
+	private String ship_type_string;
+	
 	public Post() {
 		super();
 	}
@@ -110,6 +113,11 @@ public class Post implements Serializable {
 	}
 	public void setTrade_status(int trade_status) {
 		this.trade_status = trade_status;
+		if(trade_status == 0) {
+			this.trade_status_string = "거래중";
+		} else if (trade_status == 1) {
+			this.trade_status_string = "거래 완료";
+		}
 	}
 	public Timestamp getCreated_dt() {
 		return created_dt;
@@ -146,6 +154,11 @@ public class Post implements Serializable {
 	}
 	public void setShip_type(int ship_type) {
 		this.ship_type = ship_type;
+		if(ship_type == 0) {
+			this.ship_type_string = "직거래";
+		} else if (ship_type == 1) {
+			this.ship_type_string = "배송";
+		}
 	}
 	public ArrayList<Image> getImages() {
 		return images;
@@ -160,6 +173,22 @@ public class Post implements Serializable {
 		this.comments = comments;
 	}
 	
+	public String getTrade_status_string() {
+		return trade_status_string;
+	}
+
+	public void setTrade_status_string(String trade_status_string) {
+		this.trade_status_string = trade_status_string;
+	}
+
+	public String getShip_type_string() {
+		return ship_type_string;
+	}
+
+	public void setShip_type_string(String ship_type_string) {
+		this.ship_type_string = ship_type_string;
+	}
+
 	public String toString() {
 		return 
 				"게시글 id" + getPost_id() + "/n";

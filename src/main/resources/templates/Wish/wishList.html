@@ -1,61 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>찜한 목록</title>
-
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
-	crossorigin="anonymous"></script>
-
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" rel="stylesheet" />
-
+<title>Insert title here</title>
 </head>
 <body>
-	<h2 align="center">찜한 목록 확인</h2>
-	
-	<div align="center">
-			<table border="1">
-				<tr>
-					<th>식품명</th>
-					<th>가격</th>
-					<th>수량</th>
-					<th>총 가격</th>
-					<th>취소</th>
-				</tr>
-				<tr th:if="${map.wishListCount == 0}">
-					<td colspan="5"><b>찜한 목록이 비어있습니다.</b></td>
-				</tr>
-	
-				<tr th:each="wish, iterStat:${map.wishList}">
-					<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
-					<td th:text="${wish.item.food.name}"></td>
-					<td th:text="${wish.item.item_price}"></td>
-					<td>
-						<form name="update" id="updateWish" method="post" action="#" th:action="@{/wish/update}">
-							<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />
-							<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
-							<input type="submit" value="수정" />
-						</form>
-					</td>
-					<td th:text="${wish.likedPrice}"></td>
-					<td><a href="#" th:href="@{/wish/remove(likedId=${wish.liked_id})}">삭제</a></td>
-				</tr>
-				
-				<tr>
-					<td colspan="5" align="right" 
-						th:text="'찜한 식품 금액 합계: ' + ${map.totalPrice} + '원'">
-						<b>합계</b>
-					</td>
-				</tr>
-			</table>
-			
-			<button type="button" th:onclick="'location.href=\''+ @{/wish/remove/list} + '\''">모두 삭제</button>
-	</div>
-
+<section th:fragment="wishList" class="py-5 bg-light">
+			<h2>&nbsp; 찜한 목록 확인</h2>
+            <div class="container">
+                <div class="row">
+                	<div th:if="${map.wishListCount == 0}">
+                		<strong class="mb-4">찜한 목록이 비어있습니다.</strong>
+                	</div>
+                    <div th:each="wish : ${map.wishList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                        	<div th:if="${!#lists.isEmpty(wish.item.images)}">
+                            	<a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${wish.item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="#!" th:text="${wish.item.food.name}"></a></h4>
+                                가격 : <strong class="card-text" th:text="${wish.item.item_price}" ></strong> <br/>
+                                수량 : <form name="update" id="updateWish" method="post" action="#" th:action="@{/wish/update}">
+									<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />
+									<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
+									<input type="submit" value="수정" />
+								</form> <br>
+                                
+                                총가격 : <strong class="card-text" th:text="${wish.likedPrice}"></strong> <br/>
+                          
+                                <a href="#" th:href="@{/wish/remove(likedId=${wish.liked_id})}">삭제</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+               합계 : <strong class="card-text" th:text="${map.totalPrice}"></strong> <br/>
+        </section>
 </body>
 </html>

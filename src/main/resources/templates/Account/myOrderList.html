@@ -22,7 +22,7 @@
                         <div class="card h-100">
                             <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${orderReg.item.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="#!" th:text="${orderReg.item.food.name}"></a></h4>
+                                <h4 class="card-title"><a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:text="${orderReg.item.food.name}"></a></h4>
                                 수량 : <strong class="card-text" th:text="${orderReg.quantity}" ></strong> <br/>
                                 총 금액 : <strong class="card-text" th:text="${orderReg.ord_price}"></strong> <br/>
                                 진행 상태 : <strong class="card-text" th:text="${orderReg.item.item_status}"></strong> <br/>

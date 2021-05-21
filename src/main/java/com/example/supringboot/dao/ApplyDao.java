@@ -2,7 +2,7 @@ package com.example.supringboot.dao;
 
 import com.example.supringboot.domain.Order_reg;
 
-public interface OrderDao {
+public interface ApplyDao {
 	// 공구 신청
 	public boolean applyItem(Order_reg order);
 	// 공구 신청 취소

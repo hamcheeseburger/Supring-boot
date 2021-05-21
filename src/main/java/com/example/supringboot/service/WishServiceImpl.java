@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.supringboot.dao.mybatis.MybatisItemDao;
+import com.example.supringboot.dao.mybatis.MybatisApplyDao;
 import com.example.supringboot.dao.mybatis.MybatisWishDao;
 import com.example.supringboot.domain.Item;
+import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.WishItem;
 
 @Service
@@ -21,6 +23,9 @@ public class WishServiceImpl implements WishService {
 	
 	@Autowired
 	private MybatisItemDao itemDao;
+	
+	@Autowired
+	private MybatisApplyDao orderDao;
 	
 	@Override
 	public List<WishItem> getLikedItem(int user_id) {
@@ -73,7 +78,7 @@ public class WishServiceImpl implements WishService {
 	}
 
 	
-	// 공구식품 관련 코드
+	// 공구식품 관련 코드 -> 임시로 여기에 작성
 	@Override
 	public List<Item> getAllItem() {
 		return itemDao.getAllItemList();
@@ -92,5 +97,21 @@ public class WishServiceImpl implements WishService {
 	@Override
 	public Item getDetailItem(int item_id) {
 		return itemDao.getDetailItem(item_id);
+	}
+
+	// 공구 신청 관련 코드 -> 임시로 여기에 작성
+	@Override
+	public boolean applyItem(Order_reg order) {
+		return orderDao.applyItem(order);
+	}
+
+	@Override
+	public boolean cancelItem(int order_reg_id, int user_id) {
+		return orderDao.cancelItem(order_reg_id, user_id);
+	}
+
+	@Override
+	public Order_reg getOrderById(int order_reg_id, int user_id) {
+		return orderDao.getOnOrderById(order_reg_id, user_id);
 	}
 }

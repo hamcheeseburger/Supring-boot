@@ -3,16 +3,16 @@ package com.example.supringboot.dao.mybatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.supringboot.dao.OrderDao;
+import com.example.supringboot.dao.ApplyDao;
 import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.mybatis.mapper.ItemMapper;
-import com.example.supringboot.mybatis.mapper.OrderMapper;
+import com.example.supringboot.mybatis.mapper.ApplyMapper;
 
 @Repository
-public class MybatisOrderDao implements OrderDao {
+public class MybatisApplyDao implements ApplyDao {
 	
 	@Autowired
-	private OrderMapper orderMapper;
+	private ApplyMapper orderMapper;
 	
 	@Override
 	public boolean applyItem(Order_reg order) {
@@ -38,6 +38,6 @@ public class MybatisOrderDao implements OrderDao {
 
 	@Override
 	public Order_reg getOnOrderById(int order_reg_id, int user_id) {
-		return orderMapper.getOnOrderById(order_reg_id, user_id);
+		return orderMapper.getOneOrderById(order_reg_id, user_id);
 	}
 }

@@ -14,6 +14,7 @@
                         <li th:if="${session.userSession == null}" class="nav-item"><a class="nav-link" href="#" th:href="@{/account/signOnForm}">로그인</a></li>
                         <li th:if="${session.userSession == null}" class="nav-item"><a class="nav-link" href=# th:href="@{/account/newAccount/step1}">회원가입</a></li>
                         <li th:if="${session.userSession != null}" class="nav-item"><a class="nav-link" href=# th:href="@{/account/myPage}">마이페이지</a></li>
+                        <li th:if="${session.userSession != null && session.userSession.account.admin == true}" class="nav-item"><a class="nav-link" href=# th:href="@{/admin/adminPage}">관리자페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Portfolio</a>

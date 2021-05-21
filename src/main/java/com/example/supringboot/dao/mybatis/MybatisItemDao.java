@@ -67,28 +67,6 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public boolean applyItem(Order_reg order) {
-		int result = itemMapper.applyItem(order);
-		
-		if (result == 1) {
-			return true;
-		} else {
-			return false;	
-		}
-	}
-
-	@Override
-	public boolean cancelItem(int order_reg_id, int user_id) {
-		int result = itemMapper.cancelItem(order_reg_id, user_id);
-		
-		if (result == 1) {
-			return true;
-		} else {
-			return false;	
-		}
-	}
-
-	@Override
 	public List<Item> getGoingItemList() {
 		return itemMapper.getGoingItemList();
 	}

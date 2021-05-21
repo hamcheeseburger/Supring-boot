@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,6 +39,7 @@ public class PostForm implements Serializable {
 	private Timestamp modified_dt; // Post 수정일
 //	@NotNull(message = "{quantity.NotNull}")
 //	@Min(value = 1, message="{quantity.NumberFormat}")
+	
 	private int quantity; // 교환 또는 거래 할 식품 개수 (소수점 단위는 사용 불가!! 0.5 이런 숫자 사용시 오류남.)
 	@NotBlank(message = "{unit.NotBlank}")
 	private String unit; // 교환 또는 거래 할 식품 단위

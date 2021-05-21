@@ -36,8 +36,4 @@ public interface ItemMapper {
 	public List<Item> getEndItemList() throws DataAccessException;
 	// 특정 공구식품 정보조회
 	public Item getOneItemById(@Param("item_id") int item_id) throws DataAccessException;
-	// 공구 신청
-	public int applyItem(Order_reg order) throws DataAccessException;
-	// 공구 신청 취소
-	public int cancelItem(@Param("order_reg_id") int order_reg_id, @Param("user_id") int user_id) throws DataAccessException;
 }

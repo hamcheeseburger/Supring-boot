@@ -88,21 +88,6 @@
 		WHERE i.item_id=#{item_id}
 	</select>
 
-	<!-- 공구 신청 -->
-	<insert id="applyItem" parameterType="Order_reg">
-		INSERT INTO Order_reg (order_reg_id, item_id, user_id, ord_reg_dt, receiver_name, 
-			ship_addr1, ship_addr2, ship_zip, card_type, card_num, card_exp_dt, quantity, ord_price)
-		VALUES (ORDER_REG_SEQ.NEXTVAL, #{item.item_id}, #{user.user_id}, #{ord_reg_dt}, 
-			#{receiver_name}, #{ship_addr1}, #{ship_addr2}, #{ship_zip}, 
-			#{card_type}, #{card_num}, #{card_exp_dt}, #{quantity}, #{ord_price})
-	</insert>
-	
-	<!-- 공구 신청 취소 -->
-	<delete id="cancelItem" parameterType="int">
-		DELETE FROM order_reg
-		WHERE order_reg_id = #{order_reg_id} AND user_id = #{user_id}
-	</delete>
-
 	<!-- <resultMap type="Item" id="itemResultMap"> <result column="item_id" 
 		property="item_id"/> <result column="food_id" property="Food객체" /> <result 
 		column="user_id" property="user_id" /> <result column="title" property="" 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.OrderMapper">
+	<!-- 공구 신청 -->
+	<insert id="applyItem" parameterType="Order_reg">
+		INSERT INTO Order_reg (order_reg_id, item_id, user_id, ord_reg_dt, receiver_name, 
+			ship_addr1, ship_addr2, ship_zip, card_type, card_num, card_exp_dt, quantity, ord_price)
+		VALUES (ORDER_REG_SEQ.NEXTVAL, #{item.item_id}, #{user.user_id}, #{ord_reg_dt}, 
+			#{receiver_name}, #{ship_addr1}, #{ship_addr2}, #{ship_zip}, 
+			#{card_type}, #{card_num}, #{card_exp_dt}, #{quantity}, #{ord_price})
+	</insert>
+	
+	<!-- 공구 신청 취소 -->
+	<delete id="cancelItem" parameterType="int">
+		DELETE FROM order_reg
+		WHERE order_reg_id = #{order_reg_id} AND user_id = #{user_id}
+	</delete>
+
+	<resultMap id="orderResult" type="Order_reg">
+		<id column="order_reg_id" jdbcType="NUMERIC" property="order_reg_id" />
+		<result column="ord_reg_dt" jdbcType="TIMESTAMP" property="ord_reg_dt" />
+		<result column="quantity" jdbcType="NUMERIC" property="quantity" />
+		<result column="ord_price" jdbcType="NUMERIC" property="ord_price" />
+		<result column="receiver_name" jdbcType="VARCHAR" property="receiver_name" />
+		<result column="ship_addr1" jdbcType="VARCHAR" property="ship_addr1" />
+		<result column="ship_addr2" jdbcType="VARCHAR" property="ship_addr2" />
+		<result column="ship_zip" jdbcType="VARCHAR" property="ship_zip" />
+		<result column="card_type" jdbcType="VARCHAR" property="card_type" />
+		<result column="card_num" jdbcType="VARCHAR" property="card_num" />
+		<result column="card_exp_dt" jdbcType="TIMESTAMP" property="card_exp_dt" />
+		
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+		</association>
+		
+		<association property="item" column="item_id" javaType="Item">
+			<id property="item_id" column="item_id" />
+			<result property="title" column="title" />
+			<result property="item_status" column="item_status" />
+			<association property="food" column="food_id" javaType="Food">
+				<id property="food_id" column="food_id" />
+				<result property="name" column="name" />
+			</association>
+			
+			<collection property="images" ofType="Image">
+				<id property="image_id" column="image_id" />
+				<result property="image" column="image" />
+			</collection>
+		</association>
+
+	</resultMap>
+	
+	<!-- 특정 공구 신청 내역 가져오기 -->
+	<select id="getOneOrderById" parameterType="int" resultMap="orderResult">
+		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
+		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
+		FROM Order_reg o, Item i, Image im, Food f
+		WHERE o.user_id=#{user_id} and o.order_reg_id = #{order_reg_id} and 
+			o.item_id = i.item_id and i.item_id = im.item_id and f.food_id = i.food_id 
+	</select>
+
+</mapper>

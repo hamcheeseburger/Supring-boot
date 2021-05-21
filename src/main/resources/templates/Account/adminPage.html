@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{mainlayout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="custom-content"> 
+        <section class="py-5">
+            <div class="container">
+                <!-- Page Heading/Breadcrumbs-->
+                <h1>
+                    관리자페이지
+                    <small>Admin Page</small>
+                </h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active">Admin page</li>
+                </ol>
+                <!-- Content Row-->
+                <div class="row">
+                    <!-- Sidebar Column-->
+                    <div class="col-lg-3 mb-4">
+                        <div class="list-group">
+                            <a class="list-group-item" th:href="@{/admin/itemList}">등록한 '같이 먹어요' 목록 조회</a>
+                        </div>
+                    </div>
+                    <!-- Content Column-->
+                    <div class="col-lg-9 mb-4">
+                    	<div th:if="${selection == 0}">
+                    		
+                        	<div th:replace="Account/adminItemList :: adminItemList"></div>
+                    		<div th:if="${registerSelection == 1}">
+                    			<div th:replace="Account/adminRegisterList :: adminRegisterList"></div>
+                    		</div>
+                    		
+                    	</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+
+</body>
+</html>

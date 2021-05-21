@@ -26,6 +26,7 @@ public class SupringBootImpl implements SupringBootFacade{
 	@Autowired
 	private MybatisAdminDao adminDao;
 	
+	
 	@Override
 	public void insertAccount(Account account) {
 		// TODO Auto-generated method stub
@@ -78,5 +79,12 @@ public class SupringBootImpl implements SupringBootFacade{
 	public ArrayList<Comment> getMyCommentList(int user_id) {
 		// TODO Auto-generated method stub
 		return accountDao.selectMyComments(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Item> getAdminItemList(int user_id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectAdminItems(user_id);
 	}
 }

@@ -33,8 +33,8 @@ import com.example.supringboot.service.WishService;
 @Controller
 //@SessionAttributes("selection")
 public class MyPageController {
-	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	
+	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	@Value("/Account/myPage")
 	String myPageView;
 	

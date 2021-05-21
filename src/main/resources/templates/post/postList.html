@@ -14,41 +14,10 @@
 		<meta name="author" content="">
 		
 		<title>this is a post list page</title>
-		
-		 <!-- Google Font: Source Sans Pro -->
-		 <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
-		 <!-- Font Awesome -->
-		 <link rel="stylesheet" th:href="@{/adminLTE/plugins/fontawesome-free/css/all.min.css}">
-		 <!-- Theme style -->
-		 <link rel="stylesheet" th:href="@{/adminLTE/dist/css/adminlte.min.css}">
-		  
-		<!-- board -->
-		<link rel="stylesheet" th:href="@{/board/css/style.css}" />
-		<link rel="stylesheet" th:href="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" /> 
-		  
+				  
 		<th:block layout:fragment="add-css"></th:block>
 </head>
   
-
-<body th:fragment="main-body">
-	<div class="fixed-navbar">
-		<div class="pull-left">
-			<h1 class="page-title">POST</h1>
-		</div>
-	</div>
-	<!-- /.fixed-navbar -->
-
-	<div id="wrapper">
-		<div class="main-content">
-			<div class="row row-inline-block small-spacing">
-				<div class="col-xs-12">
-					<div class="box-content">
-						<div class="clearfix">
-							<h4 class="box-title pull-left"></h4>
-							<!-- /.box-title -->
-
-							<!-- 	<th:block layout:fragment="search"></th:block> -->
-
 							<th:block layout:fragment="search">
 								<form action="#" id="searchform-header"
 									class="searchform js__toggle active pull-right">
@@ -61,7 +30,7 @@
 							</th:block>
 
 
-						</div>
+					
 						<!-- //.clearfix -->
 
 						<!--  <th:block layout:fragment="content"></th:block> -->
@@ -115,6 +84,7 @@
 											<li><a href="#">3</a></li>
 											<li><a href="#">4</a></li>
 											<li><a href="#">5</a></li>
+										
 											<li><a href="#" aria-label="Next"> <span
 													aria-hidden="true">&raquo;</span>
 											</a></li>
@@ -124,39 +94,5 @@
 							</div>
 						</th:block>
 
-			
-					</div>
-					<!-- /.box-content -->
 
-					<th:block layout:fragment="add-content"></th:block>
-
-				</div>
-				<!-- /.col-xs-12 -->
-			</div>
-			<!-- /.row row-inline-block small-spacing -->
-			<footer class="footer">
-				<div class="float-right d-none d-sm-block">
-					<b>Version</b> 3.1.0-rc
-				</div>
-				<strong>Copyright &copy; 2014-2021 <a
-					href="https://adminlte.io">AdminLTE.io</a>.
-				</strong> All rights reserved.
-			</footer>
-		</div>
-		<!-- /.main-content -->
-	</div>
-	<!-- /#wrapper -->
-
-	<!-- jQuery -->
-	<script th:src="@{/adminLTE/plugins/jquery/jquery.min.js}"></script>
-	<!-- Bootstrap 4 -->
-	<script
-		th:src="@{/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<!-- AdminLTE App -->
-	<script th:src="@{/adminLTE/dist/js/adminlte.min.js}"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script th:src="@{/adminLTE/dist/js/demo.js}"></script>
-
-	<th:block layout:fragment="script"></th:block>
-</body>
 </html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.AdminMapper">
+	<!-- 관리자가 게시한 Item 목록 -->
+ 	<select id="selectItemsWithAdminId" parameterType="int" resultType="Item">
+		SELECT i.item_id, i.user_id, i.item_price, i.title, i.end_dt, 
+		i.min_quantity, i.created_dt, i.item_status, (SELECT COUNT (order_reg_id) FROM Item Where item_id=i.item_id) as numOfRegister
+		FROM Item i, Account a, Order_reg o
+		WHERE i.user_id=41 and i.user_id = a.user_id and i.item_id = o.item_id and a.admin=1
+	</select>
+	
+	<resultMap id="associOrderRegAccount" type="Order_reg">
+		<id column="order_reg_id" jdbcType="NUMERIC" property="order_reg_id" />
+		<result column="receiver_name" jdbcType="VARCHAR" property="receiver_name" />
+		<result column="ship_addr1" jdbcType="VARCHAR" property="ship_addr1" />
+		<result column="ship_addr2" jdbcType="VARCHAR" property="ship_addr2" />
+		<result column="card_type" jdbcType="VARCHAR" property="card_type" />
+		<result column="card_num" jdbcType="VARCHAR" property="card_num" />
+		<result column="card_exp_dt" jdbcType="TIMESTAMP" property="card_exp_dt" />
+		<association property="item" column="item_id" javaType="Item">
+			<id column="item_id" property="item_id" />
+		</association>
+		<association property="user" column="user_id" javaType="Account">
+			<id column="user_id" property="user_id" />
+			<result column="login_id" property="login_id" />
+			<result column="email" property="email" />
+			<result column="name" property="name" />
+			<result column="phone" property="phone" />
+		</association>
+	</resultMap>
+	
+	<!-- 공동구매 신청한 신청서 및 신청자 목록 -->
+	<select id="selectItemOrderRegs" parameterType="int" resultMap="associOrderRegAccount">
+		SELECT o.order_reg_id, o.receiver_name, o.ship_addr1, o.ship_addr2, o.card_type,
+		o.card_num, o.card_exp_dt, o.item_id, a.user_id, a.login_id, a.email, a.name, a.phone
+		FROM Order_reg o, Account a
+		WHERE o.item_id=#{item_id} and o.user_id = o.user_id
+	</select>
+</mapper>

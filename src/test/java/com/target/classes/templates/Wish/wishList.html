@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<section th:fragment="wishList" class="py-5 bg-light">
+			<h2>&nbsp; 찜한 목록 확인</h2>
+            <div class="container">
+                <div class="row">
+                	<div th:if="${map.wishListCount == 0}">
+                		<strong class="mb-4">찜한 목록이 비어있습니다.</strong>
+                	</div>
+                    <div th:each="wish : ${map.wishList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                        	<div th:if="${!#lists.isEmpty(wish.item.images)}">
+                            	<a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${wish.item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="#!" th:text="${wish.item.food.name}"></a></h4>
+                                가격 : <strong class="card-text" th:text="${wish.item.item_price}" ></strong> <br/>
+                                수량 : <form name="update" id="updateWish" method="post" action="#" th:action="@{/wish/update}">
+									<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />
+									<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
+									<input type="submit" value="수정" />
+								</form> <br>
+                                
+                                총가격 : <strong class="card-text" th:text="${wish.likedPrice}"></strong> <br/>
+                          
+                                <a href="#" th:href="@{/wish/remove(likedId=${wish.liked_id})}">삭제</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+               합계 : <strong class="card-text" th:text="${map.totalPrice}"></strong> <br/>
+        </section>
+</body>
+</html>

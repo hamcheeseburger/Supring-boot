@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:text="#{newAccountHeader}"></h1>
+<form action="#" th:action="@{step3}" th:object="${accountForm}" method="post">		
+	    <p>
+	        이름:<br>
+	        <input type="text" th:field="*{account.name}" />
+	        <a th:if="${#fields.hasErrors('account.name')}" th:errorclass="error" th:errors="*{account.name}" />
+	    </p>
+	    <p>
+	        이메일:<br>
+	        <input type="email" th:field="*{account.email}" th:placeholder="#{emailPlaceHolder}"/>
+	        <a th:if="${#fields.hasErrors('account.email')}" th:errorclass="error" th:errors="*{account.email}" />
+
+	    </p>
+	    <p>
+	        주소1:<br>
+	        <input type="text" th:field="*{account.addr1}" /> 
+	        <a th:if="${#fields.hasErrors('account.addr1')}" th:errorclass="error" th:errors="*{account.addr1}" />
+	    </p>
+	    <p>
+	        주소2:<br>
+	        <input type="text" th:field="*{account.addr2}" /> 
+	        <a th:if="${#fields.hasErrors('account.addr2')}" th:errorclass="error" th:errors="*{account.addr2}" />
+	    </p>
+	    <p>
+	        우편번호:<br>
+	        <input type="text" th:field="*{account.zip}" /> 
+	        <a th:if="${#fields.hasErrors('account.zip')}" th:errorclass="error" th:errors="*{account.zip}" />
+	    </p>
+	    <p>
+	        핸드폰 번호:<br>
+	        <input type="text" th:field="*{account.phone}" th:placeholder="#{phonePlaceHolder}"/> 
+	        <a th:if="${#fields.hasErrors('account.phone')}" th:errorclass="error" th:errors="*{account.phone}" />
+	    </p>
+	    
+	    <input type="submit" value="다음 단계로" >
+</form>
+</body>
+</html>

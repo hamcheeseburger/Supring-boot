@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.AccountMapper">
+
+  <select id="getAccountByLoginId" parameterType="String" resultType="com.example.supringboot.domain.Account">
+    SELECT * FROM Account WHERE login_id=#{login_id}
+  </select>
+  
+ <!-- 사용자 추가 -->
+ <insert id="insertAccount" parameterType="Account">
+  	INSERT INTO ACCOUNT (user_id, login_id, password, email, name, addr1, addr2, zip, phone, admin)
+    VALUES (ACCOUNT_SEQ.NEXTVAL, #{login_id}, #{password}, #{email}, #{name}, #{addr1}, #{addr2}, #{zip}, #{phone}, #{admin})
+ </insert>
+
+
+ <select id="getAccountById" parameterType="int" resultType="Account">
+	SELECT *
+	FROM ACCOUNT
+	WHERE user_id=#{user_id}
+ </select>
+
+ <select id="getAccount" resultType="Account">
+	SELECT *
+	FROM ACCOUNT
+	WHERE login_id = #{login_id} and password = #{password}
+ </select>
+
+ 
+ <!-- 사용자 계정 수정 -->
+ <update id="updateAccount" parameterType="Account">
+	UPDATE ACCOUNT SET 
+	email=#{email},
+	name=#{name},
+	addr1=#{addr1},
+	addr2=#{addr2},
+	zip=#{zip},
+	phone=#{phone}
+	WHERE login_id=#{login_id}
+ </update>
+ 
+ 	<resultMap id="associItemOrderRegImage" type="Order_reg">
+		<id column="order_reg_id" jdbcType="NUMERIC" property="order_reg_id" />
+		<result column="ord_reg_dt" jdbcType="TIMESTAMP" property="ord_reg_dt" />
+		<result column="quantity" jdbcType="NUMERIC" property="quantity" />
+		<result column="ord_price" jdbcType="NUMERIC" property="ord_price" />
+		
+		<association property="item" column="item_id" javaType="Item">
+			<id property="item_id" column="item_id" />
+			<result property="title" column="title" />
+			<result property="item_status" column="item_status" />
+			<association property="food" column="food_id" javaType="Food">
+				<id property="food_id" column="food_id" />
+				<result property="name" column="name" />
+			</association>
+			
+			<collection property="images" ofType="Image">
+				<id property="image_id" column="image_id" />
+				<result property="image" column="image" />
+			</collection>
+		</association>
+
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+		</association>
+	</resultMap>
+	
+	<!-- 진행중, 실패한 공구신청목록 출력 Select -->
+	<select id="selectOrderRegWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
+		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
+		FROM Order_reg o, Item i, Image im, Food f
+		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and i.item_id = im.item_id and f.food_id = i.food_id 
+		and i.item_status !='success'
+	</select>
+	
+	<!-- 성공한 공구신청목록 출력 select -->
+	<select id="selectOrderWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
+		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
+		FROM Order_reg o, Item i, Image im, Food f
+		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and im.item_id = i.item_id and f.food_id = i.food_id
+		and i.item_status = 'success'
+	</select>
+	
+	<resultMap id="associPostAccountImage" type="Post">
+		<id column="post_id" jdbcType="NUMERIC" property="post_id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="food_name" jdbcType="VARCHAR" property="food_name" />
+		<result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+		<result column="trade_status" jdbcType="NUMERIC" property="trade_status" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+		<result column="price" jdbcType="NUMERIC" property="price" />
+		<result column="quantity" jdbcType="NUMERIC" property="quantity" />
+		<result column="unit" jdbcType="VARCHAR" property="unit" />
+		<result column="exp_dt" jdbcType="TIMESTAMP" property="exp_dt" />
+		<result column="ship_type" jdbcType="NUMERIC" property="ship_type" />
+		
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+			<result property="name" column="name" />
+		</association>
+
+		<collection property="images" ofType="Image">
+			<id property="image_id" column="image_id" />
+			<result property="image" column="image" />
+		</collection>
+	</resultMap>
+	
+	<!-- 내가 판매 및 교환 등록한 식품 조회  -->
+	<select id="selectPostsWithUserId" parameterType="int" resultMap="associPostAccountImage">
+		SELECT p.post_id, p.title, p.food_name, p.trade_type, p.trade_status,
+		p.created_dt, p.modified_dt, p.price, p.quantity, p.unit, p.exp_dt,
+		a.user_id, a.name, i.image_id, i.image, p.ship_type
+		FROM Post p, Account a, Image i
+		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id
+	</select>
+	
+	<resultMap id="associCommtPostAccount" type="Comment">
+		<id column="comment_id" jdbcType="NUMERIC" property="comment_id" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
+		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
+		<result column="secret" jdbcType="NUMERIC" property="secret" />
+		<association property="post" column="post_id" javaType="Post">
+			<id property="post_id" column="post_id" />
+			<result property="title" column="title" />
+		</association>
+	</resultMap>
+	
+	<!-- 내가 게시한 댓글 목록 -->
+	<select id="selectCommentsWithUserId" parameterType="int" resultMap="associCommtPostAccount">
+		SELECT c.comment_id, c.content, c.created_dt, c.modified_dt, c.secret, p.post_id, p.title
+		FROM Commt c, Post p
+		WHERE c.user_id=#{user_id} and c.post_id = p.post_id
+	</select>
+
+</mapper>

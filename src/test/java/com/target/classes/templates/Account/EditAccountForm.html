@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>회원가입 또는 정보수정 페이지</h1>
+<section th:fragment="editAccountForm">
+           	<h3>내 정보 수정</h3>
+            <div class="container">
+                    <div class="col-lg-8 mb-4">
+
+                        <form id="editAccountForm" action="#" th:action="@{/account/editAccount}" th:object="${accountForm}" method="post">
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>아이디:</label>
+                                    <input class="form-control" id="login_id" type="text" th:field="*{account.login_id}" readonly="readonly"/>
+                                    <b th:if="${#fields.hasErrors('account.login_id')}" th:errorclass="error" th:errors="*{account.login_id}"></b>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>이름:</label>
+                                    <input class="form-control" id="name" type="text" th:field="*{account.name}" />
+                                	<b th:if="${#fields.hasErrors('account.name')}" th:errorclass="error" th:errors="*{account.name}"></b>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>이메일:</label>
+                                    <input class="form-control" id="email" type="email" th:field="*{account.email}" th:placeholder="#{emailPlaceHolder}"/>
+                                	<b th:if="${#fields.hasErrors('account.email')}" th:errorclass="error" th:errors="*{account.email}"></b>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>주소1:</label>
+                                    <input class="form-control" id="addr1" type="text" th:field="*{account.addr1}" />
+                                	<b th:if="${#fields.hasErrors('account.addr1')}" th:errorclass="error" th:errors="*{account.addr1}"></b>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>주소2:</label>
+                                    <input class="form-control" id="addr2" type="text" th:field="*{account.addr2}" />
+                                	<b th:if="${#fields.hasErrors('account.addr2')}" th:errorclass="error" th:errors="*{account.addr2}"></b>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>우편번호:</label>
+                                    <input class="form-control" id="zip" type="text" th:field="*{account.zip}" />
+                                	<b th:if="${#fields.hasErrors('account.zip')}" th:errorclass="error" th:errors="*{account.zip}"></b>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>핸드폰번호:</label>
+                                    <input class="form-control" id="phone" type="text" th:field="*{account.phone}" />
+                                	<b th:if="${#fields.hasErrors('account.phone')}" th:errorclass="error" th:errors="*{account.phone}"></b>
+                                </div>
+                            </div>
+                            <div id="success"></div>
+                            <!-- For success/fail messages-->
+                            <button class="btn btn-primary" id="sendMessageButton" type="submit">수정</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- <form th:fragment="editAccountForm" action="#" th:action="@{/account/editAccount}" th:object="${accountForm}" method="post">		
+		<p>
+	         <label for="login_id">아이디</label>:<br />
+	        <input type="text" id="text" th:field="*{account.login_id}" readonly="readonly"/>
+	        <a th:if="${#fields.hasErrors('account.login_id')}" th:errorclass="error" th:errors="*{account.login_id}" />
+	    </p> -->
+	    
+	<!--     <p>
+	        비밀번호:<br>
+	        <input type="password" id="password" th:field="*{account.password}" />
+	        <a th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}" />
+	    </p>
+	    <p>
+	        비밀번호 재입력:<br>
+	        <input type="password" th:field="*{repeatedPassword}" /> 
+	        <a th:if="${#fields.hasErrors('repeatedPassword')}" th:errorclass="error" th:errors="*{repeatedPassword}" />
+	    </p> -->
+	    
+<!-- 	    <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" />
+	    
+	    <p>
+	        이름:<br>
+	        <input type="text" th:field="*{account.name}" />
+	        <a th:if="${#fields.hasErrors('account.name')}" th:errorclass="error" th:errors="*{account.name}" />
+	    </p>
+	    <p>
+	        이메일:<br>
+	        <input type="email" th:field="*{account.email}" th:placeholder="#{emailPlaceHolder}"/>
+	        <a th:if="${#fields.hasErrors('account.email')}" th:errorclass="error" th:errors="*{account.email}" />
+
+	    </p>
+	    <p>
+	        주소1:<br>
+	        <input type="text" th:field="*{account.addr1}" /> 
+	        <a th:if="${#fields.hasErrors('account.addr1')}" th:errorclass="error" th:errors="*{account.addr1}" />
+	    </p>
+	    <p>
+	        주소2:<br>
+	        <input type="text" th:field="*{account.addr2}" /> 
+	        <a th:if="${#fields.hasErrors('account.addr2')}" th:errorclass="error" th:errors="*{account.addr2}" />
+	    </p>
+	    <p>
+	        우편번호:<br>
+	        <input type="text" th:field="*{account.zip}" /> 
+	        <a th:if="${#fields.hasErrors('account.zip')}" th:errorclass="error" th:errors="*{account.zip}" />
+	    </p>
+	    <p>
+	        핸드폰 번호:<br>
+	        <input type="text" th:field="*{account.phone}" th:placeholder="#{phonePlaceHolder}"/> 
+	        <a th:if="${#fields.hasErrors('account.phone')}" th:errorclass="error" th:errors="*{account.phone}" />
+	    </p>
+	    
+	    <input type="submit" value="수정하기" > 
+</form>-->
+</body>
+</html>

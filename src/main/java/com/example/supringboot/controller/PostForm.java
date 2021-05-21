@@ -27,7 +27,8 @@ public class PostForm implements Serializable {
 	private String content; // Post 내용
 	@NotBlank(message = "{food_name.NotBlank}")
 	private String food_name; // 거래 될 음식 이름
-	@NotNull(message = "{price.NotNull}")
+//	@NotNull(message = "{price.NotNull}")
+//	@Min(value = 0, message="{price.NumberFormat}")
 	private int price; // 거래 금액
 	@NotBlank(message = "{trade_type.NotBlank}")
 	private String trade_type; // 거래 타입 (교환, 거래) => (trade, payment)
@@ -47,10 +48,13 @@ public class PostForm implements Serializable {
 	private ArrayList<Comment> comments; // Post에 달린 댓글들
 	/* post form에서만 사용하는 변수들 */
 	@NotBlank(message = "{exp_dt_string.NotBlank}")
-	@Pattern(regexp = "/^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$/", message = "{exp_dt_string.pattern}")
+	@Pattern(regexp = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$", message = "{exp_dt_string.pattern}")
 	private String exp_dt_string; // 식품 유통기한 (from postForm) :  yyyy-MM-dd
 //	private int user_id; // 사용x
 	private MultipartFile file;
+	private String str_price;
+	private String str_quantity;
+	private String fileChanged;
 	
 	public PostForm() {
 		super();
@@ -58,6 +62,22 @@ public class PostForm implements Serializable {
 
 	public int getPost_id() {
 		return post_id;
+	}
+
+	public String getStr_price() {
+		return str_price;
+	}
+
+	public void setStr_price(String str_price) {
+		this.str_price = str_price;
+	}
+
+	public String getStr_quantity() {
+		return str_quantity;
+	}
+
+	public void setStr_quantity(String str_quantity) {
+		this.str_quantity = str_quantity;
 	}
 
 	public void setPost_id(int post_id) {
@@ -134,6 +154,14 @@ public class PostForm implements Serializable {
 
 	public void setCreated_dt(Timestamp created_dt) {
 		this.created_dt = created_dt;
+	}
+
+	public String getFileChanged() {
+		return fileChanged;
+	}
+
+	public void setFileChanged(String fileChanged) {
+		this.fileChanged = fileChanged;
 	}
 
 	public Timestamp getModified_dt() {

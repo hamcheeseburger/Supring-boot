@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{mainlayout}">
+<head>
+<meta charset="UTF-8">
+<title th:text="#{loginTitle}">login</title>
+ <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+<body>
+<div layout:fragment="custom-content" align="center">
+<div  class="hold-transition sidebar-mini" >
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- jquery validation -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">로그인 <small>login</small></h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+              <form id="quickForm" action="#" th:action="@{/account/signOnForm}" th:object="${account}" method="post">
+                <div style="width:500px; text-align:center">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">아이디</label>
+                    <input type="text" name="login_id" class="form-control" id="exampleInputEmail1" th:field="*{login_id}">
+                  	<b th:if="${#fields.hasErrors('login_id')}" th:errorclass="error" th:errors="*{login_id}"></b>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">비밀번호</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" th:field="*{password}">
+                  	<b th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></b>
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                      <label class="custom-control-label" for="exampleCheck1">아이디 저장</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                	<p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></p>
+              	</div>
+                </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">로그인</button>
+                </div>
+                
+              </form>
+              
+            </div>
+            <!-- /.card -->
+            </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+
+          </div>
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+           <!--  <div class="container">
+            		<h3>로그인</h3>
+                    <div class="col-lg-8 mb-4">
+                        <form id="editAccountForm" action="#" th:action="@{/account/signOnForm}" th:object="${account}" method="post">
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>아이디</label>
+                                    <input class="form-control" id="login_id" type="text" th:field="*{login_id}"/>
+                                    <b th:if="${#fields.hasErrors('login_id')}" th:errorclass="error" th:errors="*{login_id}"></b>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>비밀번호:</label>
+                                    <input class="form-control" id="name" type="password" th:field="*{password}" />
+                                	<b th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></b>
+                                </div>
+                            </div>
+                            
+                          	<b th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></b>
+                            <div id="success"></div>
+                            For success/fail messages
+                            <button class="btn btn-primary" id="sendMessageButton" type="submit">로그인</button>
+                        
+                        	
+                        </form>
+                    </div>
+                </div> -->
+                </div>
+</div>
+</body>
+</html>

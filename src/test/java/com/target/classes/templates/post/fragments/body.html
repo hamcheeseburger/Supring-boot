@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<body th:fragment="main-body">
+		<!--  
+		<div class="fixed-navbar">
+			<div class="pull-left">
+				<h1 class="page-title">POST</h1>
+			</div>
+		</div>
+		-->
+		<!-- /.fixed-navbar -->
+		
+		<!-- Navigation-->
+		<div th:replace="header :: mainHeader"></div>
+
+		<div id="wrapper">
+		<div class="main-content">
+			<div class="row row-inline-block small-spacing">
+				<div class="col-xl-12">
+					<div class="box-content">
+						<div class="clearfix">
+							<h4 class="box-title pull-left"></h4>
+							<!-- /.box-title -->
+
+							<th:block layout:fragment="search"></th:block>
+
+						</div>
+						<!-- //.clearfix -->
+
+						<th:block layout:fragment="content"></th:block>
+
+						<th:block layout:fragment="paging"></th:block>
+					</div>
+					<!-- /.box-content -->
+
+					<th:block layout:fragment="add-content"></th:block>
+
+				</div>
+				<!-- /.col-xs-12 -->
+			</div>
+			<!-- /.row row-inline-block small-spacing -->
+		</div>
+		<!-- /.main-content -->
+		</div>
+		<!-- /#wrapper -->
+		<!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+        </footer>
+		<!-- jQuery -->
+		<script th:src="@{/adminLTE/plugins/jquery/jquery.min.js}"></script>
+		<!-- Bootstrap 4 -->
+		<script th:src="@{/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/adminLTE/dist/js/adminlte.min.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/adminLTE/dist/js/demo.js}"></script>
+		
+		<!-- board -->
+		
+		<script th:src="@{/board/scripts/jquery.min.js}"></script>
+		<script th:src="@{/board/plugin/bootstrap/js/bootstrap.min.js}"></script>
+		<script th:src="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+		<script th:src="@{/board/scripts/main.js}"></script>
+		<script th:src="@{/board/scripts/common.js}"></script>
+		
+		<!-- from other teammate's Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/js/scripts.js"></script>
+
+		<th:block layout:fragment="script"></th:block>
+	</body>
+</html>

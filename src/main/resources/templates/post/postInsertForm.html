@@ -33,7 +33,9 @@
 				<label for="title" class="col-sm-2 control-label">제목</label>
 				<div class="col-sm-10">
 					<input type="text" th:field="*{title}" class="form-control"
-						placeholder="제목을 입력해 주세요." />
+						placeholder="제목을 입력해 주세요." >
+						<span th:if="${#fields.errors('title')}" th:errors="*{title}"></span>
+						</input>
 				</div>
 			</div>
 
@@ -42,6 +44,7 @@
 				<div class="col-sm-10">
 					<textarea th:field="*{content}" class="form-control"
 						placeholder="내용을 입력해 주세요."></textarea>
+						<span th:if="${#fields.errors('content')}" th:errors="*{content}"></span>
 				</div>
 			</div>
 
@@ -50,6 +53,7 @@
 				<div class="col-sm-10">
 					<input type="text" th:field="*{food_name}" class="form-control"
 						placeholder="식품명을 입력해 주세요." />
+						<span th:if="${#fields.errors('food_name')}" th:errors="*{food_name}"></span>
 				</div>
 			</div>
 
@@ -58,6 +62,8 @@
 				<div class="col-sm-10">
 					<input type="text" th:field="*{price}" class="form-control"
 						placeholder="가격을 입력해 주세요." />
+						<!-- 수정해야함 -->
+						<span th:if="${#fields.errors('price')}" th:errors="*{price}"></span>
 				</div>
 			</div>
 
@@ -70,6 +76,7 @@
 							th:for="${#ids.prev('trade_type')}"
 							th:text="${ty eq 'trade' ? '교환' : '판매' }">임시</label></li>
 					</ul>
+					<span th:if="${#fields.errors('trade_type')}" th:errors="*{trade_type}"></span>
 				</div>
 			</div>
 	
@@ -83,14 +90,20 @@
 							th:for="${#ids.prev('trade_status')}"
 							th:text="${st eq '0' ? '교환 및 거래 가능' : '교환 및 거래 완료' }">임시</label></li>
 					</ul>
+					<span th:if="${#fields.errors('trade_status')}" th:errors="*{trade_status}"></span>
+				
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="quantity" class="col-sm-2 control-label">수량</label>
 				<div class="col-sm-10">
+				
 					<input type="text" th:field="*{quantity}" class="form-control"
 						placeholder="수량을 입력해 주세요." />
+						<!-- 추가해야함 -->
+					<span th:if="${#fields.errors('quantity')}" th:errors="*{quantity}"></span>
+						
 				</div>
 			</div>
 
@@ -99,6 +112,7 @@
 				<div class="col-sm-10">
 					<input type="text" th:field="*{unit}" class="form-control"
 						placeholder="단위를 입력해 주세요." />
+						<span th:if="${#fields.errors('unit')}" th:errors="*{unit}"></span>
 				</div>
 			</div>
 
@@ -107,6 +121,7 @@
 				<div class="col-sm-10">
 					<input type="text" th:field="*{exp_dt_string}" class="form-control"
 						placeholder="유통기한을 입력해 주세요.(yyyy/MM/dd)" />
+						<span th:if="${#fields.errors('exp_dt_string')}" th:errors="*{exp_dt_string}"></span>
 				</div>
 			</div>
 
@@ -115,12 +130,14 @@
 				<div class="col-sm-10">
 					<input type="file" accept="image/*" th:field="*{file}"
 						class="form-control" />
+						
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="preview" class="col-sm-2 control-label">미리보기</label>
 				<div class="col-sm-10" id="preview">
+				
 				</div>
 			</div>
 
@@ -138,6 +155,7 @@
 								th:text="${sh eq '0' ? '직거래' : '배송' }">임시</label>
 						</li>
 					</ul>
+					
 				</div>
 			</div>	
 			

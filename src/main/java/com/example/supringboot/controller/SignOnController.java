@@ -32,7 +32,7 @@ public class SignOnController {
 	@Value("/Account/signOnForm")
 	private String signOnFormView;
 	
-	@Value("index")
+	@Value("main")
 	private String signOnSuccessView;
 	
 	@Autowired

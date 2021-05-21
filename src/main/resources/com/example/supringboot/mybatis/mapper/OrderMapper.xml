@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.supringboot.mybatis.mapper.OrderMapper">
+	<!-- 공구 신청 -->
+	<insert id="applyItem" parameterType="Order_reg">
+		INSERT INTO Order_reg (order_reg_id, item_id, user_id, ord_reg_dt, receiver_name, 
+			ship_addr1, ship_addr2, ship_zip, card_type, card_num, card_exp_dt, quantity, ord_price)
+		VALUES (ORDER_REG_SEQ.NEXTVAL, #{item.item_id}, #{user.user_id}, #{ord_reg_dt}, 
+			#{receiver_name}, #{ship_addr1}, #{ship_addr2}, #{ship_zip}, 
+			#{card_type}, #{card_num}, #{card_exp_dt}, #{quantity}, #{ord_price})
+	</insert>
+	
+	<!-- 공구 신청 취소 -->
+	<delete id="cancelItem" parameterType="int">
+		DELETE FROM order_reg
+		WHERE order_reg_id = #{order_reg_id} AND user_id = #{user_id}
+	</delete>
+	
+	<!-- 특정 공구 신청 내역 가져오기 -->
+
+
+</mapper>

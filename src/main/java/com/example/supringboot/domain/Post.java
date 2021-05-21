@@ -20,6 +20,7 @@ public class Post implements Serializable {
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Timestamp created_dt; // Post 게시일
 	private Timestamp modified_dt; // Post 수정일
+	
 	private int quantity; // 교환 또는 거래 할 식품 개수
 	private String unit; // 교환 또는 거래 할 식품 단위
 	private Timestamp exp_dt; // 식품 유통기한

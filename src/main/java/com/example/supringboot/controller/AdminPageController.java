@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -46,6 +47,15 @@ public class AdminPageController {
 		modelAndView.addObject("itemList", itemList)
 			.addObject("selection", 0);
 		
+		return modelAndView;
+	}
+	
+	@GetMapping("/admin/itemRegisterList")
+	public ModelAndView getItemRegisterList(@RequestParam int item_id) {
+		logger.info("getItemRegisterList: " + item_id);
+		ModelAndView modelAndView = new ModelAndView(adminPageView);
+		modelAndView.addObject("selection", 0)
+		.addObject("registerSelection", 1);
 		return modelAndView;
 	}
 }

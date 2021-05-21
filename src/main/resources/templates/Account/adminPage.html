@@ -30,14 +30,19 @@ layout:decorate="~{mainlayout}">
                     <!-- Content Column-->
                     <div class="col-lg-9 mb-4">
                     	<div th:if="${selection == 0}">
-              
+                    		
                         	<div th:replace="Account/adminItemList :: adminItemList"></div>
+                    		<div th:if="${registerSelection == 1}">
+                    			<div th:replace="Account/adminRegisterList :: adminRegisterList"></div>
+                    		</div>
+                    		
                     	</div>
-                    
                     </div>
                 </div>
             </div>
         </section>
+
         </div>
+
 </body>
 </html>

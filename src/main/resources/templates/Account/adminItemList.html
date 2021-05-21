@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <section th:fragment="adminItemList" class="py-5 bg-light">
@@ -23,12 +24,14 @@
                                 신청자수 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
                                 상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
                                 등록일 : <strong class="card-text" th:text="${item.created_dt}"></strong> <br/>
-                                <a th:href="@{/admin/itemRegisterList}">신청자 명단</a>
+                                <a th:href="@{/admin/itemRegisterList(item_id=${item.item_id})}">신청자명단</a>
+
                             </div>
                         </div>
                         
                     </div>
                 </div>
+				
         </section>
 </body>
 </html>

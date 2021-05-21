@@ -7822,6 +7822,19 @@ button.bg-dark:focus {
   margin-top: -0.5rem !important;
 }
 
+.custom_content {
+	 min-height:100%;
+   position:relative;
+	 padding-bottom:100px;/* footer height */
+}
+
+.py-5 bg-dark {
+	width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+}
+
 .mr-n2,
 .mx-n2 {
   margin-right: -0.5rem !important;

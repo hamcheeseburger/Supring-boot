@@ -28,7 +28,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(interceptor)
 				.addPathPatterns("/account/**")
-				.excludePathPatterns("/account/signOnForm", "/account/signOff");
+				.excludePathPatterns("/account/signOnForm", "/account/signOff", "/account/newAccount/**");
 	}
 	
 }

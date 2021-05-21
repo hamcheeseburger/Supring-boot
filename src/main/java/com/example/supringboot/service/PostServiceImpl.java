@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService{
 		post.setUnit(postForm.getUnit());	
 //		postForm의 날짜를 Timestamp로 변환
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		    Date parsedDate = (Date) dateFormat.parse(postForm.getExp_dt_string());
 		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 		    post.setExp_dt(timestamp);

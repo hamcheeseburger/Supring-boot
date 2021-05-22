@@ -31,6 +31,16 @@
 	values (#{image_id}, #{post_id, jdbcType=NUMERIC}, #{image})
 </insert>
 
+<!-- 공구 이미지 -->
+<insert id="insertImageWithItem" parameterType="Image">
+	<selectKey keyProperty="image_id" resultType="int"
+		order="BEFORE">
+		SELECT IMAGE_SEQ.nextval AS image_id FROM DUAL
+	</selectKey>
+	insert into image (image_id, item_id, image)
+	values (#{image_id}, #{item_id, jdbcType=NUMERIC}, #{image})
+</insert>
+
 <delete id="deleteImage" parameterType="int">
 	delete from image
 	where image_id=#{image_id}

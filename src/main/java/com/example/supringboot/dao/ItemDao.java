@@ -13,6 +13,8 @@ public interface ItemDao {
 	public List<Food> searchFoodList(String keyword);
 	//Food객체 가져오기
 	public Food getFood(int food_id);
+	//공구상품 목록 가져오기
+	public List<Item> getItemListByAdmin(int user_id);
 	//공구식품 수정
 	public int updateItem(Item item);
 	//공구식품 삭제

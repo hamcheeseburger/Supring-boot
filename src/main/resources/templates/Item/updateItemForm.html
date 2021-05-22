@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{mainlayout}" >
+<head>
+<meta charset="UTF-8">
+<title>공구상품 수정</title>
+</head>
+<body>
+	<div layout:fragment="custom-content"> 
+	<section class="py-5">
+	<div class="container">
+
+<h1>공동 구매 상품 확인</h1>
+<!-- Complete&Update form  -->
+
+<form method="POST" action="#" th:action="@{/item/updateItem(itemId=${item.item_id})}">
+	<table border="1">
+		<tr>
+			<td>등록사진</td>
+			<td th:if="${item.images.size == 0}">사진 없음</td>
+			<td th:if="${item.images.size != 0}">
+				<a href="#"> <img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /> </a>
+			</td>
+		</tr>
+		<tr>
+			<td>상품제목</td>
+			<td><input th:value="${item.title}" type="text" style="width: 300" name="title"></td>
+		</tr>
+		<tr>
+			<td>상품 금액</td>
+			<td><input th:value="${item.item_price}" type="text" style="width: 300" name="price"></td>
+		</tr>
+		<tr>
+			<td>배송비</td>
+			<td><input th:value="${item.ship_price}" type="text" style="width: 300" name="ship_price"></td>
+		</tr>
+		<tr>
+			<td>기간</td>
+			<td>
+				<input th:value="${item.created_dt}" type="text" style="width: 300" name="created_dt" placeholder="년도/월/일"> &nbsp; ~ &nbsp;
+				<input th:value="${item.end_dt}" type="text" style="width: 300" name="end_dt" placeholder="년도/월/일">
+			</td>
+		</tr>
+		<tr>
+			<td>목표 수량</td>
+			<td><input th:value="${item.min_quantity}" type="text" style="width: 300" name="minQuantity"></td>
+		</tr>
+		<tr>
+			<td>상세 설명</td>
+			<td><textarea th:text="${item.content}" cols="80" rows="10" name="content"></textarea></td>
+		</tr>
+		<tr></tr>
+		<tr>
+			<td>영양 정보</td>
+			<td><table>
+				<tr>
+					<th>1회 제공량: &nbsp;</th>
+					<td th:text="${foodInfo.serving_size}">serving_size</td>
+				</tr>
+				<tr>
+					<th>제공량 단위: &nbsp; </th>
+					<td th:text="${foodInfo.serving_size_unit}?:'정보없음'">serving_size_unit</td>
+				</tr>
+				<tr>
+					<th>열량(kcal): &nbsp;</th>
+					<td th:text="${foodInfo.calories}?:'정보없음'">calories</td>
+				</tr>
+				<tr>
+					<th>단백질: &nbsp;</th>
+					<td th:text="${foodInfo.protein}?:'정보없음'">protein</td>
+				</tr>
+				<tr>
+					<th>지방: &nbsp;</th>
+					<td th:text="${foodInfo.grease}?:'정보없음'">grease</td>
+				</tr>
+				<tr>
+					<th>탄수화물: &nbsp;</th>
+					<td th:text="${foodInfo.carbohydrate}?:'정보없음'">carbohydrate</td>
+				</tr>
+				<tr>
+					<th>당류: &nbsp;</th>
+					<td th:text="${foodInfo.sugars}?:'정보없음'">sugars</td>
+				</tr>
+			</table></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="수정하기"> </td>
+			<td><input th:onclick="'location.href=\''+ @{/item/deleteItem(itemId=${item.item_id})} + '\''"  type="button" value="삭제하기"> </td>
+		</tr>
+	</table>
+	<br/>
+</form>
+
+	</div>
+	</section>
+	</div>
+</body>
+</html>

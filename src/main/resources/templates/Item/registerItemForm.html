@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{mainlayout}" >
 <head>
 <meta charset="UTF-8">
 <script>
-function getFoodInfo(){
-	form.action = "/item/getFoodInfo"
-	form.submit();
-} 
+
 </script>
+
 <title>공구식품 등록</title>
 </head>
 <body>
+	<div layout:fragment="custom-content"> 
+	<section class="py-5">
+	<div class="container">
 
-<h1>공동 구매 상품 등록</h1>
+<div align="center">
+<h1>공동 구매 상품 등록</h1> <br>
 <!-- registration form  -->
 
 <form name="searchFood" method="GET">
-	<table>
+	<table align="left">
 		<tr>
 			<td>상품 검색</td>
 			<td><input type="text" style="width: 500" name="keyword"></td>
 			<td><input type="submit" value="검색"/> </td>
 		</tr>
+	</table>
 </form>
 
-
-<form method="POST">
+<form method="POST" enctype="multipart/form-data" th:object="${itemForm}"> <!-- action="/item/adminList" -->
 	<table>
 		<!--
 		<tr>
@@ -56,8 +60,8 @@ function getFoodInfo(){
 		</tr>
 		<tr>
 			<td>기간</td>
-			<td><input type="text" style="width: 300" name="created_dt"> &nbsp; ~ &nbsp;
-				<input type="text" style="width: 300" name="end_dt"></td>
+			<td><input type="text" style="width: 300" name="created_dt" placeholder="년도/월/일"> &nbsp; ~ &nbsp;
+				<input type="text" style="width: 300" name="end_dt" placeholder="년도/월/일"></td>
 		</tr>
 		<tr>
 			<td>목표 수량</td>
@@ -70,47 +74,16 @@ function getFoodInfo(){
 		<tr></tr>
 		<tr>
 			<td>사진 등록</td>
-			<td><input type="file" name="images"></td>
-		</tr>
-		<!--
-		<tr>
-			<td>영양 정보</td>
-			<td><table>
-				<tr>
-					<th>1회 제공량</th>
-					<td>serving_size</td>
-				</tr>
-				<tr>
-					<th>제공량 단위</th>
-					<td>serving_size_unit</td>
-				</tr>
-				<tr>
-					<th>열량(kcal)</th>
-					<td>calories</td>
-				</tr>
-				<tr>
-					<th>단백질</th>
-					<td>protein</td>
-				</tr>
-				<tr>
-					<th>지방</th>
-					<td>grease</td>
-				</tr>
-				<tr>
-					<th>탄수화물</th>
-					<td>carbohydrate</td>
-				</tr>
-				<tr>
-					<th>당류</th>
-					<td>sugars</td>
-				</tr>
-			</table></td>
-		</tr>
-		-->
+			<td><input type="file" name="images" accept="image/*"></td>
+		</tr> 
 	</table>
 	<br/>
 	<input type="submit" value="등록하기">
 </form>
+</div>
 
+	</div>
+	</section>
+	</div>
 </body>
 </html>

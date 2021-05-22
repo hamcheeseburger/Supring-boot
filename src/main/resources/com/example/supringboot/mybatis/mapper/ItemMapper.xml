@@ -41,6 +41,15 @@
 		WHERE i.item_status = 'ongoing'
 	</select>
 	
+	<!-- 추가 -->
+	<select id="getItemListByAdmin" resultMap="itemResult">
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
+		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+			LEFT JOIN food f ON i.food_id = f.food_id
+		WHERE i.item_status = 'ongoing' AND i.user_id = #{user_id}
+	</select>
+	
 	<select id="getEndItemList" resultMap="itemResult">
 		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
@@ -143,7 +152,7 @@
 
 	<insert id="updateItem" parameterType="Item">
 		UPDATE item
-		SET food_id=#{food.food_id}, title=#{title}, content=#{content},
+		SET title=#{title}, content=#{content},
 		end_dt=#{end_dt},
 		min_quantity=#{min_quantity},
 		created_dt=#{created_dt}, modified_dt=#{modified_dt},

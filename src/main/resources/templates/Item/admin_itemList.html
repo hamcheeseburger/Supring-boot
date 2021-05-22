@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{mainlayout}" >
+<head>
+<meta charset="UTF-8">
+<title>관리자용 공구목록</title>
+</head>
+<body>
+	<div layout:fragment="custom-content"> 
+	<section class="py-5">
+	<div class="container">
+
+	<h2 align="center">내가 등록한 공구상품 목록</h2>
+	<div align="center">
+			<!--<p th:text="${'현재 진행 중인 공구상품: ' + map.goingItemCount}">현재 진행중인 공구상품(ongoing)</p>-->
+			<p>현재 진행 중인 공구상품</p>
+			<table border="1">
+				<tr>
+					<th>상품 번호</th>
+					<th>제목</th>
+					<th>신청자 수</th>
+				</tr>
+	
+				<tr th:each="item: ${itemList}">
+					<td th:text="${item.item_id}"></td>
+					<td>
+						<a href="#" th:href="@{/item/updateItemForm(itemId=${item.item_id})}" th:text="${item.title}"></a>
+					</td>
+					<td th:text="${item.numOfRegister}"></td>
+				</tr>
+			</table>
+			<!--<button onclick="location.href='/item/registerItem'">식품 등록</button>-->
+			<br><br>
+			<button th:onclick="'location.href=\''+ @{/item/registerItem} + '\''" >상품 등록</button>
+			<!-- <p th:text="${'마감된 공동구매 식품 개수: ' + map.endItemCount}">마감된 공구상품(ongoing)</p> -->
+	</div>
+	
+	</div>
+	</section>
+	</div>
+</body>
+</html>

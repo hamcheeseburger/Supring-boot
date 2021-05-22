@@ -31,15 +31,18 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
+	public List<Item> getItemListByAdmin(int user_id) {
+		return itemDao.getItemListByAdmin(user_id);
+	}
+	
+	@Override
 	public int updateItem(Item item) {
-		// TODO Auto-generated method stub
-		return 0;
+		return itemDao.updateItem(item);
 	}
 
 	@Override
 	public int deleteItem(int item_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return itemDao.deleteItem(item_id);
 	}
 
 	@Override

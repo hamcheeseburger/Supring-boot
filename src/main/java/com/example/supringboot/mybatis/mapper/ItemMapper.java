@@ -22,6 +22,9 @@ public interface ItemMapper {
 	//Food객체 가져오기
 	public Food getFood(@Param("food_id") int food_id) throws DataAccessException;
 	
+	//특정관리자 공구목록 가져오기
+	public List<Item> getItemListByAdmin(@Param("user_id") int user_id) throws DataAccessException;
+	
 	//공구식품 수정
 	public int updateItem(Item item) throws DataAccessException;
 	

@@ -20,7 +20,7 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public boolean registerPost(PostForm postForm) {
 		int result = 0;
-		
+	
 		Post post = new Post();
 		post.setUser(postForm.getUser());
 		post.setTitle(postForm.getTitle());

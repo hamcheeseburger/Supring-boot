@@ -11,6 +11,7 @@ import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
+import com.example.supringboot.mybatis.mapper.AdminMapper;
 import com.example.supringboot.mybatis.mapper.ImageMapper;
 import com.example.supringboot.mybatis.mapper.ItemMapper;
 
@@ -26,11 +27,13 @@ public class MybatisItemDao implements ItemDao {
 	@Override
 	public int insertItem(Item item) {
 		int rslt = itemMapper.insertItem(item);
-		if(item.getImages()!=null) {
+		
+		if(rslt != 0 && item.getImages() != null) {
 			ArrayList<Image> images = item.getImages();
 			for(Image img: images) {
 				img.setItem_id(item.getItem_id());
-				imageMapper.insertImage(img);
+				imageMapper.insertImageWithItem(img);
+				System.out.println("db에 이미지 등록 완료 ");
 			}
 		}
 		return rslt;
@@ -101,6 +104,11 @@ public class MybatisItemDao implements ItemDao {
 	@Override
 	public Food getFood(int food_id) {
 		return itemMapper.getFood(food_id);
+	}
+
+	@Override
+	public List<Item> getItemListByAdmin(int user_id) {
+		return itemMapper.getItemListByAdmin(user_id);
 	}
 
 

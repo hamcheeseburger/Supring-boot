@@ -11,6 +11,7 @@ import com.example.supringboot.controller.InsertPostController;
 import com.example.supringboot.controller.PostForm;
 import com.example.supringboot.dao.PostDao;
 import com.example.supringboot.domain.Comment;
+import com.example.supringboot.domain.Criteria;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.mybatis.mapper.CommentMapper;
@@ -30,8 +31,8 @@ public class MybatisPostDao  implements PostDao{
 	
 	
 	@Override
-	public ArrayList<Post> getAllPostList() {
-		return postMapper.getAllPost();
+	public ArrayList<Post> getAllPostList(Post post) {
+		return postMapper.getAllPost(post);
 	}
 	
 	@Override
@@ -105,6 +106,18 @@ public class MybatisPostDao  implements PostDao{
 			}
 		}		
 		return result;
+	}
+
+
+	@Override
+	public ArrayList<Post> selectPostList(Post post) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectPostTotalCount(Post post) {
+		return postMapper.selectPostTotalCount(post);
 	}
 
 

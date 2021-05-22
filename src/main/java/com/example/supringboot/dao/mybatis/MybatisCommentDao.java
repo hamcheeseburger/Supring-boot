@@ -19,6 +19,7 @@ public class MybatisCommentDao implements CommentDao{
 	public ArrayList<Comment> getAllCommentList(int post_id) {
 		return commentMapper.selectCommentByPostId(post_id);
 	}
+	
 
 	@Override
 	public int insertComment(Comment comment) {
@@ -31,18 +32,26 @@ public class MybatisCommentDao implements CommentDao{
 	}
 	
 	@Override
-	public boolean deleteComment(int comment_id, int user_id) {
+	public int deleteComment(int comment_id, int user_id) {
 		int result = commentMapper.deleteComment(comment_id, user_id);
 		
-		if(result == 1) {
-			return true;
-		}
-		
-		return false;
+		return result;
 	}
 	
 	@Override
 	public int numOfComment(int post_id) {
 		return commentMapper.numOfComment(post_id);
 	}
+
+//	@Override
+//	public ArrayList<Comment> getAllCommentList(Comment comment) {
+//		// TODO Auto-generated method stub
+//		return commentMapper.selectCommentByPostId(comment);
+//	}
+//
+//	@Override
+//	public int numOfComment(Comment comment) {
+//		// TODO Auto-generated method stub
+//		return commentMapper.numOfComment(comment);
+//	}
 }

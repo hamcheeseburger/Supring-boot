@@ -41,12 +41,15 @@
 	</insert>
 
 	<!-- 해당 게시글에 달린 댓글 목록 가져오기 -->
-	<select id="selectCommentByPostId" resultMap="commentResultMap" parameterType="int">
+	 <select id="selectCommentByPostId" resultMap="commentResultMap" parameterType="int">
 		select *
 		from commt c, account a
 		where
 			c.post_id=#{post_id} and
 			c.user_id=a.user_id
+		order by
+			c.comment_id desc,
+			c.created_dt desc
 	</select>
 
 	<!-- updateComment -->
@@ -55,6 +58,15 @@
 		SET content = #{content}, modified_dt=SYSDATE
 		WHERE comment_id = #{comment_id}
 	</update>
+	
+	<!-- 특정 댓글 상세내용 -->
+	<select id="detailComment" parameterType="int" resultMap="commentResultMap"> 
+		SELECT * 
+		FROM commt c , account a
+		WHERE c.comment_id = #{comment_id} and
+		c.user_id = a.user_id
+	</select> 
+	
 
 	<!-- 댓글 삭제하기 -->
 	<delete id="deleteComment" parameterType="int">
@@ -63,10 +75,16 @@
 	</delete>
 	
 	<!-- 댓글 개수 가져오기 -->
+	<!-- 
 	<select id="numOfComment" parameterType="int" resultType="int"> 
 		SELECT COUNT(comment_id) 
 		FROM commt
 		WHERE post_id = #{post_id} 
 	</select> 
-
+ -->
+ <select id="numOfComment" parameterType="int" resultType="int"> 
+		SELECT COUNT(comment_id) 
+		FROM commt
+		WHERE post_id = #{post_id} 
+	</select> 
 </mapper>

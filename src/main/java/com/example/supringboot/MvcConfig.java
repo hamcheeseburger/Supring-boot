@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.supringboot.controller.SignOnInterceptor;
 
+import com.example.supringboot.interceptor.*;
 //import sp5.sp5chapcboot.interceptor.AuthCheckInterceptor;
 
 @Configuration
@@ -23,6 +24,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	
 	@Autowired
 	private SignOnInterceptor interceptor;
+	
+	@Autowired
+	private LoggerInterceptor loggerInterceptor;
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -34,8 +38,12 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(interceptor)
 				.addPathPatterns("/account/**")
 				.excludePathPatterns("/account/signOnForm", "/account/signOff", "/account/newAccount/**");
+		
+		registry.addInterceptor(loggerInterceptor)
+				.addPathPatterns("/post/**")
+				.excludePathPatterns("/css/**", "/js/**", "/board/**", "/assets/**", "/adminLTE/**");
 	}
-
+	
 	@Bean
 	public MessageSource validationMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -50,5 +58,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		bean.setValidationMessageSource(validationMessageSource());
 		return bean;
 	}
+	
 	
 }

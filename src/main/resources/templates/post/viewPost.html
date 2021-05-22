@@ -26,11 +26,18 @@
 			<div class="form-group">
 					<label for="inp-type-5" class="col-sm-2 control-label">사진</label>
 					<div class="col-sm-10">
-						<p th:if="${post.images.size == 0}">사진 없음</p>
+						<!--  <p th:if="${post.images.size == 0}">사진 없음</p>-->
 						<p th:if="${post.images.size != 0}">
-							<a href="#">
-								<img th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
-							</a>
+							
+								<div th:if="${post.images[0].base64Image}">
+									<a href="#">
+									<img th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
+									</a>
+								</div>
+								<div th:unless="${post.images[0].base64Image}">
+									<p>사진 없음</p>
+								</div>
+							
 						</p>
 					</div>
 				</div>
@@ -169,6 +176,29 @@
 		</div>
 		<!-- /.box-content -->
 	</th:block>
-
+	
+	<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				/*<![CDATA[*/
+	
+				function deletePost(idx) {
+	
+					if (confirm(idx + "번 게시글을 삭제할까요?")) {
+						var uri = /*[[ @{/post/deletePost} ]]*/ null;
+						var html = "";
+	
+						html += '<form name="dataForm" action="'+uri+'" method="post">';
+							html += '<input type="hidden" name="post_id" value="'+idx+'" />';
+						html += '</form>';
+	
+						$("body").append(html);
+						document.dataForm.submit();
+					}
+				}
+				/*[- end of function -]*/
+	
+				/*]]>*/
+			</script>
+	</th:block>
 
 </html>

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
-public class Comment implements Serializable {
+public class Comment extends Common implements Serializable {
 	private int comment_id; // 기본키
 	private Post post; // 댓글이 달린 게시글 객체
 	private Account user; // 댓글을 게시한 사용자 객체
@@ -12,6 +12,9 @@ public class Comment implements Serializable {
 	private Timestamp created_dt; // 댓글 게시일
 	private Timestamp modified_dt; // 댓글 수정일
 	private int secret; // 비밀댓글 여부 (1: 비밀댓글, 0: 공개댓글)
+	
+//	paging으로 인해 user name을 바로 저장하는 필드 필요
+	private String name;
 	
 	public Comment() {
 		super();
@@ -28,6 +31,15 @@ public class Comment implements Serializable {
 		this.modified_dt = modified_dt;
 		this.secret = secret;
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getComment_id() {
 		return comment_id;
 	}

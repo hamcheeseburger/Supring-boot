@@ -1,5 +1,6 @@
 package com.example.supringboot.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -51,6 +52,35 @@ public class CommentServiceImpl implements CommentService {
 		result = commentDao.deleteComment(comment_id, user_id);
 		
 		return result;
+	}
+
+	@Override
+	public ArrayList<Comment> timestampToStr(ArrayList<Comment> commentList) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		ArrayList<Comment> newList = new ArrayList<Comment>();
+		for(Comment c: commentList) {
+			String cString = "";
+			String mString = "";
+			
+			if (c.getCreated_dt() != null) {
+				try {
+					cString = formatter.format(c.getCreated_dt());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}		
+			}
+			if (c.getModified_dt() != null) {
+				try {
+					mString = formatter.format(c.getModified_dt());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}	
+			}
+			c.setStr_created_dt(cString);
+			c.setStr_modified_dt(mString);
+			newList.add(c);
+		}
+		return newList;
 	}
 
 	

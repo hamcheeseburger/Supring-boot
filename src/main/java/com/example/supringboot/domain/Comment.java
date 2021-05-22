@@ -15,7 +15,19 @@ public class Comment extends Common implements Serializable {
 	
 //	paging으로 인해 user name을 바로 저장하는 필드 필요
 	private String name;
+	private String str_modified_dt;
+	private String str_created_dt;
+//	댓글 삽입시 사용할 post_id
+	private int post_id;
 	
+	public int getPost_id() {
+		return post_id;
+	}
+
+	public void setPost_id(int post_id) {
+		this.post_id = post_id;
+	}
+
 	public Comment() {
 		super();
 	}
@@ -32,6 +44,22 @@ public class Comment extends Common implements Serializable {
 		this.secret = secret;
 	}
 	
+	public String getStr_modified_dt() {
+		return str_modified_dt;
+	}
+
+	public void setStr_modified_dt(String str_modified_dt) {
+		this.str_modified_dt = str_modified_dt;
+	}
+
+	public String getStr_created_dt() {
+		return str_created_dt;
+	}
+
+	public void setStr_created_dt(String str_created_dt) {
+		this.str_created_dt = str_created_dt;
+	}
+
 	public String getName() {
 		return name;
 	}

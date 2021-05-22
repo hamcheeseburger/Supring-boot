@@ -14,4 +14,6 @@ public interface CommentService {
 	// 댓글 삭제
 	public int deleteComment(int comment_id, int user_id);
 	
+	// timestamp to str
+	public ArrayList<Comment> timestampToStr(ArrayList<Comment> commentList);
 }

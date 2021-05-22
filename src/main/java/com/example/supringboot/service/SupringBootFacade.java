@@ -9,7 +9,7 @@ import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Item;
 
 public interface SupringBootFacade {
-	void insertAccount(Account account);
+	boolean insertAccount(Account account);
 	
 	Account getAccount(String login_id, String password);
 	

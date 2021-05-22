@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+<div layout:fragment="custom-content" align="center">
 <h1 th:text="#{newAccountHeader}"></h1>
-<form action="#" th:action="@{/account/newAccount/step1}" th:object="${accountForm}" method="post">		
+
+<form id="quickForm" action="#" th:action="@{/account/newAccount/step1}" th:object="${accountForm}" method="post">
+                <div style="width:500px; text-align:center">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="login_id">아이디</label>
+                    <input type="text" name="login_id" class="form-control" id="exampleInputEmail1" th:field="*{account.login_id}">
+                  	<b th:if="${#fields.hasErrors('account.login_id')}" th:errorclass="error" th:errors="*{account.login_id}"></b>
+                  </div>
+                  
+                </div>
+                </div>
+                <b th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></b>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <input type="submit" class="btn btn-primary" value="다음 단계로"/>
+                </div>
+                
+              </form>
+
+<!-- <form action="#" th:action="@{/account/newAccount/step1}" th:object="${accountForm}" method="post">		
 		<p>
 	         <label for="login_id">아이디</label>:<br>
 	        <input type="text" id="text" th:field="*{account.login_id}" />
@@ -16,6 +39,7 @@
 	    <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" />
 	    
 	    <input type="submit" value="다음 단계로" />
-</form>
+</form> -->
+</div>
 </body>
 </html>

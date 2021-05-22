@@ -23,7 +23,7 @@
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
                                 목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/>
-                                신청자수 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
+                                현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
                                 상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
                                 등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/>
                                 <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>

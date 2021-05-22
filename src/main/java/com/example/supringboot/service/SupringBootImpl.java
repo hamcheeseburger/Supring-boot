@@ -28,9 +28,9 @@ public class SupringBootImpl implements SupringBootFacade{
 	
 	
 	@Override
-	public void insertAccount(Account account) {
+	public boolean insertAccount(Account account) {
 		// TODO Auto-generated method stub
-		accountDao.insertAccount(account);
+		return accountDao.insertAccount(account);
 	}
 	
 	

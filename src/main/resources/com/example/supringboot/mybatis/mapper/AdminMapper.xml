@@ -10,6 +10,7 @@
 			<result property="end_dt" column="end_dt" />
 			<result property="min_quantity" column="min_quantity" />
 			<result property="created_dt" column="created_dt" />
+			<result property="numOfRegister" column="numOfRegister" />
 			<association property="food" column="food_id" javaType="Food">
 				<id property="food_id" column="food_id" />
 				<result property="name" column="name" />
@@ -24,8 +25,8 @@
 
 	<!-- 관리자가 게시한 Item 목록 -->
  	<select id="selectItemsWithAdminId" parameterType="int" resultMap="adminItemImage">
-		        SELECT i.item_id, i.user_id, i.item_price, i.title, i.end_dt, 
-		i.min_quantity, i.created_dt, i.item_status, (SELECT COUNT (order_reg_id) FROM Order_reg Where item_id=i.item_id) as numOfRegister,
+		SELECT i.item_id, i.user_id, i.item_price, i.title, i.end_dt, 
+		i.min_quantity, i.created_dt, i.item_status, (SELECT SUM (quantity) FROM Order_reg Where item_id=i.item_id) as numOfRegister,
 		im.image, im.image_id, f.name, f.food_id
 		FROM Item i, Image im, food f
 		WHERE i.user_id=#{user_id} and i.item_id = im.item_id and i.food_id = f.food_id

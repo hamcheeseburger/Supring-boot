@@ -53,6 +53,7 @@ public class AdminPageController {
 		return modelAndView;
 	}
 	
+//	Modal로 띄워서 표현할 것 이기 때문에(ajax 통신) json 형태로 response하도록 하였음
 	@GetMapping("/admin/itemRegisterList")
 	@ResponseBody
 	public List<Order_reg> getItemRegisterList(@RequestParam int item_id) {

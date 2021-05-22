@@ -10,7 +10,7 @@ import com.example.supringboot.domain.Post;
 public interface AccountDao {
 	public Account getAccountById(int user_id);
 	public Account getAccountByLoginId(String login_id);
-	public void insertAccount(Account account);
+	public boolean insertAccount(Account account);
 	public Account getAccount(String login_id, String password);
 	public boolean updateAccount(Account account);
 //	진행중, 실패한 공구신청목록

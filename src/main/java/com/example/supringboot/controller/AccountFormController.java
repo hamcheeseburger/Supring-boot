@@ -1,5 +1,7 @@
 package com.example.supringboot.controller;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -107,10 +109,14 @@ public class AccountFormController {
 		step3Validator.validate(accountForm, result);
 		if(result.hasErrors()) return step3FormView;
 		
-		
+		boolean r = false;
 		// DB에 회원정보 Insert
 		if(accountForm.isNewAccount()) {
-			supringService.insertAccount(accountForm.getAccount());
+			r = supringService.insertAccount(accountForm.getAccount());
+		}
+		
+		if(!r) {
+			return "error";
 		}
 		
 		// session에서 객체 삭제..

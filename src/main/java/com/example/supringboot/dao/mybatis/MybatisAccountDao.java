@@ -1,9 +1,11 @@
 package com.example.supringboot.dao.mybatis;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.example.supringboot.mybatis.mapper.AccountMapper;
@@ -30,9 +32,21 @@ public class MybatisAccountDao implements AccountDao {
 	}
 
 	@Override
-	public void insertAccount(Account account) {
+	public boolean insertAccount(Account account) {
+		int result = 0;
 		// TODO Auto-generated method stub
-		accountMapper.insertAccount(account);
+		try {
+			result = accountMapper.insertAccount(account);
+		} catch (DataAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result == 1) {
+			return true;
+		}
+		
+		return false;
 		
 	}
 

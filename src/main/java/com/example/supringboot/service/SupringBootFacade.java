@@ -9,7 +9,7 @@ import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Item;
 
 public interface SupringBootFacade {
-	void insertAccount(Account account);
+	boolean insertAccount(Account account);
 	
 	Account getAccount(String login_id, String password);
 	
@@ -24,4 +24,5 @@ public interface SupringBootFacade {
 	ArrayList<Comment> getMyCommentList(int user_id);
 	
 	ArrayList<Item> getAdminItemList(int user_id);
+	ArrayList<Order_reg> getAdminRegisterList(int item_id);
 }

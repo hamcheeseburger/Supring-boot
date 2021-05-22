@@ -7,6 +7,8 @@
 </head>
 <body>
 <section th:fragment="adminItemList" class="py-5 bg-light">
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
             <div class="container">
                 <h2 class="mb-4">등록한 '같이 먹어요' 목록</h2>
                 <div class="row">
@@ -21,17 +23,115 @@
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
                                 목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/>
-                                신청자수 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
+                                현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
                                 상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
-                                등록일 : <strong class="card-text" th:text="${item.created_dt}"></strong> <br/>
-                                <a th:href="@{/admin/itemRegisterList(item_id=${item.item_id})}">신청자명단</a>
+                                등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/>
+                                <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>
 
                             </div>
                         </div>
                         
                     </div>
                 </div>
-				
+                </div>
+                <!-- Modal -->
+				<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+    				<div class="modal-dialog modal-lg" role="document">
+        				<div class="modal-content">
+            				<div class="modal-header">
+                				<h5 class="modal-title" id="popupModalLabel">신청자 명단 조회</h5>
+                				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    				<span aria-hidden="true">&times;</span>
+                				</button>
+            				</div>
+            			<div class="modal-body">
+            				<th:block layout:fragment="content">
+							<div class="table-responsive clearfix">
+								<table class="table table-hover">
+									
+									<thead>
+										<tr>
+											<th>신청번호</th>
+											<th>신청자명</th>
+											<th>수령인</th>
+											<th>수량</th>
+											<th>핸드폰번호</th>
+
+										</tr>
+									</thead>
+									<tbody id="registerInfo">
+									
+									</tbody>
+								</table>
+							</div>
+						</th:block>
+            			</div>
+            			<div class="modal-footer">
+                			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                		
+            		</div>
+        		</div>
+        	
+    </div>
+</div>
+				<script>
+					var $j = jQuery.noConflict();
+					function getRegisterList(item_id) {
+						console.log(item_id);
+						
+						 $.ajax({
+						    url: '/admin/itemRegisterList?item_id=' + item_id,
+						    method: 'GET',
+						    dataType: 'html',
+						    success : function (res) {
+						    	 var rows = JSON.parse(res);
+						    	 var str = $('#registerInfo');
+						    	 str.empty();
+						    	 
+						    	 console.log(rows.length);
+						    	 if(rows.length == 0) {
+						    		 str.html("신청자 내역이 없습니다.");
+						    	 }
+						    	 
+						    	 Array.prototype.forEach.call(rows, element => {
+						    		 console.log(element['order_reg_id']);
+						    		 console.log(element.user['name']);
+						    		 
+						    		 var row = document.createElement("tr");
+						    		 var child1 = document.createElement("td");
+						    		 var child2 = document.createElement("td");
+						    		 var child5 = document.createElement("td");
+						    		 var child3 = document.createElement("td");
+						    		 var child4 = document.createElement("td");
+						    		 
+						    		 $(child1).html(element['order_reg_id']);
+						    		 $(child2).html(element.user['name']);
+						    		 $(child5).html(element['receiver_name']);
+						    		 $(child3).html(element['quantity']);
+						    		 $(child4).html(element.user['phone']);
+						    		 
+						    		 row.append(child1);
+						    		 row.append(child2);
+						    		 row.append(child5);
+						    		 row.append(child3);
+						    		 row.append(child4);
+						    		 str.append(row);
+						    		
+						    		console.log(element)
+						    		 
+						    	});
+						    	
+						    	$('#popupModal').modal();
+						    	//alert(res);
+						    },
+						    error: function (xhr) {
+						        alert("fail");
+						    }
+						});
+
+					}
+					// @{/admin/itemRegisterList(item_id=${item.item_id})}
+				</script>
         </section>
 </body>
 </html>

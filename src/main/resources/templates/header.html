@@ -13,8 +13,22 @@
                     <ul class="navbar-nav ml-auto">
                         <li th:if="${session.userSession == null}" class="nav-item"><a class="nav-link" href="#" th:href="@{/account/signOnForm}">로그인</a></li>
                         <li th:if="${session.userSession == null}" class="nav-item"><a class="nav-link" href=# th:href="@{/account/newAccount/step1}">회원가입</a></li>
-                        <li th:if="${session.userSession != null}" class="nav-item"><a class="nav-link" href=# th:href="@{/account/myPage}">마이페이지</a></li>
-                        <li th:if="${session.userSession != null && session.userSession.account.admin == true}" class="nav-item"><a class="nav-link" href=# th:href="@{/admin/adminPage}">관리자페이지</a></li>
+                        <li th:if="${session.userSession != null}" class="nav-item dropdown">
+                        	<a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href=# th:href="@{/account/myPage}">마이페이지</a>
+                        	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                                <a class="dropdown-item" th:href="@{/account/editAccount}">내 정보 수정</a>
+                                <a class="dropdown-item" th:href="@{/account/myOrderList}">나의 '같이 먹어요' 목록</a>
+                                <a class="dropdown-item" th:href="@{/account/myPostList}">나의 '나누어 먹어요' 목록</a>
+                                <a class="dropdown-item" th:href="@{/account/myWishList}">내가 찜한 식품</a>
+                                <a class="dropdown-item" th:href="@{/account/myCommentList}">내가 남긴 댓글</a>
+                            </div>
+                        </li>
+                        <li th:if="${session.userSession != null && session.userSession.account.admin == true}" class="nav-item dropdown">
+                        	<a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href=# th:href="@{/admin/adminPage}">관리자페이지</a>
+                        	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                                <a class="dropdown-item" th:href="@{/admin/itemList}">등록한 '같이 먹어요' 목록</a>
+                            </div>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Portfolio</a>

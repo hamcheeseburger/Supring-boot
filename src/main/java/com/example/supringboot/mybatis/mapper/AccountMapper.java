@@ -1,5 +1,6 @@
 package com.example.supringboot.mybatis.mapper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -15,7 +16,7 @@ import com.example.supringboot.domain.Post;
 public interface AccountMapper {
 	Account getAccountById(int user_id) throws DataAccessException;
 	Account getAccountByLoginId(String login_id) throws DataAccessException;
-	void insertAccount(Account account) throws DataAccessException;
+	int insertAccount(Account account) throws DataAccessException, SQLException;
 	Account getAccount(@Param("login_id") String login_id, @Param("password") String password) throws DataAccessException;
 	int updateAccount(Account account) throws DataAccessException;
 

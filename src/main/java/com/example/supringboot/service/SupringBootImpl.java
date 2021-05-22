@@ -28,9 +28,9 @@ public class SupringBootImpl implements SupringBootFacade{
 	
 	
 	@Override
-	public void insertAccount(Account account) {
+	public boolean insertAccount(Account account) {
 		// TODO Auto-generated method stub
-		accountDao.insertAccount(account);
+		return accountDao.insertAccount(account);
 	}
 	
 	
@@ -86,5 +86,12 @@ public class SupringBootImpl implements SupringBootFacade{
 	public ArrayList<Item> getAdminItemList(int user_id) {
 		// TODO Auto-generated method stub
 		return adminDao.selectAdminItems(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Order_reg> getAdminRegisterList(int item_id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectItemOrderRegs(item_id);
 	}
 }

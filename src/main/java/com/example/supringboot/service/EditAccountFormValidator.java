@@ -32,7 +32,11 @@ public class EditAccountFormValidator implements Validator{
 		
 		// 핸드폰 형식이 이상할 시에 변경
 		String newPhoneFormat = phone_format(account.getPhone());
-		account.setPhone(newPhoneFormat);
+		if(newPhoneFormat.length() != 13) {
+			errors.rejectValue("account.phone", "shortPassword", "핸드폰 형식이 아닙니다.");
+		} else {
+			account.setPhone(newPhoneFormat);
+		}
 	}
 	
 	public String phone_format(String number) { 

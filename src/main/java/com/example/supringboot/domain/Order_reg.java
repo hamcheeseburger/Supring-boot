@@ -2,6 +2,7 @@ package com.example.supringboot.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Order_reg implements Serializable {
@@ -39,6 +40,18 @@ public class Order_reg implements Serializable {
 		this.card_type = card_type;
 		this.card_num = card_number;
 		this.card_exp_dt = card_exp_dt;
+	}
+	
+	public void initOrder(Account account, Item receive_item, int amount, int total) {
+		user = account;
+		item = receive_item;
+		ord_reg_dt = (Timestamp) new Date();
+		quantity = amount;
+		ord_price = total;
+		
+		ship_addr1 = account.getAddr1();
+	    ship_addr2 = account.getAddr2();
+	    ship_zip = account.getZip();
 	}
 	
 	public int getOrder_reg_id() {
@@ -123,5 +136,6 @@ public class Order_reg implements Serializable {
 	public void setShip_zip(String ship_zip) {
 		this.ship_zip = ship_zip;
 	}
+	
 	
 }

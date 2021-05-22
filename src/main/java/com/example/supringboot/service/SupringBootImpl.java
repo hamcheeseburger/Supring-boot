@@ -87,4 +87,11 @@ public class SupringBootImpl implements SupringBootFacade{
 		// TODO Auto-generated method stub
 		return adminDao.selectAdminItems(user_id);
 	}
+
+
+	@Override
+	public ArrayList<Order_reg> getAdminRegisterList(int item_id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectItemOrderRegs(item_id);
+	}
 }

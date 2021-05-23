@@ -47,13 +47,16 @@ public class MybatisPostDao  implements PostDao{
 		Post post = new Post();
 		post = postMapper.getOnePostById(post_id);
 		ArrayList<Comment> comments = commentMapper.selectCommentByPostId(post_id);
-		logger.info("mybatis post의 image : " + post.getImages().get(0).getImage());
-//		이미지 삽입시 이미지가 null이어도 db에 삽입되어 이런 처리가 필요함.
-		if (post.getImages().get(0) == null) {
-			post.setImages(null);
-		}
+		if (post != null) { // 24,25번 게시글은 post가 null이다?
+			logger.info("mybatis post의 image : " + post.getImages().get(0).getImage());
+//			이미지 삽입시 이미지가 null이어도 db에 삽입되어 이런 처리가 필요함.
+			if (post.getImages().get(0) == null) {
+				post.setImages(null);
+			}
 
-		post.setComments(comments);
+			post.setComments(comments);
+		}
+		
 		return post;
 		
 	}

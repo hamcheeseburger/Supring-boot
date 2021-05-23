@@ -17,31 +17,65 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.service.CommentService;
-
-
 @RestController
 public class GetAllCommentList {
-	private static final Logger logger = LoggerFactory.getLogger(GetAllCommentList.class);
-	
-	@Autowired
-	private CommentService commentService;
-	
-	
-	@GetMapping(value = "/comments/{post_id}")
-	public JSONObject getCommentList(@PathVariable("post_id") Long idx,
-			@ModelAttribute("params") Comment comment) {
-		int post_id = idx.intValue();
-		ArrayList<Comment> commentList = commentService.getAllCommentList(post_id);
-		logger.info("GetAllCommentList() : " + commentList);
-		
-		commentList = commentService.timestampToStr(commentList);
-		
-		JSONObject jsonObject = new JSONObject();
-	
-		jsonObject.put("commentList", commentList);
-		
-		logger.info("GetAllCommentList() json : " + jsonObject);
-		return jsonObject;
-//		return commentList;
-	}
+private static final Logger logger = LoggerFactory.getLogger(GetAllCommentList.class);
+
+@Autowired
+private CommentService commentService;
+
+
+@GetMapping(value = "/comments/{post_id}")
+public List<Comment> getCommentList(@PathVariable("post_id") Long idx, @ModelAttribute("params") Comment comment) {
+	int post_id = idx.intValue();
+	ArrayList<Comment> commentList = commentService.getAllCommentList(post_id);
+	logger.info("GetAllCommentList() : " + commentList);
+
+	commentList = commentService.timestampToStr(commentList);
+
+//JSONObject jsonObject = new JSONObject();
+
+//jsonObject.put("commentList", commentList);
+
+//logger.info("GetAllCommentList() json : " + jsonObject);
+//return jsonObject;
+	return commentList;
 }
+}
+
+//@RestController
+//public class GetAllCommentList {
+//	private static final Logger logger = LoggerFactory.getLogger(GetAllCommentList.class);
+//	
+//	@Autowired
+//	private CommentService commentService;
+//	
+//	
+//	@GetMapping(value = "/comments/{post_id}")
+//	public ArrayList<Comment> getCommentList(@PathVariable("post_id") Long idx,
+//			@ModelAttribute("params") Comment comment) {
+//		int post_id = idx.intValue();
+//		ArrayList<Comment> commentList = commentService.getAllCommentList(post_id);
+//		logger.info("GetAllCommentList() : " + commentList);
+//		
+//		commentList = commentService.timestampToStr(commentList);
+//	
+//		return commentList;
+//	}
+////	public JSONObject getCommentList(@PathVariable("post_id") Long idx,
+////			@ModelAttribute("params") Comment comment) {
+////		int post_id = idx.intValue();
+////		ArrayList<Comment> commentList = commentService.getAllCommentList(post_id);
+////		logger.info("GetAllCommentList() : " + commentList);
+////		
+////		commentList = commentService.timestampToStr(commentList);
+////		
+////		JSONObject jsonObject = new JSONObject();
+////	
+////		jsonObject.put("commentList", commentList);
+////		
+////		logger.info("GetAllCommentList() json : " + jsonObject);
+////		return jsonObject;
+//////		return commentList;
+////	}
+//}

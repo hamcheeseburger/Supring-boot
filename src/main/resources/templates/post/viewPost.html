@@ -194,18 +194,18 @@
 				/*[- end of function -]*/
 				$(function() {
 					
-					printCommentList();
-					
+					// printCommentList();
+					ajaxPrint();
 					
 				});
 			
 				function ajaxPrint() {
 					
 					var uri = /*[[ @{/comments/} + ${post.post_id} ]]*/ null;
-					alert('hello');
+					
 					
 					$.ajax({			/* Ajax 호출을 위해  JQuery 이용 */
-						url: '/comments/1',
+						url: uri,
 						type: 'GET',
 						dataType: 'html',
 						success: function(response){	// response: JS object parsed from JSON text		
@@ -213,15 +213,20 @@
 							if (isEmpty(response) == false) {
 								var commentsHtml = "";
 								
-								$(response.commentList).each(function(idx, comment) {
+								var commentList = JSON.parse(response);
+								console.log(commentList.length);
+								
+								Array.prototype.forEach.call(commentList, comment => {
+									console.log(comment['content']);
 									commentsHtml += `
 										<li>
-											<span class="name">${comment.user.name}</span>
-											<span class="desc">${comment.content}</span>
-											<span class="time">${moment(comment.created_dt).format('YYYY-MM-DD HH:mm:ss')}</span>
+											<span class="name">${comment.user['name']}</span>
+											<span class="desc">${comment['content']}</span>
+											<span class="time">${comment['str_created_dt']}</span>
 											<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
 										</li>
 									`;
+									
 								});
 								
 								$(".notice-list").html(commentsHtml);
@@ -257,8 +262,8 @@
 								alert("댓글 등록에 실패하였습니다.");
 								return false;
 							}
-
-							printCommentList();
+							ajaxPrint();
+							// printCommentList();
 							content.value = "";
 						},
 						error: function(xhr, status, error) {
@@ -283,7 +288,7 @@
 									<li>
 										<span class="name">${comment.user.name}</span>
 										<span class="desc">${comment.content}</span>
-										<span class="time">${moment(comment.created_dt).format('YYYY-MM-DD HH:mm:ss')}</span>
+							/*			<span class="time">${moment(comment.created_dt).format('YYYY-MM-DD HH:mm:ss')}</span> */
 										<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
 									</li>
 								`;

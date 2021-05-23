@@ -25,6 +25,8 @@ public class ViewPostController {
 	@GetMapping(value = "/post/viewPost")
 	public String viewDetailPost(@RequestParam(value = "post_id", required = false) Long post_id,
 			Model model) {
+		logger.info("viewDetailPost()에 들어왔어요.");
+		
 		if (post_id == null) {
 			// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
 			return "redirect:/post/getPostList";

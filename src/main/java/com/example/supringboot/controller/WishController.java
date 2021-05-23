@@ -29,30 +29,39 @@ public class WishController {
 	public String insertWishItem(HttpServletRequest request) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
-		int userId = userSession.getAccount().getUser_id();
-		int amount = Integer.parseInt(request.getParameter("amount"));
-		int itemId = Integer.parseInt(request.getParameter("itemId"));
-		System.out.println("item_id: " + itemId);
-		
-		boolean isWishItem = wishService.isWishItem(userId, itemId);
-		
-		// 찜하기 목록에 추가하려는 식품이 있을 경우
-		if (isWishItem) {
-			wishService.updateQuantity(userId, itemId, amount);
-		} else {
-			// 없을 경우 새롭게 추가
-			wishService.likeItem(userId, itemId, amount);
+		// 로그인된 사용자가 아닐 경우 로그인 페이지로 이동시키기
+		if (userSession == null) {
+			return "redirect:/account/signOnForm";
+		}
+		else {
+			int userId = userSession.getAccount().getUser_id();
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+			System.out.println("item_id: " + itemId);
+			
+			boolean isWishItem = wishService.isWishItem(userId, itemId);
+			
+			// 찜하기 목록에 추가하려는 식품이 있을 경우
+			if (isWishItem) {
+				wishService.updateQuantity(userId, itemId, amount);
+			} else {
+				// 없을 경우 새롭게 추가
+				wishService.likeItem(userId, itemId, amount);
+			}
+			
+			return "redirect:/wish/list";
 		}
 		
-		return "redirect:/wish/list";
 	}
 	
 	// 찜한 식품 목록 보기
 	@RequestMapping("/wish/list")
 	public ModelAndView wishList(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("/Wish/wishList");
+		ModelAndView mav = new ModelAndView("Wish/wishList");
 		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		// 로그인하지 않았을 경우 어떻게 처리할지 생각해야함
 		
 		int userId = userSession.getAccount().getUser_id();
 		System.out.println("user_id: " + userId);
@@ -73,10 +82,11 @@ public class WishController {
 		map.put("wishListCount", list.size());
 		map.put("totalPrice", totalPrice);
 		
-//		mav.setViewName("Wish/list");
+		mav.addObject("user", userSession);
 		mav.addObject("map", map);
 		
 		return mav;
+		
 	}
 	
 	// 찜한 식품 목록에서 삭제하기

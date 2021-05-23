@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
-public class Post implements Serializable {
+public class Post extends Common implements Serializable {
 	private int post_id; // 기본키
 	private Account user; // Post를 작성한 사용자 객체
 	private Category category; // Post가 분류될 카테고리 객체
@@ -27,12 +27,12 @@ public class Post implements Serializable {
 	private int ship_type; // 거래 방법 (1: 배송, 0: 직거래)
 	private ArrayList<Image> images; // 식품 이미지
 	private ArrayList<Comment> comments; // Post에 달린 댓글들
-	/* post form에서만 사용하는 변수들 */
-//	private String exp_dt_string; // 식품 유통기한 (from postForm)
-
-	
+	/* post form에서만 사용하는 변수들 */	
 	private String trade_status_string;
 	private String ship_type_string;
+	
+//	paging으로 인해 user name을 바로 저장하는 필드 필요
+	private String name;
 	
 	public Post() {
 		super();
@@ -188,6 +188,14 @@ public class Post implements Serializable {
 
 	public void setShip_type_string(String ship_type_string) {
 		this.ship_type_string = ship_type_string;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String toString() {

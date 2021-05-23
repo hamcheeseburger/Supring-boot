@@ -19,14 +19,7 @@
 </head>
   
 							<th:block layout:fragment="search">
-								<form action="#" id="searchform-header"
-									class="searchform js__toggle active pull-right">
-									<input type="search" placeholder="Search..."
-										class="input-search">
-									<button class="mdi mdi-magnify button-search" type="submit">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</button>
-								</form>
+								<div th:replace="post/fragments/common :: search"></div>
 							</th:block>
 
 
@@ -53,10 +46,11 @@
 											th:each="row : ${postList}">
 											<td scope="row" th:text="${row.post_id}"></td>
 											<td th:text="${row.trade_type} == 'trade' ? '교환' : '거래' "></td>
-											<td class="text-left"><a
-												th:href="@{/post/viewPost( post_id=${row.post_id} )}"
-												th:text="${row.title}"></a></td>
-											<td th:text="${row.user.name}"></td>
+											<td class="text-left">
+											<a th:href="|@{/post/viewPost}${params.makeQueryString(params.currentPageNo)}&post_id=${row.post_id}|" th:text="${row.title}"></a>
+											</td>
+												<!-- user.name이 아니라 post객체에서 바로 name 가져옴 -->
+											<td th:text="${row.name}"></td>
 											<!--  
 											<td
 												th:text="${#temporals.format( row.created_dt, 'yyyy/MM/dd' )}"></td>
@@ -76,25 +70,41 @@
 								</div>
 
 								<th:block layout:fragment="paging">
-									<nav aria-label="Page navigation" class="text-center">
-										<ul class="pagination">
-											<li><a href="#" aria-label="Previous"> <span
-													aria-hidden="true">&laquo;</span>
-											</a></li>
-											<li><a href="#">1</a></li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li><a href="#">4</a></li>
-											<li><a href="#">5</a></li>
-										
-											<li><a href="#" aria-label="Next"> <span
-													aria-hidden="true">&raquo;</span>
-											</a></li>
-										</ul>
-									</nav>
+									<nav th:replace="post/fragments/common :: pagination"></nav>
 								</th:block>
 							</div>
 						</th:block>
+						<th:block layout:fragment="script">
+								<script th:inline="javascript">
+									/*<![CDATA[*/
+						
+									function movePage(uri, queryString) {
+										location.href = uri + queryString;
+									}
+									function searchBoard(form) {
+										/*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+										if (isEmpty(form) == true) {
+											var searchKeyword = document.getElementById("mainSearchKeyword");
+											if (isEmpty(searchKeyword.value) == true) {
+												alert("키워드를 입력해 주세요.");
+												searchKeyword.focus();
+												return false;
+											}
 
+											form = document.getElementById("searchForm");
+											form.searchKeyword.value = searchKeyword.value;
+											form.submit();
+										}
+										/* [- 드롭다운으로 검색했을 때 -] */
+										if (isEmpty(form.searchKeyword.value) == true) {
+											alert("키워드를 입력해 주세요.");
+											form.searchKeyword.focus();
+											return false;
+										}
+									}
+									/*[- end of function -]*/
+									/*]]>*/
+								</script>
+							</th:block>
 
 </html>

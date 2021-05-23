@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.example.supringboot.domain.Criteria;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.service.PostService;
 
@@ -26,8 +27,9 @@ public class GetAllPostController {
 	private PostService postService;
 	
 	@GetMapping(value = "/post/getPostList")
-	public String openPostList(Model model) {
-		ArrayList<Post> postList = postService.getPostList();
+	public String openPostList(@ModelAttribute("params") Post post, 
+			Model model) {
+		ArrayList<Post> postList = postService.getPostList(post);
 		model.addAttribute("postList", postList);
 
 		return postListView;

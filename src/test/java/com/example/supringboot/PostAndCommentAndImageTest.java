@@ -98,8 +98,8 @@ public class PostAndCommentAndImageTest {
 	@Test
 //	@Ignore
 	void getAllPostList() {
-		ArrayList<Post> list = postdao.getAllPostList();
-		System.out.print(list.size());
+//		ArrayList<Post> list = postdao.getAllPostList();
+//		System.out.print(list.size());
 	}
 	
 //	@Test

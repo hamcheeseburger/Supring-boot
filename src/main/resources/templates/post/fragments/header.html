@@ -15,12 +15,22 @@
 		 <link rel="stylesheet" th:href="@{/adminLTE/plugins/fontawesome-free/css/all.min.css}">
 		 <!-- Theme style -->
 		 <link rel="stylesheet" th:href="@{/adminLTE/dist/css/adminlte.min.css}">
-		  
-		<!-- board -->
-		<link rel="stylesheet" th:href="@{board/css/style.css}" />
-		<link rel="stylesheet" th:href="@{board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" />
 		 
+		<!-- board -->
+		<link rel="stylesheet" th:href="@{/board/css/style.css}" />
+		<link rel="stylesheet" th:href="@{/board/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" /> 
+		
+		<!-- from other team mate's -->
+		 <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        
+        <!-- Core theme CSS (includes Bootstrap) 해당 css는 내가 사용하는 css와 겹쳐서 사용할 때 디자인이 원하는대로 적용 안됨. -->
+          <!-- <link href="/css/styles.css" rel="stylesheet" />   -->
+		  
 		  
 		<th:block layout:fragment="add-css"></th:block>
 	</head>
+	<body th:replace="post/fragments/body :: main-body"></body>
 </html>

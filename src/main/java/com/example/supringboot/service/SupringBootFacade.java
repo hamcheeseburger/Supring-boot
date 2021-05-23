@@ -10,7 +10,7 @@ import com.example.supringboot.domain.Item;
 
 public interface SupringBootFacade {
 	boolean insertAccount(Account account);
-	
+	Account getAccountByLoginId(String login_id);
 	Account getAccount(String login_id, String password);
 	
 	boolean updateAccount(Account account);
@@ -24,5 +24,10 @@ public interface SupringBootFacade {
 	ArrayList<Comment> getMyCommentList(int user_id);
 	
 	ArrayList<Item> getAdminItemList(int user_id);
+	
 	ArrayList<Order_reg> getAdminRegisterList(int item_id);
+
+	String hashPassword(String password);
+	
+	boolean passwordCheck(String password, String hashPassword);
 }

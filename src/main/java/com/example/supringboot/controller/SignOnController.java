@@ -61,12 +61,21 @@ public class SignOnController {
 		if(result.hasErrors()) return new ModelAndView(signOnFormView, "account", account);
 		
 		// 로그인 검증
-		Account dbAccount = supringService.getAccount(account.getLogin_id(), account.getPassword());
+//		Account dbAccount = supringService.getAccount(account.getLogin_id(), account.getPassword());
+		
+		Account dbAccount = supringService.getAccountByLoginId(account.getLogin_id());
 				
 		if(dbAccount == null) {
-			result.reject("LoginFail", "아이디 혹은 비밀번호가 일치하지 않습니다.");
+			result.reject("LoginFail", "존재하지 않는 아이디 입니다.");
 			return new ModelAndView(signOnFormView, "account", account);
 		}
+
+//		방법1
+		if(!supringService.passwordCheck(account.getPassword(), dbAccount.getPassword())) {
+			result.reject("LoginFail", "비밀번호가 일치하지 않습니다.");
+			return new ModelAndView(signOnFormView, "account", account);
+		}
+		
 		
 		// 유저 세션 생성(sessionAttributes 때문에 자동으로 session에 저장됨)
 		UserSession userSession = new UserSession();

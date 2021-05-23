@@ -1,7 +1,5 @@
 package com.example.supringboot.controller;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -92,6 +90,10 @@ public class AccountFormController {
 		
 		if(result.hasErrors()) return step2FormView;
 		
+		String hashPassword = supringService.hashPassword(accountForm.getAccount().getPassword());
+		
+		accountForm.getAccount().setPassword(hashPassword);
+		
 		logger.info("Errors : " + result.getErrorCount());
 		
 		return step3FormView;
@@ -115,6 +117,7 @@ public class AccountFormController {
 			r = supringService.insertAccount(accountForm.getAccount());
 		}
 		
+//		sql exception
 		if(!r) {
 			return "error";
 		}

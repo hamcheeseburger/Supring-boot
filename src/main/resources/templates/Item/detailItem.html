@@ -39,7 +39,8 @@
 			<form name="wish" id="insertWish" method="post" action="#" th:action="@{/wish/add}">
 				<input type="number" id="amount" name="amount" value="1" min="1" />
 				<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
-				<input type="submit" value="찜하기" />
+				<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
+				<input type="submit" value="공구 신청" onclick="javascript: form.action='/item/apply';" />
 			</form>
 	</div>
 

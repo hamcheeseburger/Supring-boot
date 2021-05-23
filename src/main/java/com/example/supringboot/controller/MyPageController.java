@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -133,7 +134,7 @@ public class MyPageController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/account/myWishList")
+	@GetMapping("/account/wish/list")
 	public ModelAndView myWishList(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView(myPageView);
 		modelAndView.addObject("selection", 3);
@@ -164,6 +165,28 @@ public class MyPageController {
 		modelAndView.addObject("map", map);
 		
 		return modelAndView;
+	}
+	
+	@GetMapping("/account/wish/remove")
+	public String removeWish(@RequestParam int likedId) {
+		wishService.cancelLikedItem(likedId);
+		return "redirect:/account/wish/list";
+	}
+	
+	@PostMapping("/account/wish/update")
+	public String updateWish(HttpServletRequest request) {
+		int likedId = Integer.parseInt(request.getParameter("likedId"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		
+		WishItem wish = wishService.getOneWishItem(likedId);
+		wish.setAmount(amount);
+		
+//		System.out.println("wish_id: " + wish.getLiked_id());
+//		System.out.println("name: " + wish.getItem().getTitle());
+		
+		wishService.updateLikedItem(wish);
+		
+		return "redirect:/account/wish/list";
 	}
 	
 	@GetMapping("/account/myCommentList")

@@ -39,7 +39,7 @@ layout:decorate="~{mainlayout}">
                             <a class="list-group-item" th:href="@{/account/editAccount}">내 정보 수정</a>
                             <a class="list-group-item" th:href="@{/account/myOrderList}">나의 '같이 먹어요' 목록</a>
                             <a class="list-group-item" th:href="@{/account/myPostList}">나의 '나누어 먹어요' 목록</a>
-                            <a class="list-group-item" th:href="@{/account/myWishList}">내가 찜한 식품</a>
+                            <a class="list-group-item" th:href="@{/account/wish/list}">내가 찜한 식품</a>
                             <a class="list-group-item" th:href="@{/account/myCommentList}">내가 남긴 댓글</a>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ layout:decorate="~{mainlayout}">
                     		<div th:replace="Account/myPostList :: myPostList"></div>
                     	</div>
                     	<div th:if="${selection == 3}">
-                    		<div th:replace="Wish/wishList :: wishList"></div>
+                    		<div th:replace="Account/myWishList :: wishList"></div>
                     	</div>
                     	<div th:if="${selection == 4}">
                     		<div th:replace="Account/myCommentList :: myCommentList"></div>

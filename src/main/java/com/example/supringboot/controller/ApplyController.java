@@ -84,9 +84,6 @@ public class ApplyController {
 			int itemTotal = amount * item.getItem_price();
 			applyForm.setItemTotalPrice(itemTotal);
 			
-			// 카드 유효기간 -> 임시로 현재 날짜 넣기
-			applyForm.getOrder().setCard_exp_dt(new Timestamp(new Date().getTime()));
-			
 			applyForm.getOrder().initOrder(account, item, amount, total);
 			
 			return applyFormView;

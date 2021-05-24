@@ -18,19 +18,19 @@ public class ApplyValidator implements Validator {
 	
 	@Override
 	public void validate(Object obj, Errors errors) {
-		validateCreditCard((Order_reg) obj, errors);
-		validateShippingAddress((Order_reg) obj, errors);
+		validateCreditCard((ApplyForm) obj, errors);
+		validateShippingAddress((ApplyForm) obj, errors);
 	}
 
-	public void validateCreditCard(Order_reg order, Errors errors) {
+	public void validateCreditCard(ApplyForm order, Errors errors) {
 		errors.setNestedPath("order");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "card_num", "CCN_REQUIRED", "카드 번호를 입력하세요.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "card_exp_dt", "EXPIRY_DATE_REQUIRED", "카드 유효기간을 입력하세요.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "card_type", "CARD_TYPE_REQUIRED", "카드 타입을 선택하세요.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "card_type", "CARD_TYPE_REQUIRED", "카드사를 선택하세요.");
 		errors.setNestedPath("");
 	}
 
-	public void validateShippingAddress(Order_reg order, Errors errors) {
+	public void validateShippingAddress(ApplyForm order, Errors errors) {
 		errors.setNestedPath("order");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "receiver_name", "NAME_REQUIRED", "수령인 이름을 입력하세요.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ship_addr1", "ADDRESS_REQUIRED", "첫 번째 주소를 입력하세요.");

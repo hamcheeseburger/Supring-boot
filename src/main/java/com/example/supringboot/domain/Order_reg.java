@@ -45,7 +45,7 @@ public class Order_reg implements Serializable {
 	public void initOrder(Account account, Item receive_item, int amount, int total) {
 		user = account;
 		item = receive_item;
-		ord_reg_dt = (Timestamp) new Date();
+		ord_reg_dt = new Timestamp(new Date().getTime());
 		quantity = amount;
 		ord_price = total;
 		

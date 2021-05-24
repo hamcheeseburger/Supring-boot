@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
 <title>공동구매 식품 상세보기</title>
 
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
-	crossorigin="anonymous"></script>
-
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" rel="stylesheet" />
-
 </head>
 <body>
-	<h2 align="center">공동구매 식품 상세보기</h2>
+	<div layout:fragment="custom-content" align="center">
+		<h2 align="center">공동구매 식품 상세보기</h2>
 	
-	<div align="center">
+		<div align="center">
 			<p th:if="${detail.images.size == 0}">사진 없음</p>
 			<p th:if="${detail.images.size != 0}">
 				<a href="#">
-					<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" alt="액박이미지" />
+					<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" width="300px" height="300px" alt="액박이미지" />
 				</a>
 			</p>
 			<p th:text="'제목: ' + ${detail.title}"></p>
@@ -36,13 +29,15 @@
 			<p th:text="'시작일: ' + ${detail.created_dt}"></p>
 			<p th:text="'마감일: ' + ${detail.end_dt}"></p>
 			
-			<form name="wish" id="insertWish" method="post" action="#" th:action="@{/wish/add}">
+			<form name="wish" id="insertWish" method="post" action="#" >
 				<input type="number" id="amount" name="amount" value="1" min="1" />
 				<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 				<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
-				<input type="submit" value="공구 신청" onclick="javascript: form.action='/item/apply';" />
+				<input type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
 			</form>
+		</div>
 	</div>
+	
 
 </body>
 </html>

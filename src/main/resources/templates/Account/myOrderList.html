@@ -27,6 +27,7 @@
                                 총 금액 : <strong class="card-text" th:text="${orderReg.ord_price}"></strong> <br/>
                                 진행 상태 : <strong class="card-text" th:text="${orderReg.item.item_status}"></strong> <br/>
                                 신청일 : <strong class="card-text" th:text="${orderReg.ord_reg_dt}"></strong> <br/>
+                                <a th:href="@{/item/apply/confirm(applyId=${orderReg.order_reg_id})}">신청내역 보기</a>
                             </div>
                         </div>
                         
@@ -47,6 +48,7 @@
                                 총 금액 : <strong class="card-text" th:text="${order.ord_price}"></strong> <br/>
                                 진행 상태 : <strong class="card-text" th:text="${order.item.item_status}"></strong> <br/>
                                 신청일 : <strong class="card-text" th:text="${order.ord_reg_dt}"></strong> <br/>
+                                <a th:href="@{/item/apply/confirm(applyId=${orderReg.order_reg_id})}">신청내역 보기</a>
                             </div>
                         </div>
                     </div>

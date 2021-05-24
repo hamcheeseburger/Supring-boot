@@ -8,6 +8,7 @@
 		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
 		<result column="title" jdbcType="VARCHAR" property="title" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="min_quantity" jdbcType="NUMERIC" property="min_quantity" />
 		<result column="end_dt" jdbcType="TIMESTAMP" property="end_dt" />
 		<result column="created_dt" jdbcType="TIMESTAMP" property="created_dt" />
 		<result column="modified_dt" jdbcType="TIMESTAMP" property="modified_dt" />
@@ -27,14 +28,14 @@
 	</resultMap>
 
 	<select id="getAllItem" resultMap="itemResult">
-		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 			LEFT JOIN food f ON i.food_id = f.food_id
 	</select>
 
 	<select id="getGoingItemList" resultMap="itemResult">
-		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 			LEFT JOIN food f ON i.food_id = f.food_id
@@ -51,7 +52,7 @@
 	</select>
 	
 	<select id="getEndItemList" resultMap="itemResult">
-		SELECT i.item_id, i.title, i.content, i.end_dt, i.created_dt, i.modified_dt, 
+		SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 			LEFT JOIN food f ON i.food_id = f.food_id
@@ -91,9 +92,12 @@
 	</resultMap>
 
 	<select id="getOneItemById" parameterType="int" resultMap="datailItemResult">
-		SELECT i.item_id, user_id, food_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
-			item_price, ship_price, item_status, im.image_id, im.image
+		SELECT i.item_id, user_id, i.food_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+			item_price, ship_price, item_status, f.cat_id, f.name, f.serving_size, 
+			f.serving_size_unit, f.calories, f.protein, f.grease, f.carbohydrate, f.sugars,
+			im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+			LEFT JOIN food f ON i.food_id = f.food_id
 		WHERE i.item_id=#{item_id}
 	</select>
 

@@ -46,6 +46,7 @@ public class ViewItemController {
 	@RequestMapping("/item/detail")
 	public String detailItem(@RequestParam int itemId, ModelMap model) {
 		Item item = wishService.getDetailItem(itemId);
+		System.out.println("detail food name: " + item.getFood().getName());
 		model.put("detail", item);
 		
 		return "/Item/detailItem";

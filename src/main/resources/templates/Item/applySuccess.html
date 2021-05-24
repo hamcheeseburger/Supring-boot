@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{mainlayout}">
+<head>
+<meta charset="UTF-8">
+<title>공동구매 신청 내역 상세보기</title>
+</head>
+<body>
+
+	<div layout:fragment="custom-content" align="center">
+		<h3>공동구매 신청 내역 상세보기</h3>
+		
+		<div style="width:500px; text-align:center">
+		    <div class="card-body">
+		    	<div class="form-group">
+		    		<div th:if="${applyForm.order.item.images.size != 0}">
+						<img th:src="@{'data:image/jpeg;base64,'+${applyForm.order.item.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
+					</div>
+					<div th:unless="${applyForm.order.item.images.size != 0}">
+						<p>사진 없음</p>
+					</div>
+		    	</div>
+		    
+		    	<div class="form-group">
+		           <label>식품 이름: </label> 
+		            <b th:text="${applyForm.order.item.food.name}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>수량: </label> 
+		            <b th:text="${applyForm.order.quantity}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>가격: </label> 
+		            <b th:text="${applyForm.itemTotalPrice}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>배송비: </label> 
+		            <b th:text="${applyForm.order.item.ship_price}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>신청자 이름: </label> 
+		            <b th:text="${applyForm.order.user.name}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>연락처: </label>
+		            <b th:text="${applyForm.order.user.phone}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>이메일: </label>
+		            <b th:text="${applyForm.order.user.email}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>수령인: </label>
+		            <b th:text="${applyForm.order.receiver_name}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>배송주소1: </label>
+		            <b th:text="${applyForm.order.ship_addr1}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>배송주소2: </label>
+		            <b th:text="${applyForm.order.ship_addr2}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>우편번호: </label>
+		            <b th:text="${applyForm.order.ship_zip}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>카드타입: </label>
+		            <b th:text="${applyForm.order.card_type}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>카드번호: </label>
+		            <b th:text="${applyForm.order.card_num}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>카드 유효기간: </label>
+		            <b th:text="${applyForm.order.card_exp_dt}"></b>
+		       </div>
+		       <div class="form-group">
+		           <label>총 금액: </label>
+		            <b th:text="${applyForm.order.ord_price}"></b>
+		       </div>
+			</div>
+			
+			<button type="button" th:onclick="'location.href=\''+ @{/item/list} + '\''">공구 식품 목록</button>
+		</div>
+	</div>
+</body>
+</html>

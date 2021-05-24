@@ -18,7 +18,7 @@ public class Order_reg implements Serializable {
 	private String ship_zip; // 배송지 우편번호
 	private String card_type; // 카드 타입 (visa, master)
 	private String card_num; // 카드번호
-	private Timestamp card_exp_dt; // 카드 만료기간
+	private String card_exp_dt; // 카드 만료기간
 	
 	public Order_reg() {
 		super();
@@ -26,7 +26,7 @@ public class Order_reg implements Serializable {
 	
 	public Order_reg(int order_reg_id, Item item, Account user, Timestamp ord_reg_dt, int quantity, int ord_price,
 			String receiver_name, String ship_addr1, String ship_addr2, String card_type, String card_number,
-			Timestamp card_exp_dt) {
+			String card_exp_dt) {
 		super();
 		this.order_reg_id = order_reg_id;
 		this.item = item;
@@ -122,10 +122,10 @@ public class Order_reg implements Serializable {
 		this.card_num = card_num;
 	}
 
-	public Timestamp getCard_exp_dt() {
+	public String getCard_exp_dt() {
 		return card_exp_dt;
 	}
-	public void setCard_exp_dt(Timestamp card_exp_dt) {
+	public void setCard_exp_dt(String card_exp_dt) {
 		this.card_exp_dt = card_exp_dt;
 	}
 

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import com.example.supringboot.controller.InsertPostController;
 import com.example.supringboot.controller.PostForm;
 import com.example.supringboot.dao.mybatis.MybatisPostDao;
+import com.example.supringboot.domain.Criteria;
 import com.example.supringboot.domain.Image;
+import com.example.supringboot.domain.PaginationInfo;
 import com.example.supringboot.domain.Post;
 
 @Service
@@ -108,12 +110,18 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public ArrayList<Post> getPostList() {
+	public ArrayList<Post> getPostList(Post post) {
 		ArrayList<Post> postList = new ArrayList<Post>();
-		int postCnt = postDao.getPostCount();
+//		int postCnt = postDao.getPostCount();
+		int postCnt = postDao.selectPostTotalCount(post);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(post);
+		paginationInfo.setTotalRecordCount(postCnt);
+		
+		post.setPaginationInfo(paginationInfo);
 		
 		if (postCnt > 0)
-			postList = postDao.getAllPostList();
+			postList = postDao.getAllPostList(post);
 		
 		return postList;
 	}
@@ -154,6 +162,13 @@ public class PostServiceImpl implements PostService{
 		postForm.setFile(null);
 		
 		return postForm;
+	}
+	
+	@Override
+	public int deletePost(int post_id) {
+		int result = postDao.removePost(post_id);
+		
+		return result;
 	}
 	
 }

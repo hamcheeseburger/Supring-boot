@@ -90,6 +90,10 @@ public class AccountFormController {
 		
 		if(result.hasErrors()) return step2FormView;
 		
+		String hashPassword = supringService.hashPassword(accountForm.getAccount().getPassword());
+		
+		accountForm.getAccount().setPassword(hashPassword);
+		
 		logger.info("Errors : " + result.getErrorCount());
 		
 		return step3FormView;
@@ -107,10 +111,15 @@ public class AccountFormController {
 		step3Validator.validate(accountForm, result);
 		if(result.hasErrors()) return step3FormView;
 		
-		
+		boolean r = false;
 		// DB에 회원정보 Insert
 		if(accountForm.isNewAccount()) {
-			supringService.insertAccount(accountForm.getAccount());
+			r = supringService.insertAccount(accountForm.getAccount());
+		}
+		
+//		sql exception
+		if(!r) {
+			return "error";
 		}
 		
 		// session에서 객체 삭제..

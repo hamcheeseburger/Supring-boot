@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.supringboot.constant.Method;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.service.PostInsertValidator;
 import com.example.supringboot.service.PostService;
+import com.example.supringboot.util.UiUtils;
 
 @Controller
 @SessionAttributes({"postForm"})
-public class UpdatePostController {
+public class UpdatePostController extends UiUtils{
 	private static final Logger logger = LoggerFactory.getLogger(UpdatePostController.class);
 
 	@Value("post/postUpdateForm")
@@ -80,7 +82,8 @@ public class UpdatePostController {
 	
 	@PostMapping(value = "/post/updatePost")
 	public String updatePost(HttpServletRequest request,
-			@Valid @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, SessionStatus sessionStatus) {
+			@Valid @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, SessionStatus sessionStatus, 
+			Model model) {
 		
 		
 		new PostInsertValidator().validate(postForm, bindingResult);
@@ -118,6 +121,8 @@ public class UpdatePostController {
 			registered_id = postService.updatePost(postForm);
 			if (registered_id == -1) {
 				// TODO => 게시글 수정에 실패하였다는 메시지를 전달
+				return showMessageWithRedirect("게시글 수정에 실패하였습니다.", "/post/getPostList", Method.GET, null, model);
+
 			}
 			else {
 				//	게시글 수정 성공시 session에서 삭제해야 할까?
@@ -125,6 +130,8 @@ public class UpdatePostController {
 			}
 		} catch (Exception e) {
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/post/getPostList", Method.GET, null, model);
+
 		}
 		logger.info("postUpdate() - registered_id : " + registered_id);
 		//		게시글 확인하는 페이지로 리다이렉트할 것

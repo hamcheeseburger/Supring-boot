@@ -15,7 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,16 +29,18 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
+import com.example.supringboot.constant.Method;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.service.PostInsertValidator;
 import com.example.supringboot.service.PostService;
+import com.example.supringboot.util.UiUtils;
 
 @Controller
 //@RequestMapping({"/post/createPost"})
 @SessionAttributes({"postForm"})
-public class InsertPostController {
+public class InsertPostController extends UiUtils {
 	private static final Logger logger = LoggerFactory.getLogger(InsertPostController.class);
 
 	
@@ -77,7 +81,7 @@ public class InsertPostController {
 	
 	@PostMapping("/post/createPost")
 	public String postInsert(HttpServletRequest request,
-			@Valid @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, SessionStatus sessionStatus) {
+			@Valid @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, SessionStatus sessionStatus, Model model) {
 		logger.info("postInsert()");
 		
 		new PostInsertValidator().validate(postForm, bindingResult);
@@ -113,15 +117,23 @@ public class InsertPostController {
 			registered_id = postService.registerPost(postForm);
 			if (registered_id == -1) {
 				// TODO => 게시글 등록에 실패하였다는 메시지를 전달
+				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/post/getPostList", Method.GET, null, model);
 			}
 			else {
 				//	게시글 등록 성공시 session에서 삭제해야 할까?
 				sessionStatus.setComplete();
-			}
-		} catch (Exception e) {
+				
+			} 
+		}  catch (DataAccessException e) {
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/post/getPostList", Method.GET, null, model);
+
+		} 
+		catch (Exception e) {
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/post/getPostList", Method.GET, null, model);
 		}
 		//		게시글 확인하는 페이지로 리다이렉트할 것
-		return "redirect:/post/viewPost?post_id=" + registered_id;
+//		return "redirect:/post/viewPost?post_id=" + registered_id;
+		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/post/getPostList", Method.GET, null, model);
 	}
 }

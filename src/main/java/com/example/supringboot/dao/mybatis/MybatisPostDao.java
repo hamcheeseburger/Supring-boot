@@ -11,6 +11,7 @@ import com.example.supringboot.controller.InsertPostController;
 import com.example.supringboot.controller.PostForm;
 import com.example.supringboot.dao.PostDao;
 import com.example.supringboot.domain.Comment;
+import com.example.supringboot.domain.Criteria;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Post;
 import com.example.supringboot.mybatis.mapper.CommentMapper;
@@ -30,8 +31,8 @@ public class MybatisPostDao  implements PostDao{
 	
 	
 	@Override
-	public ArrayList<Post> getAllPostList() {
-		return postMapper.getAllPost();
+	public ArrayList<Post> getAllPostList(Post post) {
+		return postMapper.getAllPost(post);
 	}
 	
 	@Override
@@ -46,13 +47,16 @@ public class MybatisPostDao  implements PostDao{
 		Post post = new Post();
 		post = postMapper.getOnePostById(post_id);
 		ArrayList<Comment> comments = commentMapper.selectCommentByPostId(post_id);
-		logger.info("mybatis post의 image : " + post.getImages().get(0).getImage());
-//		이미지 삽입시 이미지가 null이어도 db에 삽입되어 이런 처리가 필요함.
-		if (post.getImages().get(0) == null) {
-			post.setImages(null);
-		}
+		if (post != null) { // 24,25번 게시글은 post가 null이다?
+			logger.info("mybatis post의 image : " + post.getImages().get(0).getImage());
+//			이미지 삽입시 이미지가 null이어도 db에 삽입되어 이런 처리가 필요함.
+			if (post.getImages().get(0) == null) {
+				post.setImages(null);
+			}
 
-		post.setComments(comments);
+			post.setComments(comments);
+		}
+		
 		return post;
 		
 	}
@@ -105,6 +109,18 @@ public class MybatisPostDao  implements PostDao{
 			}
 		}		
 		return result;
+	}
+
+
+	@Override
+	public ArrayList<Post> selectPostList(Post post) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectPostTotalCount(Post post) {
+		return postMapper.selectPostTotalCount(post);
 	}
 
 

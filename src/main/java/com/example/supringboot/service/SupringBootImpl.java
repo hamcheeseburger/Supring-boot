@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.transaction.Transactional;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,9 @@ public class SupringBootImpl implements SupringBootFacade{
 	
 	
 	@Override
-	public void insertAccount(Account account) {
+	public boolean insertAccount(Account account) {
 		// TODO Auto-generated method stub
-		accountDao.insertAccount(account);
+		return accountDao.insertAccount(account);
 	}
 	
 	
@@ -60,7 +61,6 @@ public class SupringBootImpl implements SupringBootFacade{
 		return hashMap;
 	}
 
-
 	@Override
 	public Account getAccountById(int user_id) {
 		// TODO Auto-generated method stub
@@ -86,5 +86,34 @@ public class SupringBootImpl implements SupringBootFacade{
 	public ArrayList<Item> getAdminItemList(int user_id) {
 		// TODO Auto-generated method stub
 		return adminDao.selectAdminItems(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Order_reg> getAdminRegisterList(int item_id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectItemOrderRegs(item_id);
+	}
+
+
+	@Override
+	public String hashPassword(String password) {
+		// TODO Auto-generated method stub
+		String salt = BCrypt.gensalt();
+		
+		return BCrypt.hashpw(password, salt);
+	}
+	
+	@Override
+	public boolean passwordCheck(String password, String hashPassword) {
+		if (BCrypt.checkpw(password, hashPassword)) { return true; }
+		
+		return false;
+	}
+
+	@Override
+	public Account getAccountByLoginId(String login_id) {
+		// TODO Auto-generated method stub
+		return accountDao.getAccountByLoginId(login_id);
 	}
 }

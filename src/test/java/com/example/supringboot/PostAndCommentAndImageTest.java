@@ -175,7 +175,7 @@ public class PostAndCommentAndImageTest {
 		
 		post.setPost_id(8);
 		
-		int result = postdao.updatePost(post);
+//		int result = postdao.updatePost(post);
 		
 	}
 	

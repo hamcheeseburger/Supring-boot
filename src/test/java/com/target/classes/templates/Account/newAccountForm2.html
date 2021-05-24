@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:text="#{newAccountHeader}"></h1>
+<form action="#" th:action="@{step2}" th:object="${accountForm}" method="post">		
+	    <p>
+	        비밀번호:<br>
+	        <input type="password" id="password" th:field="*{account.password}" />
+	        <a th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}" />
+	    </p>
+	    <p>
+	        비밀번호 재입력:<br>
+	        <input type="password" th:field="*{repeatedPassword}" /> 
+	        <a th:if="${#fields.hasErrors('repeatedPassword')}" th:errorclass="error" th:errors="*{repeatedPassword}" />
+	    </p>
+	    
+	    <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" />
+	    
+	    <input type="submit" value="다음 단계로" >
+</form>
+</body>
+</html>

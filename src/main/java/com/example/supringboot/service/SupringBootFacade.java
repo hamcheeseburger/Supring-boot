@@ -3,7 +3,10 @@ package com.example.supringboot.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.example.supringboot.domain.Order_reg;
+import com.example.supringboot.domain.Post;
 import com.example.supringboot.domain.Account;
+import com.example.supringboot.domain.Comment;
+import com.example.supringboot.domain.Item;
 
 public interface SupringBootFacade {
 	void insertAccount(Account account);
@@ -15,4 +18,10 @@ public interface SupringBootFacade {
 	HashMap<String, ArrayList<Order_reg>> getMyOrderList(int user_id);
 	
 	Account getAccountById(int user_id);
+	
+	ArrayList<Post> getMyPostList(int user_id);
+	
+	ArrayList<Comment> getMyCommentList(int user_id);
+	
+	ArrayList<Item> getAdminItemList(int user_id);
 }

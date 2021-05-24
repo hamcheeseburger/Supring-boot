@@ -6,9 +6,13 @@ import com.example.supringboot.controller.PostForm;
 import com.example.supringboot.domain.Post;
 
 public interface PostService {
-	public boolean registerPost(PostForm post);
+	public int registerPost(PostForm postForm);
 	
-	public boolean updatePost(PostForm post);
+	public int updatePost(PostForm postForm);
 	
 	public ArrayList<Post> getPostList();
+	
+	public Post getDetailPost(int post_id);
+	
+	public PostForm postToPostForm(Post post);
 }

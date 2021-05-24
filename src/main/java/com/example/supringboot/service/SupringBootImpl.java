@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
 import com.example.supringboot.domain.Account;
+import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
+import com.example.supringboot.domain.Post;
 
 @Service
 @Transactional
@@ -23,6 +25,7 @@ public class SupringBootImpl implements SupringBootFacade{
 	
 	@Autowired
 	private MybatisAdminDao adminDao;
+	
 	
 	@Override
 	public void insertAccount(Account account) {
@@ -62,5 +65,26 @@ public class SupringBootImpl implements SupringBootFacade{
 	public Account getAccountById(int user_id) {
 		// TODO Auto-generated method stub
 		return accountDao.getAccountById(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Post> getMyPostList(int user_id) {
+		// TODO Auto-generated method stub
+		return accountDao.selectMyPosts(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Comment> getMyCommentList(int user_id) {
+		// TODO Auto-generated method stub
+		return accountDao.selectMyComments(user_id);
+	}
+
+
+	@Override
+	public ArrayList<Item> getAdminItemList(int user_id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectAdminItems(user_id);
 	}
 }

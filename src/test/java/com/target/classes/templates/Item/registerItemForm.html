@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>공구식품 등록</title>
+</head>
+<body>
+
+<h1>공동 구매 상품 등록</h1>
+<!-- registration form  -->
+
+<form name="searchFood" method="GET">
+	<table align="center">
+		<tr>
+			<td>식품 검색</td>
+			<td><input type="text" style="width: 300" name="keyword"></td>
+			<td><input type="submit" value="검색"/> </td>
+		</tr>
+</form>
+
+
+<form method="POST">
+	<table>
+		<!--
+		<tr>
+			<td>식품 검색</td>
+			<td><input type="text" style="width: 300" name="keyword"></td>
+			<td><a href='<c:url value="/item/"/>'>검색</a> </td>
+		</tr>-->
+		<tr th:each="f : ${foodList}">
+			<td>상품명</td>
+			<!--<td th:text="${f.name}">name</td>-->
+			<select name="foodList">
+					<option th:text="${f.name}">임시</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>상품 금액</td>
+			<td><input type="text" style="width: 300" name="price"></td>
+		</tr>
+		<tr>
+			<td>배송비</td>
+			<td><input type="text" style="width: 300" name="shipPrice"></td>
+		</tr>
+		<tr>
+			<td>기간</td>
+			<td><input type="text" style="width: 300" name="startDate"></td>
+			<td width="10">~</td>
+			<td><input type="text" style="width: 300" name="endDate"></td>
+		</tr>
+		<tr>
+			<td>목표 수량</td>
+			<td><input type="text" style="width: 300" name="minQuantity"></td>
+		</tr>
+		<tr>
+			<td>상세 설명</td>
+			<td><textarea cols="80" rows="10"></textarea></td>
+		</tr>
+		<tr>
+			<td>영양 정보</td>
+			<td><table>
+				<tr>
+					<th>1회 제공량</th>
+					<th>제공량 단위</th>
+					<th>열량(kcal)</th>
+					<th>단백질</th>
+					<th>지방</th>
+					<th>탄수화물</th>
+					<th>총 당류</th>
+					<th></th>
+				</tr>
+				<c:forEach var="f" items="${foodInfo}">
+				<tr>
+					<td>${f.serving_size}</td>
+					<td>${f.servint_size_unit}</td>
+					<td>${f.calories}</td>
+					<td>${protein}</td>
+					<td>${grease}</td>
+					<td>${carbohydrate}</td>
+					<td>${sugars}</td>
+				</tr>
+				</c:forEach>
+			</table></td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>

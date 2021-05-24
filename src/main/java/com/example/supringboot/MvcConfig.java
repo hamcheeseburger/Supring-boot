@@ -1,38 +1,54 @@
 package com.example.supringboot;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import nz.net.ultraq.thymeleaf.LayoutDialect;
+import com.example.supringboot.controller.SignOnInterceptor;
 
 //import sp5.sp5chapcboot.interceptor.AuthCheckInterceptor;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-
-//	@Autowired
-//	private AuthCheckInterceptor authCheckInterceptor;
-
+	
+	@Autowired
+	private SignOnInterceptor interceptor;
+	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("main");
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(authCheckInterceptor)
-//				.addPathPatterns("/edit/**")
-//				.excludePathPatterns("/edit/help/**");
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(interceptor)
+				.addPathPatterns("/account/**")
+				.excludePathPatterns("/account/signOnForm", "/account/signOff", "/account/newAccount/**");
+	}
+
+	@Bean
+	public MessageSource validationMessageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:/messages/validation");
+		messageSource.setDefaultEncoding("UTF-8");
+		return messageSource;
+	}
+
+	@Override
+	public Validator getValidator() {
+		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+		bean.setValidationMessageSource(validationMessageSource());
+		return bean;
+	}
 	
-
-
-
 }

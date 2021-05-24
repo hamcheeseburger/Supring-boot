@@ -46,6 +46,11 @@
 	where image_id=#{image_id}
 </delete>
 
+<delete id="deleteImageByPostId" parameterType="int">
+	delete from image
+	where post_id=#{post_id}
+</delete>
+
 <select id="getImageByPostId" resultMap="imageResultMap" parameterType="int">
 	select *
 	from image i

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{post/layout/basic}">
+	
+<head>
+    <!--    thymeleaf layout dialect가 contents페이지의 head태그를 layout의 head태그에 자동으로 추가해준다. -->
+    <!--    필요힌 css, script 추가영역 -->
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<th:block layout:fragment="title"></th:block>
+		  
+		<th:block layout:fragment="add-css"></th:block>
+</head>
+  
+<th:block layout:fragment="content">
+	<div class="card-content">
+		<form class="form-horizontal" th:action="@{/post/updatePost}" enctype="multipart/form-data" th:object="${postForm}" method="post">
+			<!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
+			<!-- <input type="hidden" th:if="*{post_id != null and post_id > 0}" th:field="*{post_id}" /> -->
+
+			<!-- th:field를 사용하면 value나 th:value 지정시 무조건 0이나 null이 들어가는 것 같다.. -->
+			<!-- <input type="hidden" value="41" th:field="*{user.user_id}" /> -->
+			<!-- 임시로 사용자 id를 입력 -->
+			<!--  <input type="hidden" value="41" id="user.user_id" name="user.user_id" />-->
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">제목</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{title}" class="form-control"
+						placeholder="제목을 입력해 주세요." >
+						<span th:if="${#fields.errors('title')}" th:errors="*{title}"></span>
+						</input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="content" class="col-sm-2 control-label">내용</label>
+				<div class="col-sm-10">
+					<textarea th:field="*{content}" class="form-control"
+						placeholder="내용을 입력해 주세요."></textarea>
+						<span th:if="${#fields.errors('content')}" th:errors="*{content}"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">식품명</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{food_name}" class="form-control"
+						placeholder="식품명을 입력해 주세요." />
+						<span th:if="${#fields.errors('food_name')}" th:errors="*{food_name}"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">가격</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{str_price}" class="form-control"
+						placeholder="가격을 입력해 주세요." />
+						<!-- 수정해야함 -->
+						<span th:if="${#fields.errors('str_price')}" th:errors="*{str_price}"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">거래방식</label>
+				<div class="col-sm-10">
+					<ul>
+						<li th:each="ty : ${trade_types}"><input type="radio"
+							th:field="*{trade_type}" th:value="${ty}" /> <label
+							th:for="${#ids.prev('trade_type')}"
+							th:text="${ty eq 'trade' ? '교환' : '판매' }">임시</label></li>
+					</ul>
+					<span th:if="${#fields.errors('trade_type')}" th:errors="*{trade_type}"></span>
+				</div>
+			</div>
+	
+	
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">거래상태</label>
+				<div class="col-sm-10">		
+					<ul>
+						<li th:each="st : ${status}"><input type="radio"
+							th:field="*{trade_status}" th:value="${st}" /> <label
+							th:for="${#ids.prev('trade_status')}"
+							th:text="${st eq '0' ? '교환 및 거래 가능' : '교환 및 거래 완료' }">임시</label></li>
+					</ul>
+					<span th:if="${#fields.errors('trade_status')}" th:errors="*{trade_status}"></span>
+				
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="quantity" class="col-sm-2 control-label">수량</label>
+				<div class="col-sm-10">
+				
+					<input type="text" th:field="*{str_quantity}" class="form-control"
+						placeholder="수량을 입력해 주세요." />
+						<!-- 추가해야함 -->
+					<span th:if="${#fields.errors('str_quantity')}" th:errors="*{str_quantity}"></span>
+						
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="unit" class="col-sm-2 control-label">단위</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{unit}" class="form-control"
+						placeholder="단위를 입력해 주세요." />
+						<span th:if="${#fields.errors('unit')}" th:errors="*{unit}"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="unit" class="col-sm-2 control-label">유통기한</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{exp_dt_string}" class="form-control"
+						placeholder="유통기한을 입력해 주세요.(yyyy/MM/dd)" />
+						<span th:if="${#fields.errors('exp_dt_string')}" th:errors="*{exp_dt_string}"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="file" class="col-sm-2 control-label">이미지 첨부</label>
+				<div class="col-sm-10">
+					<input type="file" accept="image/*" th:field="*{file}"
+						class="form-control" />
+					
+				</div>
+			</div>
+			
+			<input type="hidden" value="notChanged" id="fileChanged" name="fileChanged" />
+<!--  
+			<div class="form-group">
+				<label for="preview" class="col-sm-2 control-label">미리보기</label>
+				<div class="col-sm-10" id="preview">
+				
+				</div>
+			</div>
+-->
+			<div class="form-group">
+					<label for="inp-type-5" class="col-sm-2 control-label">미리보기</label>
+					<div class="col-sm-10" id="preview">
+						<p th:if="${postForm.images.size == 0}">사진 없음</p>
+						<p th:if="${postForm.images.size != 0}">
+						<a href="#">
+							<img th:src="@{'data:image/jpeg;base64,'+${postForm.images[0].base64Image}}" width="200px" height="200px"  alt="액박이미지" />
+						</a>
+					</div>
+				</div>
+	
+					
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">거래방법</label>
+				<div class="col-sm-10">		
+					<ul>
+						<li th:each="sh : ${ship_types}">
+							<input type="radio"
+								th:field="*{ship_type}" th:value="${sh}" />
+							<label
+								th:for="${#ids.prev('ship_type')}"
+								th:text="${sh eq '0' ? '직거래' : '배송' }">임시</label>
+						</li>
+					</ul>
+					
+				</div>
+			</div>	
+			
+
+
+			<div class="btn_wrap text-center">
+				<a th:href="@{/post/createPost}"
+					class="btn btn-default waves-effect waves-light">뒤로가기</a>
+				<button type="submit"
+					class="btn btn-primary waves-effect waves-light">저장하기</button>
+
+			</div>
+		</form>
+	</div>
+	<!--  <button id="ch"
+					class="btn btn-primary waves-effect waves-light">alert</button> -->
+</th:block>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	 
+	//$("#ch").click(function(){
+     //    alert('Test1 버튼 클릭');
+     //});
+	 
+		var upload = document.querySelector('#file');
+		var preview = document.querySelector('#preview');
+		var isChange = document.querySelector('#fileChanged');
+		
+		upload.addEventListener('change',function (e) {
+			var pre_img = preview.childNodes[0];
+		    var get_file = e.target.files;
+		    var image = document.createElement('img');
+		 
+		    
+		    
+		    while(preview.hasChildNodes())
+		    {
+		 		preview.removeChild(preview.firstChild);		   	
+		  	}
+		    
+		    /* FileReader 객체 생성 */
+		    var reader = new FileReader();
+		
+		    /* reader 시작시 함수 구현 */
+		    reader.onload = (function (aImg) {
+		        console.log(1);
+		
+		        return function (e) {
+		            console.log(3);
+		            /* base64 인코딩 된 스트링 데이터 */
+		            aImg.src = e.target.result
+		        }
+		    })(image)
+		
+		    if(get_file){
+		        /* 
+		            get_file[0] 을 읽어서 read 행위가 종료되면 loadend 이벤트가 트리거 되고 
+		            onload 에 설정했던 return 으로 넘어간다.
+		            이와 함게 base64 인코딩 된 스트링 데이터가 result 속성에 담겨진다.
+		        */
+		        reader.readAsDataURL(get_file[0]);
+		        console.log(2);
+		    }
+			image.style.cssText = 'width: auto; height: auto; max-width: 200px; max-height: 200px;'
+		    preview.appendChild(image);
+			//preview.replaceChild(image, pre_img);
+			isChange.value = 'changed';
+		})
+	
+	</script>
+</th:block>
+</html>

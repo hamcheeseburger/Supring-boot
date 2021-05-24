@@ -20,6 +20,7 @@ public class Post implements Serializable {
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Timestamp created_dt; // Post 게시일
 	private Timestamp modified_dt; // Post 수정일
+	
 	private int quantity; // 교환 또는 거래 할 식품 개수
 	private String unit; // 교환 또는 거래 할 식품 단위
 	private Timestamp exp_dt; // 식품 유통기한
@@ -29,6 +30,9 @@ public class Post implements Serializable {
 	/* post form에서만 사용하는 변수들 */
 //	private String exp_dt_string; // 식품 유통기한 (from postForm)
 
+	
+	private String trade_status_string;
+	private String ship_type_string;
 	
 	public Post() {
 		super();
@@ -110,6 +114,11 @@ public class Post implements Serializable {
 	}
 	public void setTrade_status(int trade_status) {
 		this.trade_status = trade_status;
+		if(trade_status == 0) {
+			this.trade_status_string = "거래중";
+		} else if (trade_status == 1) {
+			this.trade_status_string = "거래 완료";
+		}
 	}
 	public Timestamp getCreated_dt() {
 		return created_dt;
@@ -146,6 +155,11 @@ public class Post implements Serializable {
 	}
 	public void setShip_type(int ship_type) {
 		this.ship_type = ship_type;
+		if(ship_type == 0) {
+			this.ship_type_string = "직거래";
+		} else if (ship_type == 1) {
+			this.ship_type_string = "배송";
+		}
 	}
 	public ArrayList<Image> getImages() {
 		return images;
@@ -160,6 +174,22 @@ public class Post implements Serializable {
 		this.comments = comments;
 	}
 	
+	public String getTrade_status_string() {
+		return trade_status_string;
+	}
+
+	public void setTrade_status_string(String trade_status_string) {
+		this.trade_status_string = trade_status_string;
+	}
+
+	public String getShip_type_string() {
+		return ship_type_string;
+	}
+
+	public void setShip_type_string(String ship_type_string) {
+		this.ship_type_string = ship_type_string;
+	}
+
 	public String toString() {
 		return 
 				"게시글 id" + getPost_id() + "/n";

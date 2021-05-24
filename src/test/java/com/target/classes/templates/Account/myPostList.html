@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<section th:fragment="myPostList" class="py-5 bg-light">
+			<h2>&nbsp;'같이 나누어 먹어요' 목록</h2>
+            <div class="container">
+                <div class="row">
+                	<div th:if="${#lists.isEmpty(postList)}">
+                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	</div>
+                    <div th:each="post : ${postList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="#!" th:text="${post.title}"></a></h4>
+                                식품명 : <strong class="card-text" th:text="${post.food_name}" ></strong> <br/>
+                                거래타입 : <strong class="card-text" th:text="${post.trade_type}"></strong> <br/>
+                           
+                                <th:block th:if="${post.trade_type == 'payment'}">
+                                	판매가격 : <strong class="card-text" th:text="${post.price}"></strong> <br/>
+                                </th:block>
+                                거래상태 : <strong class="card-text" th:text="${post.trade_status_string}"></strong> <br/>
+                                거래방법 : <strong class="card-text" th:text="${post.ship_type_string}"></strong> <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+               
+        </section>
+</body>
+</html>

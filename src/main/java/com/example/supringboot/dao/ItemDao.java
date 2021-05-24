@@ -30,8 +30,4 @@ public interface ItemDao {
 	public List<Item> getEndItemList();
 	// 특정 공구식품 정보조회
 	public Item getDetailItem(int item_id);
-	// 공구 신청
-	public boolean applyItem(Order_reg order);
-	// 공구 신청 취소
-	public boolean cancelItem(int order_reg_id, int user_id);
 }

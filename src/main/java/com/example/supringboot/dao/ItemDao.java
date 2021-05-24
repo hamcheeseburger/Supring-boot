@@ -30,4 +30,7 @@ public interface ItemDao {
 	public List<Item> getEndItemList();
 	// 특정 공구식품 정보조회
 	public Item getDetailItem(int item_id);
+	
+	// 마감일 만료시 아이템 상태 변경
+	public boolean updateItemStatus(int item_id, String item_status);
 }

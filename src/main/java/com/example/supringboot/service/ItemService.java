@@ -1,5 +1,7 @@
 package com.example.supringboot.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.example.supringboot.domain.Food;
@@ -20,4 +22,7 @@ public interface ItemService {
 	int deleteItem(int item_id);
 	//공구진행률 조회
 	int progressItem(int item_id);
+	
+	// item 마감일에 대한 스케쥴러 시작
+	void startScheduler(int item_id, Date end_dt);
 }

@@ -100,12 +100,12 @@ public class InsertItemController {
 		System.out.println(food_id);
 		Food food = itemService.getFood(food_id);
 		Timestamp create_time = null, end_time = null, modify_time = null;
-		
+		Date endParseDate = null;
 		//공구 날짜 Timestamp 변환
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		    Date createdParsedDate = (Date) dateFormat.parse(created_dt);
-		    Date endParseDate = (Date) dateFormat.parse(end_dt);
+		    endParseDate = (Date) dateFormat.parse(end_dt);
 		    Date modifyParseDate = new Date();
 		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
 		    end_time = new java.sql.Timestamp(endParseDate.getTime());
@@ -129,6 +129,9 @@ public class InsertItemController {
 		}
 		
 		//수정필요: 세번째 현재 유저아이디 가져오기(admin계정)
+//		Item item = new Item(0, food, 41, price, ship_price, title, content, end_time, minQuantity, create_time, 
+//				modify_time, "ongoing", imageList, 0);
+		
 		Item item = new Item(0, food, 41, price, ship_price, title, content, end_time, minQuantity, create_time, 
 				modify_time, "ongoing", imageList, 0);
 		
@@ -136,6 +139,10 @@ public class InsertItemController {
 			item.setImages(imageList);
 		
 		itemService.insertItem(item);
+		
+		System.out.println("insert item_id : " + item.getItem_id());
+		
+		itemService.startScheduler(item.getItem_id(), endParseDate);
 		System.out.println("디비등록완료");
 		return "redirect:/item/adminList"; //admin_List로 리다이렉트 하기
 		//return "/Item/updateItemForm";

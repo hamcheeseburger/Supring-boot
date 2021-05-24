@@ -33,6 +33,9 @@ class SupringbootApplicationTests {
 	@Autowired(required=true)
 	MybatisAdminDao adDao;
 	
+	@Autowired
+	MybatisItemDao itemDao;
+	
 //	@Test
 	@Ignore
 	void selectAccount_test() {
@@ -67,26 +70,26 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
+////	@Test
 //	@Ignore
-	void updateAccount_test() {
-		Account account = new Account();
-		account.setUser_id(61);
-		account.setPassword("12345");
-		account.setName("유현지");
-		account.setEmail("ahah@gmail.com");
-		account.setAddr1("Seoul, South Korea");
-		account.setAddr2("Guuidong");
-		account.setZip("12345");
-		account.setPhone("010-2222-1111");
-		account.setAdmin(false);
-		
-		boolean result = dao.updateAccount(account);
-		assertEquals(result, true);
-	}
+//	void updateAccount_test() {
+//		Account account = new Account();
+//		account.setUser_id(61);
+//		account.setPassword("12345");
+//		account.setName("유현지");
+//		account.setEmail("ahah@gmail.com");
+//		account.setAddr1("Seoul, South Korea");
+//		account.setAddr2("Guuidong");
+//		account.setZip("12345");
+//		account.setPhone("010-2222-1111");
+//		account.setAdmin(false);
+//		
+//		boolean result = dao.updateAccount(account);
+//		assertEquals(result, true);
+//	}
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void selectOrderReg_test() {
 		ArrayList<Order_reg> reg = dao.selectMyOrderRegs(41);
 		for(Order_reg oReg : reg) {
@@ -155,5 +158,12 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-
+	@Test
+	void updateItemStatus_test() {
+		boolean result = itemDao.updateItemStatus(31, "fail");
+		
+		assertEquals(result, true);
+	}
+	
+	
 }

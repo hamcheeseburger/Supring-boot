@@ -72,7 +72,7 @@
 		<result column="item_price" jdbcType="NUMERIC" property="item_price" />
 		<result column="ship_price" jdbcType="NUMERIC" property="ship_price" />
 		<result column="item_status" jdbcType="VARCHAR" property="item_status" />
-		
+		<result column="numOfRegister" jdbcType="NUMERIC" property="numOfRegister" />
 		<association property="food" column="food_id" javaType="Food">
 			<id property="food_id" column="food_id" />
 			<result property="cat_id" column="cat_id" />
@@ -94,7 +94,7 @@
 	<select id="getOneItemById" parameterType="int" resultMap="datailItemResult">
 		SELECT i.item_id, user_id, i.food_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
 			item_price, ship_price, item_status, f.cat_id, f.name, f.serving_size, 
-			f.serving_size_unit, f.calories, f.protein, f.grease, f.carbohydrate, f.sugars,
+			f.serving_size_unit, f.calories, f.protein, f.grease, f.carbohydrate, f.sugars, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=#{item_id}) as numOfRegister, 
 			im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 			LEFT JOIN food f ON i.food_id = f.food_id
@@ -155,5 +155,11 @@
 		FROM order_reg
 		WHERE item_id=#{item_id}
 	</select>
-
+	
+	<update id="updateItemStatus">
+		UPDATE item
+		SET item_status = #{item_status}
+		WHERE item_id = #{item_id}
+	</update>
+	
 </mapper>

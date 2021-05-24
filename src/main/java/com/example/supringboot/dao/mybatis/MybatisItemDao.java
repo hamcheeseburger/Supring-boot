@@ -89,6 +89,20 @@ public class MybatisItemDao implements ItemDao {
 		return itemMapper.getItemListByAdmin(user_id);
 	}
 
+	@Override
+	public boolean updateItemStatus(int item_id, String item_status) {
+		// TODO Auto-generated method stub
+		int result = itemMapper.updateItemStatus(item_id, item_status);
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+
 
 	
 }

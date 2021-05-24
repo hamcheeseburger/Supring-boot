@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;

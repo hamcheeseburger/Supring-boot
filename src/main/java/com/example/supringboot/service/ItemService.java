@@ -11,6 +11,7 @@ public interface ItemService {
 	//공구식품 등록
 	int insertItem(Item item);
 	//공구식품 등록을 위한 Food테이블 서치
+	
 	List<Food> searchFoodList(String keyword);
 	//현재 관리자 등록 공구목록
 	List<Item> getItemListByAdmin(int user_id);

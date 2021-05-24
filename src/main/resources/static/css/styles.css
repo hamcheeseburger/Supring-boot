@@ -7473,6 +7473,10 @@ button.bg-dark:focus {
   height: 100% !important;
 }
 
+.fail {
+	background-color: rgb(250, 222, 225);
+}
+
 .h-auto {
   height: auto !important;
 }

@@ -41,7 +41,7 @@
 		FROM item i LEFT JOIN liked l ON i.item_id = l.item_id
 				LEFT JOIN image im ON i.item_id = im.item_id
 				LEFT JOIN food f ON f.food_id = i.food_id
-		WHERE l.user_id=#{user_id}
+		WHERE l.user_id=#{user_id} ORDER BY l.liked_id
 	</select>
 
 	<!-- 공구식품 찜하기 취소 -> 찜한 목록 페이지에서 취소 -->

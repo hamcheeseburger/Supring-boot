@@ -16,7 +16,7 @@ public class Item implements Serializable {
 	private int min_quantity; // 공동구매 최소수량(목표수량)
 	private Timestamp created_dt; // 공동구매 시작일
 	private Timestamp modified_dt; // 내용 수정일
-	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:failure, 성공:success)
+	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:fail, 성공:success)
 	private int item_price; // 식품 가격
 	private int ship_price; // 배송 가격
 	ArrayList<Image> images; // 식품 이미지들

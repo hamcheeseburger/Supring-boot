@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,11 @@ public class ItemServiceImpl implements ItemService{
 	public int insertItem(Item item) {
 		return itemDao.insertItem(item);
 	}
-
+	
 	@Override
+	@Cacheable(value="findFoodList", key="#keyword")
 	public List<Food> searchFoodList(String keyword) {
+		System.out.println("<<searchFoodList>>");
 		return itemDao.searchFoodList(keyword);
 	}
 	

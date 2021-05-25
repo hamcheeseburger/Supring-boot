@@ -72,6 +72,7 @@ layout:decorate="~{mainlayout}">
                             <div class="card-body">
                                 <h4 class="card-title"><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></h4>
                                 <p class="card-text" th:text="${item3.content}"></p>
+                                <b th:text="${item3.percentage} + '% 달성'"></b>
                             </div>
                         </div>
                     </div>

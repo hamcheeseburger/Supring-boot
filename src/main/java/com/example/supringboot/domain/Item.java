@@ -21,6 +21,7 @@ public class Item implements Serializable {
 	private int ship_price; // 배송 가격
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
+	private int percentage;
 	
 	public Item() {
 		super();
@@ -131,5 +132,25 @@ public class Item implements Serializable {
 	}
 	public void setNumOfRegister(int numOfRegister) {
 		this.numOfRegister = numOfRegister;
+		System.out.println("min_quantity : " + min_quantity);
+		System.out.println("numOfRegister : " + numOfRegister);
+		if(numOfRegister != 0) {
+			
+			this.percentage = (int) Math.round(((double) numOfRegister / min_quantity ) * 100);
+		} else {
+			this.percentage = 0;
+		}
+		
+		System.out.println(this.percentage);
+		System.out.println(((double) numOfRegister / min_quantity) * 100);
 	}
+
+	public int getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
+	}
+
 }

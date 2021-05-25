@@ -162,9 +162,11 @@
 		WHERE item_id = #{item_id}
 	</update>
 	
-	<select id="getItemLatest3Rows" resultMap="itemResult">
+	<select id="getItemLatest3Rows" resultMap="searchItemFromMainResultMap">
 		<![CDATA[select * from 
-		(SELECT i.item_id, i.title, i.content, i.item_status, im.image, im.image_id FROM ITEM i, IMAGE im where i.item_status='ongoing' and i.item_id = im.item_id ORDER BY item_id desc) 
+		(SELECT i.item_id, i.title, i.content, i.item_status, im.image, im.image_id, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+		FROM ITEM i, IMAGE im 
+		where i.item_status='ongoing' and i.item_id = im.item_id ORDER BY item_id desc) 
 		where rownum <= 4]]>
 		
 	</select>
@@ -172,7 +174,10 @@
 		<resultMap id="searchItemFromMainResultMap" type="Item">
 		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
 		<result column="title" jdbcType="VARCHAR" property="title" />
-		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="item_status" jdbcType="VARCHAR" property="item_status" />
+		<result column="min_quantity" jdbcType="NUMERIC" property="min_quantity" />
+		<result column="numOfRegister" jdbcType="NUMERIC" property="numOfRegister" />
 		
 		<association property="food" column="food" javaType="Food">
 			<result column="name" jdbcType="VARCHAR" property="name"/>
@@ -189,7 +194,8 @@
 	
 	<select id="searchItemFromMain" parameterType="String" resultMap="searchItemFromMainResultMap">
 		<![CDATA[
-			select * from (select i.item_id, i.title, f.name, im.image, c.cat_name from Item i, Food f, Category c, Image im 
+			select * from (select i.item_id, i.title, f.name, im.image, c.cat_name, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+			from Item i, Food f, Category c, Image im 
 				where i.food_id = f.food_id and f.cat_id = c.cat_id and i.item_id = im.item_id 
 					and (name like '%' ||  #{keyword} || '%' or cat_name like '%' ||  #{keyword} || '%' or title like '%' ||  #{keyword} || '%')
 					ORDER BY i.item_id) where rownum <= 4

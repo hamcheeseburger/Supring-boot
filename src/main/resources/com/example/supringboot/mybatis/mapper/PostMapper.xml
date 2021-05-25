@@ -114,6 +114,7 @@ FROM
 							   p.title LIKE '%' || #{searchKeyword} || '%'
 							OR p.content LIKE '%' || #{searchKeyword} || '%'
 							OR a.name LIKE '%' || #{searchKeyword} || '%'
+							OR p.food_name LIKE '%' || #{searchKeyword} || '%'
 						)
 				</otherwise>
 			</choose>
@@ -169,6 +170,7 @@ FROM
 							   p.title LIKE '%' || #{searchKeyword} || '%'
 							OR p.content LIKE '%' || #{searchKeyword} || '%'
 							OR a.name LIKE '%' || #{searchKeyword} || '%'
+							OR p.food_name LIKE '%' || #{searchKeyword} || '%'
 						)
 				</otherwise>
 			</choose>
@@ -290,6 +292,7 @@ WHERE ROWNUM <= #{recordsPerPage}
 							   p.title LIKE '%' || #{searchKeyword} || '%'
 							OR p.content LIKE '%' || #{searchKeyword} || '%'
 							OR a.name LIKE '%' || #{searchKeyword} || '%'
+							OR p.food_name LIKE '%' || #{searchKeyword} || '%'
 						)
 				</otherwise>
 			</choose>

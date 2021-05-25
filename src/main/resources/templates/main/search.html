@@ -26,15 +26,18 @@ layout:decorate="~{mainlayout}">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="item : ${itemList}">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <a th:href="@{/item/detail(itemId=${item.item_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h4 class="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}">Project One</a></h4>
+                                <h6 class="card-title"><b th:text="${item.title}"></b></h6>
                                 <p class="card-text" th:text="${item.content}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
                             </div>
                         </div>
                     </div>
                 </div>
                
+            </div>
+            <div align="center" th:if="${#lists.size(itemList) == 0}">
+            	<b>검색결과가 없습니다.</b>
             </div>
         </section>
         <hr class="my-0" />
@@ -45,15 +48,18 @@ layout:decorate="~{mainlayout}">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="post : ${postList}">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <a th:href="@{/post/viewPost(post_id=${post.post_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h4 class="card-title"><a th:href="@{/post/viewPost(post_id=${post.post_id})}" th:text="${post.title}">Project One</a></h4>
-                                <p class="card-text" th:text="${post.content}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+                                <h6 class="card-title"><b th:text="${post.title}"></b></h6>
+                                <p class="card-text" style="color:gray;" th:text="${post.user.name}"></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
+            </div>
+            <div align="center" th:if="${#lists.size(postList) == 0}">
+            	<b>검색결과가 없습니다.</b>
             </div>
             <div th:if="${#lists.size(postList) != 0}" align="center" style="padding:10px;">
                	<a th:href="@{/post/getPostList(searchKeyword=${keyword})}">전체보기</a>

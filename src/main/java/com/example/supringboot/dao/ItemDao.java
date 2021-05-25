@@ -33,4 +33,6 @@ public interface ItemDao {
 	
 	// 마감일 만료시 아이템 상태 변경
 	public boolean updateItemStatus(int item_id, String item_status);
+	
+	public List<Item> getItemLatest3Rows();
 }

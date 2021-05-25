@@ -26,4 +26,6 @@ public interface ItemService {
 	
 	// item 마감일에 대한 스케쥴러 시작
 	void startScheduler(int item_id, Date end_dt);
+	// Item 최신글 3개 가져오기
+	List<Item> getItemLatest3Rows();
 }

@@ -45,4 +45,6 @@ public interface ItemMapper {
 	
 	// 마감일 만료시 아이템 상태 변경
 	public int updateItemStatus(@Param("item_id") int item_id, @Param("item_status") String item_status) throws DataAccessException;
+
+	public List<Item> getItemLatest3Rows() throws DataAccessException;
 }

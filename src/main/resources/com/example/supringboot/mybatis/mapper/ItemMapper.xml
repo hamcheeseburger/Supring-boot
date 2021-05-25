@@ -162,4 +162,9 @@
 		WHERE item_id = #{item_id}
 	</update>
 	
+	<select id="getItemLatest3Rows" resultType="Item">
+		<![CDATA[select * from (SELECT * FROM ITEM ORDER BY item_id desc) where rownum <= 3]]>
+		
+	</select>
+	
 </mapper>

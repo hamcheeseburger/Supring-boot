@@ -158,12 +158,22 @@ class SupringbootApplicationTests {
 		}
 	}
 	
-	@Test
+//	@Test
+	@Ignore
 	void updateItemStatus_test() {
 		boolean result = itemDao.updateItemStatus(31, "fail");
 		
 		assertEquals(result, true);
 	}
 	
+	@Test
+	void getItemLatest3rows_test() {
+		List<Item> itemList = itemDao.getItemLatest3Rows();
+		
+		for(Item item : itemList) {
+			System.out.println("item_id : " + item.getItem_id());
+			System.out.println("item title : " + item.getTitle());
+		}
+	}
 	
 }

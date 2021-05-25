@@ -103,6 +103,12 @@ public class MybatisItemDao implements ItemDao {
 		return false;
 	}
 
+	@Override
+	public List<Item> getItemLatest3Rows() {
+		// TODO Auto-generated method stub
+		return itemMapper.getItemLatest3Rows();
+	}
+
 
 	
 }

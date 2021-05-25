@@ -96,6 +96,12 @@ public class ItemServiceImpl implements ItemService{
 		scheduler.schedule(updateTableRunner, end_dt);
 		System.out.println("startScheduler 실행");
 	}
+
+	@Override
+	public List<Item> getItemLatest3Rows() {
+		// TODO Auto-generated method stub
+		return itemDao.getItemLatest3Rows();
+	}
 	
 	
 }

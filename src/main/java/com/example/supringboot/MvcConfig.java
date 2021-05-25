@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.example.supringboot.controller.MainPageInterceptor;
 import com.example.supringboot.controller.SignOnInterceptor;
 
 import com.example.supringboot.interceptor.*;
@@ -28,6 +29,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	
 	@Autowired
 	private LoggerInterceptor loggerInterceptor;
+	
+	@Autowired
+	private MainPageInterceptor mainInterceptor;
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -43,6 +47,9 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(loggerInterceptor)
 				.addPathPatterns("/post/**")
 				.excludePathPatterns("/css/**", "/js/**", "/board/**", "/assets/**", "/adminLTE/**");
+	
+		registry.addInterceptor(mainInterceptor)
+				.addPathPatterns("/");
 	}
 	
 	@Bean

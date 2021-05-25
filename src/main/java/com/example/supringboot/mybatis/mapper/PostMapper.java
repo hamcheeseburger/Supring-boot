@@ -33,5 +33,9 @@ public interface PostMapper {
 	
 //	검색 후 결과에 해당하는 게시글 갯수 가져오기
 	int selectPostTotalCount(Post post) throws DataAccessException;
-
+	
+//	최신글 3개 가져오기
+	ArrayList<Post> getPostLatest3Rows() throws DataAccessException;
+	
+	ArrayList<Post> searchPostFromMain(String keyword) throws DataAccessException;
 }

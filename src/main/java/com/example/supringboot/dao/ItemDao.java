@@ -1,5 +1,6 @@
 package com.example.supringboot.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.supringboot.domain.Food;
@@ -35,4 +36,6 @@ public interface ItemDao {
 	public boolean updateItemStatus(int item_id, String item_status);
 	
 	public List<Item> getItemLatest3Rows();
+	
+	public ArrayList<Item> searchItemFromMain(String keyword);
 }

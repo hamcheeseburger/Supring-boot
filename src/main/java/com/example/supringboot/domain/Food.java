@@ -14,6 +14,7 @@ public class Food implements Serializable {
 	private int grease; // 지방 수치
 	private int carbohydrate; // 탄수화물 수치
 	private int sugars; // 당 수치
+	private Category category;
 	
 	public Food() {
 		super();
@@ -93,6 +94,12 @@ public class Food implements Serializable {
 	public void setSugars(int sugars) {
 		this.sugars = sugars;
 	}
-	
-	
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 }

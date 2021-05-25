@@ -162,9 +162,38 @@
 		WHERE item_id = #{item_id}
 	</update>
 	
-	<select id="getItemLatest3Rows" resultType="Item">
-		<![CDATA[select * from (SELECT * FROM ITEM ORDER BY item_id desc) where rownum <= 3]]>
+	<select id="getItemLatest3Rows" resultMap="itemResult">
+		<![CDATA[select * from 
+		(SELECT i.item_id, i.title, i.content, i.item_status, im.image, im.image_id FROM ITEM i, IMAGE im where i.item_status='ongoing' and i.item_id = im.item_id ORDER BY item_id desc) 
+		where rownum <= 4]]>
 		
+	</select>
+	
+		<resultMap id="searchItemFromMainResultMap" type="Item">
+		<id column="item_id" jdbcType="NUMERIC" property="item_id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		
+		<association property="food" column="food" javaType="Food">
+			<result column="name" jdbcType="VARCHAR" property="name"/>
+			<association property="category" column="category" javaType="Category">
+				<result column="cat_name" jdbcType="VARCHAR" property="cat_name" />
+			</association>
+		</association>
+		
+		<collection property="images" ofType="Image">
+			<id property="image_id" column="image_id" />
+			<result property="image" column="image" />
+		</collection> 
+	</resultMap>
+	
+	<select id="searchItemFromMain" parameterType="String" resultMap="searchItemFromMainResultMap">
+		<![CDATA[
+			select * from (select i.item_id, i.title, f.name, im.image, c.cat_name from Item i, Food f, Category c, Image im 
+				where i.food_id = f.food_id and f.cat_id = c.cat_id and i.item_id = im.item_id 
+					and (name like '%' ||  #{keyword} || '%' or cat_name like '%' ||  #{keyword} || '%' or title like '%' ||  #{keyword} || '%')
+					ORDER BY i.item_id) where rownum <= 4
+		]]>
 	</select>
 	
 </mapper>

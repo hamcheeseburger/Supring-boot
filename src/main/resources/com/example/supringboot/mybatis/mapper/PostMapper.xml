@@ -295,6 +295,39 @@ WHERE ROWNUM <= #{recordsPerPage}
 			</choose>
 		</if>
 	</select>
-
-
+	
+	
+	<select id="getPostLatest3Rows" resultMap="searchPostFromMainResultMap">
+		<![CDATA[
+		select * from 
+		(SELECT p.post_id, p.title, p.content, p.trade_status, p.trade_type, im.image_id, im.image, a.user_id, a.name
+		 FROM Post p, Image im, Account a where p.trade_status = 0 and p.post_id = im.post_id and a.user_id = p.user_id ORDER BY post_id desc)
+		 where rownum <= 4]]>
+	</select>
+		
+	<resultMap id="searchPostFromMainResultMap" type="Post">
+		<id column="post_id" jdbcType="NUMERIC" property="post_id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="food_name" jdbcType="VARCHAR" property="food_name" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="trade_status" jdbcType="NUMERIC" property="trade_status" />
+		<result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+		<association property="user" column="user_id" javaType="Account">
+			<id property="user_id" column="user_id" />
+		
+			<result property="name" column="name" />
+		
+		</association>
+		<collection property="images" ofType="Image">
+		<id property="image_id" column="image_id" />
+		<result property="image" column="image" />
+	</collection>
+	</resultMap>
+	
+	<select id="searchPostFromMain" parameterType="String" resultMap="searchPostFromMainResultMap">
+		<![CDATA[select * from 
+			(select p.post_id, p.title, p.food_name, a.user_id, a.name, im.image_id, im.image from Post p, Image im, Account a
+			where p.post_id = im.post_id and p.user_id = a.user_id and (p.food_name like '%' ||  #{keyword} || '%' or p.title like '%' ||  #{keyword} || '%') ORDER BY p.post_id)
+			where rownum <= 4]]>
+	</select>
 </mapper>

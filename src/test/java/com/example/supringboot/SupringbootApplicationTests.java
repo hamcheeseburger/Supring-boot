@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.example.supringboot.dao.mybatis.MybatisAccountDao;
 import com.example.supringboot.dao.mybatis.MybatisAdminDao;
 import com.example.supringboot.dao.mybatis.MybatisItemDao;
+import com.example.supringboot.dao.mybatis.MybatisPostDao;
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.domain.Food;
@@ -35,6 +36,9 @@ class SupringbootApplicationTests {
 	
 	@Autowired
 	MybatisItemDao itemDao;
+	
+	@Autowired
+	MybatisPostDao postDao;
 	
 //	@Test
 	@Ignore
@@ -166,7 +170,8 @@ class SupringbootApplicationTests {
 		assertEquals(result, true);
 	}
 	
-	@Test
+//	@Test
+	@Ignore
 	void getItemLatest3rows_test() {
 		List<Item> itemList = itemDao.getItemLatest3Rows();
 		
@@ -176,4 +181,37 @@ class SupringbootApplicationTests {
 		}
 	}
 	
+//	@Test
+	@Ignore
+	void getPostLatest3rows_test() {
+		ArrayList<Post> postList = postDao.getPostLatest3Rows();
+		
+		for(Post post : postList) {
+			System.out.println("post_id : " + post.getPost_id());
+			System.out.println("post title : " + post.getTitle());
+		}
+	}
+	
+//	@Test
+	@Ignore
+	void searchFromMain_test() {
+		ArrayList<Item> itemList = itemDao.searchItemFromMain("과자");
+		
+		for(Item item : itemList) {
+			System.out.println("item_id : " + item.getItem_id());
+			System.out.println("item title : " + item.getTitle());
+		}
+	}
+	
+	@Test
+	void searchPostFromMain_test() {
+		ArrayList<Post> postList = postDao.searchPostFromMain("허니");
+		
+		for(Post post : postList) {
+			System.out.println("post_id : " + post.getPost_id());
+			System.out.println("post title : " + post.getTitle());
+			
+			System.out.println("image : " + post.getImages().get(0));
+		}
+	}
 }

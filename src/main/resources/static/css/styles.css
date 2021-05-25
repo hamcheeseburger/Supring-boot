@@ -3996,6 +3996,11 @@ input[type=button].btn-block {
   margin-bottom: 0;
   list-style: none;
 }
+
+.main-search {
+	padding: 10px;
+}
+
 .navbar-nav .nav-link {
   padding-right: 0;
   padding-left: 0;

@@ -123,5 +123,18 @@ public class MybatisPostDao  implements PostDao{
 		return postMapper.selectPostTotalCount(post);
 	}
 
+//	Post 최신글 3개 가져오기
+	@Override
+	public ArrayList<Post> getPostLatest3Rows() {
+		// TODO Auto-generated method stub
+		return postMapper.getPostLatest3Rows();
+	}
+
+	@Override
+	public ArrayList<Post> searchPostFromMain(String keyword) {
+		// TODO Auto-generated method stub
+		return postMapper.searchPostFromMain(keyword);
+	}
+
 
 }

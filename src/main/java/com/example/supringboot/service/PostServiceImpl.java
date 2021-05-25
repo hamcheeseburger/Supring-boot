@@ -170,5 +170,11 @@ public class PostServiceImpl implements PostService{
 		
 		return result;
 	}
+
+	@Override
+	public ArrayList<Post> getPostLatest3Rows() {
+		// TODO Auto-generated method stub
+		return postDao.getPostLatest3Rows();
+	}
 	
 }

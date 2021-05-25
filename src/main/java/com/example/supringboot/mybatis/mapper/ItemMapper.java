@@ -1,5 +1,6 @@
 package com.example.supringboot.mybatis.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -47,4 +48,6 @@ public interface ItemMapper {
 	public int updateItemStatus(@Param("item_id") int item_id, @Param("item_status") String item_status) throws DataAccessException;
 
 	public List<Item> getItemLatest3Rows() throws DataAccessException;
+
+	public ArrayList<Item> searchItemFromMain(String keyword) throws DataAccessException;
 }

@@ -11,6 +11,6 @@ public class SignOffController {
 	public String handleRequest(HttpSession session) throws Exception {
 		session.removeAttribute("userSession");
 		session.invalidate();
-		return "main";
+		return "redirect:/";
 	}
 }

@@ -109,6 +109,9 @@ public class MybatisItemDao implements ItemDao {
 		return itemMapper.getItemLatest3Rows();
 	}
 
-
-	
+	@Override
+	public ArrayList<Item> searchItemFromMain(String keyword) {
+		// TODO Auto-generated method stub
+		return itemMapper.searchItemFromMain(keyword);
+	}
 }

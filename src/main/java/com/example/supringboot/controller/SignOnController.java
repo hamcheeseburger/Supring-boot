@@ -32,9 +32,6 @@ public class SignOnController {
 	@Value("/Account/signOnForm")
 	private String signOnFormView;
 	
-	@Value("main")
-	private String signOnSuccessView;
-	
 	@Autowired
 	private SignOnValidator signOnValidator;
 	
@@ -86,6 +83,6 @@ public class SignOnController {
 			return new ModelAndView("redirect:" + forwardAction);
 		}
 		
-		return new ModelAndView(signOnSuccessView);
+		return new ModelAndView("redirect:/");
 	}
 }

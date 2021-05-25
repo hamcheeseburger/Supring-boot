@@ -18,4 +18,6 @@ public interface PostDao {
 	
 	public ArrayList<Post> selectPostList(Post post);
 	public int selectPostTotalCount (Post post);
+	public ArrayList<Post> getPostLatest3Rows();
+	public ArrayList<Post> searchPostFromMain(String keyword);
 }

@@ -34,7 +34,14 @@
 				<input type="number" id="amount" name="amount" value="1" min="1" />
 				<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 				<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
-				<input type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
+				
+				<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
+					type="submit" value="수정하기" onclick="javascript: form.action='/item/updateItemForm';" />
+				<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
+					type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
+				
+				<input th:if="${session.userSession != null && session.userSession.account.admin != true}"
+					type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
 			</form>
 		</div>
 	</div>

@@ -127,4 +127,9 @@ public class MybatisItemDao implements ItemDao {
 		// TODO Auto-generated method stub
 		return itemMapper.selectAllCategory();
 	}
+
+	@Override
+	public Category getCategoryById(int cat_id) {
+		return itemMapper.getCategoryById(cat_id);
+	}
 }

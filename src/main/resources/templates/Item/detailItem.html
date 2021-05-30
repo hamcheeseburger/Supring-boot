@@ -12,6 +12,7 @@
 		<h2 align="center">공동구매 식품 상세보기</h2>
 	
 		<div align="center">
+			<p th:text="'카테고리: ' + ${category.cat_name}"></p>
 			<p th:if="${detail.images.size == 0}">사진 없음</p>
 			<p th:if="${detail.images.size != 0}">
 				<a href="#">

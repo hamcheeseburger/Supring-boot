@@ -131,6 +131,11 @@ public class ItemServiceImpl implements ItemService{
 		// TODO Auto-generated method stub
 		return itemDao.selectAllCategory();
 	}
+
+	@Override
+	public Category getCategoryById(int cat_id) {
+		return itemDao.getCategoryById(cat_id);
+	}
 	
 	
 }

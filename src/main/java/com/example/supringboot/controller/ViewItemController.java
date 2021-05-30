@@ -65,7 +65,11 @@ public class ViewItemController {
 	public String detailItem(@RequestParam int itemId, ModelMap model) {
 		Item item = wishService.getDetailItem(itemId);
 		System.out.println("detail food name: " + item.getFood().getName());
+		
+		Category cat = itemService.getCategoryById(item.getFood().getCat_id());
+		
 		model.put("detail", item);
+		model.put("category", cat);
 		
 		return "/Item/detailItem";
 	}

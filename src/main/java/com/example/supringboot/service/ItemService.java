@@ -37,4 +37,6 @@ public interface ItemService {
 	public ArrayList<Item> selectItemWithCategory(int cat_id);
 	
 	public ArrayList<Category> selectAllCategory();
+	
+	public Category getCategoryById(int cat_id);
 }

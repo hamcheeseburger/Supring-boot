@@ -212,6 +212,6 @@
 	</select>
 	
 	<select id="selectAllCategory" resultType="Category">
-		SELECT * FROM category;
+		SELECT * FROM category
 	</select>
 </mapper>

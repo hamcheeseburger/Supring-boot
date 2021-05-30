@@ -9,9 +9,54 @@
 </head>
 <body>
 	<div layout:fragment="custom-content" align="center">
-		<h2 align="center">공동구매 식품 목록</h2>
+		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:white;">
+			<div class="container">
+                <a th:href="@{/item/list}" class="nav-link"><b>카테고리</b></a>
+                <div class="collapse navbar-collapse">
+                    
+                    <ul class="navbar-nav ml-auto">
+               
+                        <li class="nav-item" th:each="category : ${categoryList}">
+                        	<a th:href="@{/item/list(cat_id=${category.cat_id})}" class="nav-link"><b th:text="${category.cat_name}" style="color:black;"></b></a>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+          
+        </nav>
 		
-		<div align="center">
+		<div th:if="${catItemList}" class="py-5 bg-light">
+			<div class="container">
+                <div class="row">
+                	<div th:if="${catItemList.size() == 0}">
+                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	</div>
+                    <div th:each="item : ${catItemList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
+                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <div class="card-body">
+                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
+                                식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
+<!--                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
+                                목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/>
+                                현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
+                                상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
+                                등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/>
+                                마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/> -->
+                         
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+               </div>
+		</div>
+		
+		<h2 th:if="${map}" align="center">공동구매 식품 목록</h2>
+		
+		<div th:if="${map}" align="center">
 				<p th:text="${'공동구매 식품 전체 개수: ' + map.allItemCount}">공동구매 식품 전체 개수</p>
 				<table border="1">
 					<tr>
@@ -47,9 +92,9 @@
 				</table>
 		</div>
 		
-		<h2 align="center">진행중인 식품 목록</h2>
+		<h2 th:if="${map}" align="center">진행중인 식품 목록</h2>
 		
-		<div align="center">
+		<div th:if="${map}" align="center">
 				<p th:text="${'진행중인 공동구매 식품 개수: ' + map.goingItemCount}">진행중인 공동구매 식품 개수</p>
 				<table border="1">
 					<tr>
@@ -85,9 +130,9 @@
 				</table>
 		</div>
 		
-		<h2 align="center">마감일 지난 공동구매 식품 목록</h2>
+		<h2 th:if="${map}" align="center">마감일 지난 공동구매 식품 목록</h2>
 		
-		<div align="center">
+		<div th:if="${map}" align="center">
 				<p th:text="${'마감일 지난 공동구매 식품 개수: ' + map.endItemCount}">마감일 지난 공동구매 식품 개수</p>
 				<table border="1">
 					<tr>

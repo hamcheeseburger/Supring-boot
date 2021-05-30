@@ -6,6 +6,18 @@
 <meta charset="UTF-8">
 <title>공동구매 신청 내역 상세보기</title>
 
+<script th:inlne="jacascript"> 
+	/*<![CDATA[*/
+	var name = "[[${detail.item.food.name}]]";
+	/*]]>*/
+				
+	function applyCancel(foodName, orderId) {
+		if (confirm("'" + name + "' 신청을 취소하시겠습니까?")) {
+			location.href="http://localhost:8081/item/applying/cancel?applyId="+orderId;	
+		}
+	}
+</script>​
+
 </head>
 
 <body>
@@ -13,13 +25,6 @@
 	<div layout:fragment="custom-content" align="center">
 		<section class="py-5">
 			<div class="container">
-				<script type="text/javascript"> 
-					function applyCancel(orderId) {
-						if (confirm("신청을 취소하시겠습니까?")) {
-							location.href="http://localhost:8081/item/applying/cancel?applyId="+orderId;	
-						}
-					}
-				</script>​
 			
 				<h3>공동구매 신청 내역 상세보기</h3>
 				

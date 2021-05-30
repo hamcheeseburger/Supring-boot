@@ -3,12 +3,16 @@ package com.example.supringboot.service;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
 import com.example.supringboot.dao.ItemDao;
 import com.example.supringboot.domain.Food;
@@ -59,6 +63,17 @@ public class ItemServiceImpl implements ItemService{
 	public int progressItem(int item_id) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+
+        return validatorResult;
 	}
 
 	@Override

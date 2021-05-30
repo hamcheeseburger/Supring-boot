@@ -5,7 +5,7 @@ layout:decorate="~{mainlayout}" >
 <head>
 <meta charset="UTF-8">
 <script>
-
+table {margin-left: 170px;}
 </script>
 
 <title>공구식품 등록</title>
@@ -15,15 +15,14 @@ layout:decorate="~{mainlayout}" >
 	<section class="py-5">
 	<div class="container">
 
-<div align="center">
-<h1>공동 구매 상품 등록</h1> <br>
-<!-- registration form  -->
+
+<h1 align="center">공동 구매 상품 등록</h1> <br>
 
 <form name="searchFood" method="GET">
-	<table align="left">
+	<table>
 		<tr>
 			<td>상품 검색</td>
-			<td><input type="text" style="width: 500" name="keyword"></td>
+			<td><input th:placeholder="${keyword}" type="text" style="width: 500" name="keyword"></td>
 			<td><input type="submit" value="검색"/> </td>
 		</tr>
 	</table>
@@ -31,41 +30,40 @@ layout:decorate="~{mainlayout}" >
 
 <form method="POST" enctype="multipart/form-data" th:object="${itemForm}"> <!-- action="/item/adminList" -->
 	<table>
-		<!--
-		<tr>
-			<td>식품 검색</td>
-			<td><input type="text" style="width: 300" name="keyword"></td>
-			<td><a href='<c:url value="/item/"/>'>검색</a> </td>
-		</tr>-->
 		<tr>
 			<td>상품명</td>
-			<!--<td th:text="${f.name}">name</td>-->
 			<td>
-			<select name="food" onClick="getFoodInfo()">
+			<select name="food_id" onClick="getFoodInfo()">
+					<option th:if="${foodname != null}" th:text="${foodname}"></option>
 					<option th:each="f : ${foodList}" th:text="${f.name}" th:value="${f.food_id}">임시</option>
 			</select>
 			</td>
 		</tr>
 		<tr>
 			<td>상품 제목</td>
-			<td><input type="text" style="width: 300" name="title"></td>
+			<td><input type="text" style="width: 300" name="title">
+			<span th:errors="*{title}"></span></td>
 		</tr>
 		<tr>
 			<td>상품 금액</td>
-			<td><input type="text" style="width: 300" name="price"></td>
+			<td><input type="text" style="width: 300" name="item_price">
+			<span th:errors="*{item_price}"></span></td>
 		</tr>
 		<tr>
 			<td>배송비</td>
-			<td><input type="text" style="width: 300" name="ship_price"></td>
+			<td><input type="text" style="width: 300" name="ship_price">
+			<span th:errors="*{ship_price}"></span></td>
 		</tr>
 		<tr>
 			<td>기간</td>
 			<td><input type="text" style="width: 300" name="created_dt" placeholder="년도/월/일"> &nbsp; ~ &nbsp;
-				<input type="text" style="width: 300" name="end_dt" placeholder="년도/월/일"></td>
+				<input type="text" style="width: 300" name="end_dt" placeholder="년도/월/일">
+				<span th:errors="*{created_dt}"></span><span th:errors="*{end_dt}"></span></td>
 		</tr>
 		<tr>
 			<td>목표 수량</td>
-			<td><input type="text" style="width: 300" name="minQuantity"></td>
+			<td><input type="text" style="width: 300" name="min_quantity">
+			<span th:errors="*{min_quantity}"></span></td>
 		</tr>
 		<tr>
 			<td>상세 설명</td>
@@ -80,7 +78,7 @@ layout:decorate="~{mainlayout}" >
 	<br/>
 	<input type="submit" value="등록하기">
 </form>
-</div>
+
 
 	</div>
 	</section>

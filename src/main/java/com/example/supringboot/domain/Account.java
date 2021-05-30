@@ -22,6 +22,7 @@ public class Account implements Serializable {
 	private String zip; // 우편번호
 	private String phone; // 핸드폰 번호
 	private boolean admin; // 관리자 여부 (true: 관리자, false: 일반 사용자)
+	private boolean saveId;
 	
 	public Account() {
 		super();
@@ -42,6 +43,14 @@ public class Account implements Serializable {
 		this.admin = admin;
 	}
 	
+	public boolean isSaveId() {
+		return saveId;
+	}
+
+	public void setSaveId(boolean saveId) {
+		this.saveId = saveId;
+	}
+
 	public int getUser_id() {
 		return user_id;
 	}

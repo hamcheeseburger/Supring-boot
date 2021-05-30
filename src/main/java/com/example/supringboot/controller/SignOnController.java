@@ -1,6 +1,8 @@
 package com.example.supringboot.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +50,7 @@ public class SignOnController {
 	}
 	
 	@PostMapping
-	public ModelAndView handleLogin(HttpServletRequest req, 
+	public ModelAndView handleLogin(HttpServletRequest req, HttpServletResponse res,
 			@ModelAttribute("account") Account account,  BindingResult result,
 			@RequestParam(value="forwardAction", required=false) String forwardAction,
 			Model model) {
@@ -56,10 +58,7 @@ public class SignOnController {
 		
 		signOnValidator.validate(account, result);
 		if(result.hasErrors()) return new ModelAndView(signOnFormView, "account", account);
-		
-		// 로그인 검증
-//		Account dbAccount = supringService.getAccount(account.getLogin_id(), account.getPassword());
-		
+			
 		Account dbAccount = supringService.getAccountByLoginId(account.getLogin_id());
 				
 		if(dbAccount == null) {
@@ -78,7 +77,7 @@ public class SignOnController {
 		UserSession userSession = new UserSession();
 		userSession.setAccount(dbAccount);
 		model.addAttribute("userSession", userSession);
-
+		
 		if(forwardAction != null) {
 			return new ModelAndView("redirect:" + forwardAction);
 		}

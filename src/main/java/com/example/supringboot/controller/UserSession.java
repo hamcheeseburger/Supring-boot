@@ -11,6 +11,7 @@ import com.example.supringboot.domain.Item;
 public class UserSession implements Serializable{
 	private Account account;
 
+
 	public Account getAccount() {
 		return account;
 	}

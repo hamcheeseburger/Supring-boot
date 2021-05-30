@@ -71,7 +71,7 @@
 		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
 		FROM Order_reg o, Item i, Image im, Food f
 		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and i.item_id = im.item_id and f.food_id = i.food_id 
-		and i.item_status !='success' ORDER BY o.order_reg_id
+		and i.item_status !='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
 	</select>
 	
 	<!-- 성공한 공구신청목록 출력 select -->
@@ -80,7 +80,7 @@
 		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
 		FROM Order_reg o, Item i, Image im, Food f
 		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and im.item_id = i.item_id and f.food_id = i.food_id
-		and i.item_status = 'success' ORDER BY o.order_reg_id
+		and i.item_status = 'success' ORDER BY o.ord_reg_dt DESC
 	</select>
 	
 	<resultMap id="associPostAccountImage" type="Post">
@@ -114,7 +114,7 @@
 		p.created_dt, p.modified_dt, p.price, p.quantity, p.unit, p.exp_dt,
 		a.user_id, a.name, i.image_id, i.image, p.ship_type
 		FROM Post p, Account a, Image i
-		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id ORDER BY p.post_id
+		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id ORDER BY p.trade_status
 	</select>
 	
 	<resultMap id="associCommtPostAccount" type="Comment">
@@ -133,7 +133,7 @@
 	<select id="selectCommentsWithUserId" parameterType="int" resultMap="associCommtPostAccount">
 		SELECT c.comment_id, c.content, c.created_dt, c.modified_dt, c.secret, p.post_id, p.title
 		FROM Commt c, Post p
-		WHERE c.user_id=#{user_id} and c.post_id = p.post_id ORDER BY c.comment_id
+		WHERE c.user_id=#{user_id} and c.post_id = p.post_id ORDER BY c.comment_id DESC
 	</select>
 
 </mapper>

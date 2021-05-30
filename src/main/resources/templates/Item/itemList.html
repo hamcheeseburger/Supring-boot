@@ -38,12 +38,13 @@
                             <div class="card-body">
                                 <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
-<!--                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
-                                목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/>
-                                현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
+                                식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
+                                <strong class="card-text" th:text="${item.percentage} + '% 달성'"></strong> <br/>
+<!--                                 목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/> -->
+<!--                                 현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/> -->
                                 상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
-                                등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/>
-                                마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/> -->
+<!--                                 등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/> -->
+<!--                                 마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/>  -->
                          
 
                             </div>

@@ -5,88 +5,104 @@
 <head>
 <meta charset="UTF-8">
 <title>공동구매 신청 내역 상세보기</title>
+
 </head>
+
 <body>
 
 	<div layout:fragment="custom-content" align="center">
-		<h3>공동구매 신청 내역 상세보기</h3>
-		
-		<div style="width:500px; text-align:center">
-		    <div class="card-body">
-		    	<div class="form-group">
-		    		<div th:if="${detail.item.images.size != 0}">
-						<img th:src="@{'data:image/jpeg;base64,'+${detail.item.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
-					</div>
-					<div th:unless="${detail.item.images.size != 0}">
-						<p>사진 없음</p>
-					</div>
-		    	</div>
-		    
-		    	<div class="form-group">
-		           <label>식품 이름: </label> 
-		            <b th:text="${detail.item.food.name}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>수량: </label> 
-		            <b th:text="${detail.quantity}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>가격: </label> 
-		            <b th:text="${itemTotalPrice}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>배송비: </label> 
-		            <b th:text="${detail.item.ship_price}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>신청자 이름: </label> 
-		            <b th:text="${detail.user.name}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>연락처: </label>
-		            <b th:text="${detail.user.phone}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>이메일: </label>
-		            <b th:text="${detail.user.email}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>수령인: </label>
-		            <b th:text="${detail.receiver_name}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>배송주소1: </label>
-		            <b th:text="${detail.ship_addr1}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>배송주소2: </label>
-		            <b th:text="${detail.ship_addr2}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>우편번호: </label>
-		            <b th:text="${detail.ship_zip}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>카드타입: </label>
-		            <b th:text="${detail.card_type}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>카드번호: </label>
-		            <b th:text="${detail.card_num}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>카드 유효기간: </label>
-		            <b th:text="${detail.card_exp_dt}"></b>
-		       </div>
-		       <div class="form-group">
-		           <label>총 금액: </label>
-		            <b th:text="${detail.ord_price}"></b>
-		       </div>
-			</div>
+		<section class="py-5">
+			<div class="container">
+				<script type="text/javascript"> 
+					function applyCancel(orderId) {
+						if (confirm("신청을 취소하시겠습니까?")) {
+							location.href="http://localhost:8081/item/applying/cancel?applyId="+orderId;	
+						}
+					}
+				</script>​
 			
-			<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''">돌아가기</button>
-			<button type="button" th:onclick="'location.href=\''+ @{/item/applying/cancel(applyId=${detail.order_reg_id})} + '\''">신청 취소</button>
-		</div>
+				<h3>공동구매 신청 내역 상세보기</h3>
+				
+				<div style="width:500px; text-align:center">
+				    <div class="card-body">
+				    	<div class="form-group">
+				    		<div th:if="${detail.item.images.size != 0}">
+								<img th:src="@{'data:image/jpeg;base64,'+${detail.item.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
+							</div>
+							<div th:unless="${detail.item.images.size != 0}">
+								<p>사진 없음</p>
+							</div>
+				    	</div>
+				    
+				    	<div class="form-group">
+				           <label>식품 이름: </label> 
+				            <b th:text="${detail.item.food.name}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>수량: </label> 
+				            <b th:text="${detail.quantity}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>가격: </label> 
+				            <b th:text="${itemTotalPrice}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>배송비: </label> 
+				            <b th:text="${detail.item.ship_price}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>신청자 이름: </label> 
+				            <b th:text="${detail.user.name}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>연락처: </label>
+				            <b th:text="${detail.user.phone}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>이메일: </label>
+				            <b th:text="${detail.user.email}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>수령인: </label>
+				            <b th:text="${detail.receiver_name}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>배송주소1: </label>
+				            <b th:text="${detail.ship_addr1}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>배송주소2: </label>
+				            <b th:text="${detail.ship_addr2}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>우편번호: </label>
+				            <b th:text="${detail.ship_zip}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>카드타입: </label>
+				            <b th:text="${detail.card_type}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>카드번호: </label>
+				            <b th:text="${detail.card_num}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>카드 유효기간: </label>
+				            <b th:text="${detail.card_exp_dt}"></b>
+				       </div>
+				       <div class="form-group">
+				           <label>총 금액: </label>
+				            <b th:text="${detail.ord_price}"></b>
+				       </div>
+					</div>
+					
+					<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''">돌아가기</button>
+					<button th:if="${detail.item.item_status == 'ongoing'}"
+						th:onclick="|javascript:applyCancel(${detail.order_reg_id})|" >신청 취소</button>
+					<!-- <button type="button" th:onclick="'location.href=\''+ @{/item/applying/cancel(applyId=${detail.order_reg_id})} + '\''">신청 취소</button> -->
+				</div>
+			</div>
+		</section>
 	</div>
 </body>
 </html>

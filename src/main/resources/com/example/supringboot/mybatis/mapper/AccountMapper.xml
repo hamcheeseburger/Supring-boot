@@ -66,21 +66,38 @@
 	</resultMap>
 	
 	<!-- 진행중, 실패한 공구신청목록 출력 Select -->
-	<select id="selectOrderRegWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+	<!-- <select id="selectOrderRegWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
 		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
 		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
 		FROM Order_reg o, Item i, Image im, Food f
 		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and i.item_id = im.item_id and f.food_id = i.food_id 
 		and i.item_status !='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
+	</select> -->
+	
+	<select id="selectOrderRegWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
+		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
+		FROM Item i INNER JOIN Order_reg o ON i.item_id = o.item_id
+			 LEFT JOIN Image im ON i.item_id = im.item_id 
+			 INNER JOIN Food f ON i.food_id = f.food_id
+		WHERE o.user_id=#{user_id} and i.item_status !='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
 	</select>
 	
 	<!-- 성공한 공구신청목록 출력 select -->
-	<select id="selectOrderWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+	<!-- <select id="selectOrderWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
 		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
 		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
 		FROM Order_reg o, Item i, Image im, Food f
 		WHERE o.user_id=#{user_id} and o.item_id = i.item_id and im.item_id = i.item_id and f.food_id = i.food_id
 		and i.item_status = 'success' ORDER BY o.ord_reg_dt DESC
+	</select> -->
+	<select id="selectOrderWithUserId" parameterType="int" resultMap="associItemOrderRegImage">
+		SELECT o.order_reg_id, o.user_id, o.ord_reg_dt, o.quantity, o.ord_price,
+		i.item_id, i.title, i.item_status, im.image_id, im.image, f.food_id, f.name
+		FROM Item i INNER JOIN Order_reg o ON i.item_id = o.item_id
+			 LEFT JOIN Image im ON i.item_id = im.item_id 
+			 INNER JOIN Food f ON i.food_id = f.food_id
+		WHERE o.user_id=#{user_id} and i.item_status ='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
 	</select>
 	
 	<resultMap id="associPostAccountImage" type="Post">

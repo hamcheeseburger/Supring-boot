@@ -9,41 +9,43 @@
 </head>
 <body>
 	<div layout:fragment="custom-content" align="center">
-		<h2 align="center">공동구매 식품 상세보기</h2>
-	
-		<div align="center">
-			<p th:text="'카테고리: ' + ${category.cat_name}"></p>
-			<p th:if="${detail.images.size == 0}">사진 없음</p>
-			<p th:if="${detail.images.size != 0}">
-				<a href="#">
-					<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" width="300px" height="300px" alt="액박이미지" />
-				</a>
-			</p>
-			<p th:text="'제목: ' + ${detail.title}"></p>
-			<p th:text="'식품명: ' + ${detail.food.name}"></p>
-			<p th:text="'내용: ' + ${detail.content}"></p>
-			<p th:text="'가격: ' + ${detail.item_price}"></p>
-			<p th:text="'배송비: ' + ${detail.ship_price}"></p>
-			<p th:text="'최소 수량: ' + ${detail.min_quantity}"></p>
-			<p th:text="'진행 상황: ' + ${detail.item_status}"></p>
-			<p th:text="'신청자 수: ' + ${detail.numOfRegister}"></p>
-			<p th:text="'시작일: ' + ${detail.created_dt}"></p>
-			<p th:text="'마감일: ' + ${detail.end_dt}"></p>
-			
-			<form name="wish" id="insertWish" method="post" action="#" >
-				<input type="number" id="amount" name="amount" value="1" min="1" />
-				<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
-				<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
+		<section class="py-5">
+			<div class="container">
+			<h2 align="center">공동구매 식품 상세보기</h2>
+		
+				<p th:text="'카테고리: ' + ${category.cat_name}"></p>
+				<p th:if="${detail.images.size == 0}">사진 없음</p>
+				<p th:if="${detail.images.size != 0}">
+					<a href="#">
+						<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" width="300px" height="300px" alt="액박이미지" />
+					</a>
+				</p>
+				<p th:text="'제목: ' + ${detail.title}"></p>
+				<p th:text="'식품명: ' + ${detail.food.name}"></p>
+				<p th:text="'내용: ' + ${detail.content}"></p>
+				<p th:text="'가격: ' + ${detail.item_price}"></p>
+				<p th:text="'배송비: ' + ${detail.ship_price}"></p>
+				<p th:text="'최소 수량: ' + ${detail.min_quantity}"></p>
+				<p th:text="'진행 상황: ' + ${detail.item_status}"></p>
+				<p th:text="'신청자 수: ' + ${detail.numOfRegister}"></p>
+				<p th:text="'시작일: ' + ${detail.created_dt}"></p>
+				<p th:text="'마감일: ' + ${detail.end_dt}"></p>
 				
-				<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
-					type="submit" value="수정하기" onclick="javascript: form.action='/item/updateItemForm';" />
-				<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
-					type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
-				
-				<input th:if="${session.userSession != null && session.userSession.account.admin != true}"
-					type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
-			</form>
-		</div>
+				<form name="wish" id="insertWish" method="post" action="#" >
+					<input type="number" id="amount" name="amount" value="1" min="1" />
+					<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
+					<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
+					
+					<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
+						type="submit" value="수정하기" onclick="javascript: form.action='/item/updateItemForm';" />
+					<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
+						type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
+					
+					<input th:if="${session.userSession != null && session.userSession.account.admin != true}"
+						type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
+				</form>
+			</div>
+		</section>
 	</div>
 	
 

@@ -2,6 +2,9 @@ package com.example.supringboot.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.validation.Errors;
 
 import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
@@ -23,6 +26,8 @@ public interface ItemService {
 	int deleteItem(int item_id);
 	//공구진행률 조회
 	int progressItem(int item_id);
+	//유효성 검사
+	Map<String, String> validateHandling(Errors errors);
 	
 	// item 마감일에 대한 스케쥴러 시작
 	void startScheduler(int item_id, Date end_dt);

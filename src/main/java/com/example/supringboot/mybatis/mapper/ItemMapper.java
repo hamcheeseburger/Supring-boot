@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
+import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
@@ -50,4 +51,8 @@ public interface ItemMapper {
 	public List<Item> getItemLatest3Rows() throws DataAccessException;
 
 	public ArrayList<Item> searchItemFromMain(String keyword) throws DataAccessException;
+	
+	public ArrayList<Item> selectItemWithCategory(int cat_id) throws DataAccessException;
+	
+	public ArrayList<Category> selectAllCategory() throws DataAccessException;
 }

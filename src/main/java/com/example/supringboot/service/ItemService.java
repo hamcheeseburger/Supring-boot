@@ -1,9 +1,9 @@
 package com.example.supringboot.service;
-
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 
@@ -28,4 +28,8 @@ public interface ItemService {
 	void startScheduler(int item_id, Date end_dt);
 	// Item 최신글 3개 가져오기
 	List<Item> getItemLatest3Rows();
+	
+	public ArrayList<Item> selectItemWithCategory(int cat_id);
+	
+	public ArrayList<Category> selectAllCategory();
 }

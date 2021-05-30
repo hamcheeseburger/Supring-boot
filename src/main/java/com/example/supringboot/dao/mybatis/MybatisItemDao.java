@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.supringboot.dao.ItemDao;
+import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Item;
@@ -113,5 +114,17 @@ public class MybatisItemDao implements ItemDao {
 	public ArrayList<Item> searchItemFromMain(String keyword) {
 		// TODO Auto-generated method stub
 		return itemMapper.searchItemFromMain(keyword);
+	}
+
+	@Override
+	public ArrayList<Item> selectItemWithCategory(int cat_id) {
+		// TODO Auto-generated method stub
+		return itemMapper.selectItemWithCategory(cat_id);
+	}
+
+	@Override
+	public ArrayList<Category> selectAllCategory() {
+		// TODO Auto-generated method stub
+		return itemMapper.selectAllCategory();
 	}
 }

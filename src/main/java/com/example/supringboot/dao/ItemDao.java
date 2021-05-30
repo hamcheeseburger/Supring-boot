@@ -3,9 +3,10 @@ package com.example.supringboot.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
-import com.example.supringboot.domain.Order_reg;
+
 
 public interface ItemDao {
 	//공구식품 등록
@@ -38,4 +39,8 @@ public interface ItemDao {
 	public List<Item> getItemLatest3Rows();
 	
 	public ArrayList<Item> searchItemFromMain(String keyword);
+	
+	public ArrayList<Item> selectItemWithCategory(int cat_id);
+	
+	public ArrayList<Category> selectAllCategory();
 }

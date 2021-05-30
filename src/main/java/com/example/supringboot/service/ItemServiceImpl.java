@@ -2,6 +2,7 @@ package com.example.supringboot.service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import com.example.supringboot.dao.ItemDao;
+import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 
@@ -101,6 +103,18 @@ public class ItemServiceImpl implements ItemService{
 	public List<Item> getItemLatest3Rows() {
 		// TODO Auto-generated method stub
 		return itemDao.getItemLatest3Rows();
+	}
+
+	@Override
+	public ArrayList<Item> selectItemWithCategory(int cat_id) {
+		// TODO Auto-generated method stub
+		return itemDao.selectItemWithCategory(cat_id);
+	}
+
+	@Override
+	public ArrayList<Category> selectAllCategory() {
+		// TODO Auto-generated method stub
+		return itemDao.selectAllCategory();
 	}
 	
 	

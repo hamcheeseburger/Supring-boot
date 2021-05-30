@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.supringboot.domain.Item;
+import com.example.supringboot.service.ItemService;
 import com.example.supringboot.service.WishServiceImpl;
 
 @Controller
 public class ViewItemController {
 	@Autowired
 	private WishServiceImpl wishService;
-
+	
+	@Autowired
+	private ItemService itemService;
+	
 	// 공구 식품 목록 보기
 	@RequestMapping("/item/list")
 	public ModelAndView itemList() {

@@ -55,4 +55,6 @@ public interface ItemMapper {
 	public ArrayList<Item> selectItemWithCategory(int cat_id) throws DataAccessException;
 	
 	public ArrayList<Category> selectAllCategory() throws DataAccessException;
+	
+	public Category getCategoryById(@Param("cat_id") int cat_id) throws DataAccessException;
 }

@@ -39,12 +39,12 @@ public class ViewItemController {
 		
 		if(cat_id == -1) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			List<Item> allList = wishService.getAllItem();
+//			List<Item> allList = wishService.getAllItem();
 			List<Item> goingList = wishService.getGoingItem();
 			List<Item> endList = wishService.getEndItem();
 		
-			map.put("allItemList", allList);
-			map.put("allItemCount", allList.size());
+//			map.put("allItemList", allList);
+//			map.put("allItemCount", allList.size());
 		
 			map.put("goingItemList", goingList);
 			map.put("goingItemCount", goingList.size());
@@ -55,6 +55,9 @@ public class ViewItemController {
 			mav.addObject("map", map);
 		}else {
 			ArrayList<Item> catItemList = itemService.selectItemWithCategory(cat_id);
+			Category cat = itemService.getCategoryById(cat_id);
+			
+			mav.addObject("catName", cat.getCat_name());
 			mav.addObject("catItemList", catItemList);
 		}
 		return mav;
@@ -65,7 +68,11 @@ public class ViewItemController {
 	public String detailItem(@RequestParam int itemId, ModelMap model) {
 		Item item = wishService.getDetailItem(itemId);
 		System.out.println("detail food name: " + item.getFood().getName());
+		
+		Category cat = itemService.getCategoryById(item.getFood().getCat_id());
+		
 		model.put("detail", item);
+		model.put("category", cat);
 		
 		return "/Item/detailItem";
 	}

@@ -3,8 +3,10 @@ package com.example.supringboot.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -44,7 +46,6 @@ public class ItemForm implements Serializable{
 	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:fail, 성공:success)
 	
 	@NotNull(message = "상품가격은 필수 입력 값입니다.")
-	@PositiveOrZero(message = "상품 가격은 0이상의 양수 값입니다.")
 	private int item_price; // 식품 가격
 	
 	@NotNull(message = "배송가격은 필수 입력 값입니다.")
@@ -54,6 +55,10 @@ public class ItemForm implements Serializable{
 	private MultipartFile file; //이미지파일 
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
+	
+	private String str_ship_price;
+	private String str_item_price;
+	private String str_min_quantity;
 	
 	public ItemForm() {
 		super();
@@ -78,6 +83,33 @@ public class ItemForm implements Serializable{
 		this.images = images;
 		this.numOfRegister = numOfRegister;
 	}
+	
+	//
+	public String getStr_ship_price() {
+		return str_ship_price;
+	}
+
+	public void setStr_ship_price(String str_ship_price) {
+		this.str_ship_price = str_ship_price;
+	}
+
+	public String getStr_item_price() {
+		return str_item_price;
+	}
+
+	public void setStr_item_price(String str_item_price) {
+		this.str_item_price = str_item_price;
+	}
+
+	public String getStr_min_quantity() {
+		return str_min_quantity;
+	}
+
+	public void setStr_min_quantity(String str_min_quantity) {
+		this.str_min_quantity = str_min_quantity;
+	}
+	//
+	
 	public int getItem_id() {
 		return item_id;
 	}

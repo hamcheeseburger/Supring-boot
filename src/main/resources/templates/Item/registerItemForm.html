@@ -4,9 +4,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" -->
 <head>
 <meta charset="UTF-8">
-<style>
-	table {margin-left: 140px;}
-</style>
 
 <title>공구식품 등록</title>
 </head>
@@ -84,7 +81,7 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 	<div class="form-inline form-group">
 		<label for="min_quantity" class="col-sm-2 control-label">목표 수량</label>
 		<div class="col-sm-10">
-			<input class="form-control" th:field="*{min_quantity}" type="text" name="min_quantity">
+			<input class="form-control" th:field="*{min_quantity}" type="number" name="min_quantity">
 			<b th:errors="*{min_quantity}"></b>
       	</div>
 	</div>

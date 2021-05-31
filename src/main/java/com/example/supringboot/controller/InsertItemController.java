@@ -44,6 +44,7 @@ import org.springframework.web.util.WebUtils;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Item;
+import com.example.supringboot.service.ItemFormValidator;
 import com.example.supringboot.service.ItemService;
 import com.example.supringboot.service.WishServiceImpl;
 
@@ -107,7 +108,7 @@ public class InsertItemController {
 		
 		Food food = itemService.getFood(itemForm.getFood_id());
 		itemForm.setFood(food);
-		
+		//new ItemFormValidator().validate(itemForm, errors);
 		//검증 오류 발생 시
 		if(errors.hasErrors()) {
 			System.out.println("검증 오류 발생");

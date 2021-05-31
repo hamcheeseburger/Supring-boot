@@ -35,6 +35,9 @@
                             </div>
                         </li>
                      
+                       <li th:if="${session.userSession != null}" class="nav-item">
+                       		<a class="nav-link" th:href="@{/wish/list}">찜한 목록</a>
+                       </li>
                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>

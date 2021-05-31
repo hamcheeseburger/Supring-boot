@@ -60,10 +60,10 @@
 			o.ship_addr1, o.ship_addr2, o.ship_zip, o.card_type, o.card_num, o.card_exp_dt, o.user_id,
 			a.name AS username, a.phone, a.email, i.item_id, i.title, i.item_status, 
 			f.food_id, f.name AS foodname, im.image_id, im.image
-		FROM Order_reg o, Item i, Image im, Food f, Account a
-		WHERE o.user_id=#{user_id} and o.order_reg_id = #{order_reg_id} and 
-			o.item_id = i.item_id and i.item_id = im.item_id and f.food_id = i.food_id and
-			o.user_id = a.user_id
+		FROM Item i INNER JOIN Order_reg o ON i.item_id = o.item_id
+			 LEFT JOIN Image im ON i.item_id = im.item_id 
+			 INNER JOIN Food f ON i.food_id = f.food_id, Account a
+		WHERE o.user_id=#{user_id} and o.order_reg_id = #{order_reg_id} and o.user_id = a.user_id
 	</select>
 
 </mapper>

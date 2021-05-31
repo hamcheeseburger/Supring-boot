@@ -36,6 +36,7 @@ public class UpdateItemController {
 		Item item = wishService.getDetailItem(itemId);
 		Food food = itemService.getFood(item.getFood().getFood_id());
 		System.out.println("콘텐츠: " + item.getContent());
+		System.out.println("제목: " +item.getTitle());
 		model.put("item", item);
 		model.put("foodInfo", food);
 		
@@ -46,11 +47,11 @@ public class UpdateItemController {
 	@RequestMapping("/item/updateItem")
 	public String updateItem( @RequestParam(value="itemId") int item_id,
 			@RequestParam("title") String title,
-			@RequestParam("price") int price,
+			@RequestParam("item_price") int price,
 			@RequestParam("ship_price") int ship_price,
 			@RequestParam("created_dt") String created_dt,
 			@RequestParam("end_dt") String end_dt,
-			@RequestParam("minQuantity") int minQuantity,
+			@RequestParam("min_quantity") int minQuantity,
 			@RequestParam("content") String content,
 			//@RequestParam("images") MultipartFile file,
 			ModelMap model) throws Exception {

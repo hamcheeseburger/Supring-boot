@@ -111,6 +111,7 @@ public class InsertItemController {
 		//검증 오류 발생 시
 		if(errors.hasErrors()) {
 			System.out.println("검증 오류 발생");
+			System.out.println("대체 무슨오류????" + errors.toString() +", " + errors.getFieldErrorCount());
 			model.addAttribute("itemForm", itemForm);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("foodname", food.getName());

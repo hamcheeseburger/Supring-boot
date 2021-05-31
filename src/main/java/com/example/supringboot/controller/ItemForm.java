@@ -51,9 +51,9 @@ public class ItemForm implements Serializable{
 	@PositiveOrZero(message = "배송 가격은 0이상의 양수 값입니다.")
 	private int ship_price; // 배송 가격
 	
+	private MultipartFile file; //이미지파일 
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
-	private MultipartFile file; //이미지파일
 	
 	public ItemForm() {
 		super();

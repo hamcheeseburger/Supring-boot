@@ -48,7 +48,7 @@
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.name, im.image_id, im.image
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 			LEFT JOIN food f ON i.food_id = f.food_id
-		WHERE i.item_status = 'ongoing' AND i.user_id = #{user_id}
+		WHERE i.user_id = #{user_id}
 	</select>
 	
 	<select id="getEndItemList" resultMap="itemResult">

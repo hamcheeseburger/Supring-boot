@@ -114,4 +114,9 @@ public class WishServiceImpl implements WishService {
 	public Order_reg getOrderById(int order_reg_id, int user_id) {
 		return orderDao.getOnOrderById(order_reg_id, user_id);
 	}
+
+	@Override
+	public boolean applyUpdate(Order_reg order) {
+		return orderDao.applyUpdate(order);
+	}
 }

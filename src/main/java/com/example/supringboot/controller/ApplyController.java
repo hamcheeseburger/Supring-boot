@@ -43,6 +43,9 @@ public class ApplyController {
 	@Value("item/applyForm")
 	private String applyFormView;
 	
+	@Value("item/editApply")
+	private String editApplyView;
+	
 	@Value("item/viewApply")
 	private String viewApply;
 	
@@ -91,12 +94,10 @@ public class ApplyController {
 		
 	}
 	
-	@RequestMapping("/item/apply")
+	@RequestMapping("/item/apply/success")
 	public String applySubmit(@ModelAttribute("applyForm") ApplyForm applyForm,
 			BindingResult result,
 			SessionStatus status) {
-		System.out.println(1111);
-		
 		applyValidator.validate(applyForm, result);
 		
 		if (result.hasErrors()) {
@@ -137,6 +138,38 @@ public class ApplyController {
 		model.put("detail", apply);
 		
 		return viewApply;
+	}
+	
+	@RequestMapping("/item/apply/updateForm")
+	public ModelAndView editAccountForm(HttpServletRequest request, @RequestParam int applyId) {
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		int userId = userSession.getAccount().getUser_id();
+		
+		ApplyForm applyForm = new ApplyForm();
+		applyForm.setOrder(wishService.getOrderById(applyId, userId));
+		
+		int itemTotal = applyForm.getOrder().getQuantity() * applyForm.getOrder().getItem().getItem_price();
+		applyForm.setItemTotalPrice(itemTotal);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName(editApplyView);
+		modelAndView.addObject("applyForm", applyForm);
+		return modelAndView;
+	}
+	
+	@RequestMapping("/item/apply/update")
+	public String applyUpdate(@ModelAttribute("applyForm") ApplyForm applyForm, BindingResult result, SessionStatus status) {
+		
+		applyValidator.validate(applyForm, result);
+		
+		if (result.hasErrors()) {
+			return editApplyView;
+		}
+		
+		wishService.applyUpdate(applyForm.getOrder());
+
+		status.setComplete();
+		return applySuccess; // 공구신청내역 상세보기 페이지
 	}
 	
 }

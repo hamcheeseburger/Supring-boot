@@ -16,6 +16,10 @@ public class ApplyForm  implements Serializable{
 	public Order_reg getOrder() {
 		return order;
 	}
+	
+	public void setOrder(Order_reg order) {
+		this.order = order;
+	}
 
 	public int getItemTotalPrice() {
 		return itemTotalPrice;

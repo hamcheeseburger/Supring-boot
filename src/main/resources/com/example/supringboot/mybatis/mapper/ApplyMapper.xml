@@ -65,5 +65,13 @@
 			 INNER JOIN Food f ON i.food_id = f.food_id, Account a
 		WHERE o.user_id=#{user_id} and o.order_reg_id = #{order_reg_id} and o.user_id = a.user_id
 	</select>
+	
+	<!-- 공구 신청 내역 수정하기 -->
+	<update id="applyUpdate" parameterType="Order_reg">
+		UPDATE order_reg
+		SET receiver_name = #{receiver_name}, ship_addr1 = #{ship_addr1}, ship_addr2 = #{ship_addr2}, 
+			ship_zip = #{ship_zip}, card_type = #{card_type}, card_num = #{card_num}, card_exp_dt = #{card_exp_dt}
+		WHERE order_reg_id = #{order_reg_id}
+	</update>
 
 </mapper>

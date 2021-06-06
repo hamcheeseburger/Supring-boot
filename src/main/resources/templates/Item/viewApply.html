@@ -11,7 +11,7 @@
 	var name = "[[${detail.item.food.name}]]";
 	/*]]>*/
 				
-	function applyCancel(foodName, orderId) {
+	function applyCancel(orderId) {
 		if (confirm("'" + name + "' 신청을 취소하시겠습니까?")) {
 			location.href="http://localhost:8081/item/applying/cancel?applyId="+orderId;	
 		}
@@ -102,6 +102,10 @@
 					</div>
 					
 					<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''">돌아가기</button>
+					<button type="button" th:if="${detail.item.item_status == 'ongoing'}"
+						th:onclick="'location.href=\''+ @{/item/apply/updateForm(applyId=${detail.order_reg_id})} + '\''">
+						수정하기
+					</button>
 					<button th:if="${detail.item.item_status == 'ongoing'}"
 						th:onclick="|javascript:applyCancel(${detail.order_reg_id})|" >신청 취소</button>
 					<!-- <button type="button" th:onclick="'location.href=\''+ @{/item/applying/cancel(applyId=${detail.order_reg_id})} + '\''">신청 취소</button> -->

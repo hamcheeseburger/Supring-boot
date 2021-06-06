@@ -4,7 +4,7 @@
 	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
-<title>공동구매 신청</title>
+<title>공동구매 수정</title>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 		<h3>공동구매 신청하기</h3>
 		<div class="container">
 			<div class="col-lg-8 mb-4">
-				<form id="applyForm" action="#" th:action="@{/item/apply/success}" th:object="${applyForm}" method="post">
+				<form id="applyForm" action="#" th:action="@{/item/apply/update}" th:object="${applyForm}" method="post">
 					<div class="control-group form-group">
 						<div th:if="${applyForm.order.item.images.size != 0}">
 							<img th:src="@{'data:image/jpeg;base64,'+${applyForm.order.item.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
@@ -133,8 +133,9 @@
 					
 					<div id="success"></div>
 					<!-- For success/fail messages-->
-					<button class="btn btn-primary" id="sendMessageButton"
-						type="submit">신청하기</button>
+					
+					<button class="btn btn-primary" id="sendMessageButton" type="submit">수정</button>
+					
 				</form>
 			</div>
 		</div>

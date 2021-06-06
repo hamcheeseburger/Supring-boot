@@ -40,4 +40,15 @@ public class MybatisApplyDao implements ApplyDao {
 	public Order_reg getOnOrderById(int order_reg_id, int user_id) {
 		return orderMapper.getOneOrderById(order_reg_id, user_id);
 	}
+
+	@Override
+	public boolean applyUpdate(Order_reg order) {
+		int result = orderMapper.applyUpdate(order);
+		
+		if (result == 1) {
+			return true;
+		} else {
+			return false;	
+		}
+	}
 }

@@ -1107,10 +1107,11 @@ Version 1.0
   min-height: 75px;
 }
 .notice-list a {
-  display: block;
-  position: relative;
-  padding: 14px 15px 14px 85px;
-  min-height: 75px;
+  /*display: block;*/
+  /*position: relative;*/
+  color: #1d84df;
+  /*padding: 14px 15px 14px 85px;*/
+  /*min-height: 75px;*/
 }
 .notice-list a:hover {
   background: #f5f7fa;
@@ -1134,7 +1135,7 @@ Version 1.0
   top: 0px;
 }
 .notice-list .desc {
-  color: #90a4ae;
+  color: rgb(93, 104, 110);
   font-size: 13px;
   line-height: 23px;
   text-overflow: ellipsis;

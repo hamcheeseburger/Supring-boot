@@ -158,7 +158,7 @@
 						<input type="text" id="content" class="form-control" />
 						<div class="input-group-btn">
 							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${post.post_id} ]])">
-							<i class="fa fa-commenting" aria-hidden="true"></i>
+							등록
 							</button>
 						</div>
 					</div>
@@ -182,7 +182,7 @@
 						var html = "";
 	
 						html += '<form name="dataForm" action="'+uri+'" method="post">';
-							html += '<input type="hidden" name="post_id" value="'+idx+'" />';
+						html += '<input type="hidden" name="post_id" value="'+idx+'" />';
 						html += '</form>';
 	
 						$("body").append(html);
@@ -203,7 +203,6 @@
 					
 					var uri = /*[[ @{/comments/} + ${post.post_id} ]]*/ null;
 					
-					
 					$.ajax({			/* Ajax 호출을 위해  JQuery 이용 */
 						url: uri,
 						type: 'GET',
@@ -218,12 +217,32 @@
 								
 								Array.prototype.forEach.call(commentList, comment => {
 									console.log(comment['content']);
+									
 									commentsHtml += `
 										<li>
-											<span class="name">${comment.user['name']}</span>
-											<span class="desc">${comment['content']}</span>
-											<span class="time">${comment['str_created_dt']}</span>
-											<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+											<div id="cid${comment['comment_id']}">
+												<span class="name">
+													${comment.user['name']}
+												</span>
+												
+												<span class="desc" id=${comment['comment_id']} >${comment['content']}</span>
+												
+												<span class="time">${comment['str_created_dt']}</span>
+									`;
+									
+									var user = /*[[ ${user} ]]*/ -1;
+
+									if (user != -1 && user == comment.user['user_id']) {
+										commentsHtml += `
+											<div align="right">
+												<a href="javascript:void(0)" onclick="updateCommentForm('${comment['comment_id']}', '${comment.user['name']}', '${comment['content']}')" >수정 &nbsp;</a>
+												<a href="javascript:void(0)" onclick="deleteComment('${comment['comment_id']}')" >삭제</a>
+											</div>
+										`;
+									}
+									
+									commentsHtml += `	
+											</div>
 										</li>
 									`;
 									
@@ -238,9 +257,92 @@
 					});
 				}
 				
+				function updateCommentForm(comment_id, name, content) {
+					var update = "";
+					update += '<div id="cid' + comment_id + '">';
+					update += '<span class="name">' + name + '</span>';
+					update += '<span class="desc" >';
+					update += '<textarea name="editContent" id="editContent" class="form-control" style="height:45px;">';
+					update += content;
+					update += '</textarea>';
+					update += '</span>';
+					update += '<div align="right">';
+					update += '<a href="javascript:void(0)" onclick="updateComment(';
+					update += comment_id;
+					update += ')">저장&nbsp;&nbsp;&nbsp;</a>';
+					update += '<a href="javascript:void(0)" onclick="ajaxPrint()">취소<a>';
+					update += '</div>';
+					update += '</div>';
+					
+					$('#cid' + comment_id).replaceWith(update);
+					$('#cid' + comment_id + ' #editContent').focus();
+				}
+				
+				function updateComment(comment_id) {
+					var uri = /*[[ @{/comment/update} ]]*/ null;
+					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+					var params = {"comment_id": comment_id, "content": $('#editContent').val()};
+					
+					$.ajax({
+						url: uri,
+						type: "POST",
+						headers: headers,
+						dataType: "json",
+						data: JSON.stringify(params),
+						success: function(response) {
+							if (response.result == false) {
+								alert("댓글 수정에 실패하였습니다.");
+								return false;
+							}
+							ajaxPrint();
+							content.value = "";
+						},
+						error: function(xhr, status, error) {
+							alert("에러가 발생하였습니다.");
+							return false;
+						}
+					});
+				}
+				
+				function deleteComment(comment_id) {
+					var uri = /*[[ @{/comment/delete} ]]*/ null;
+					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+					var params = {"comment_id": comment_id};
+					
+					$.ajax({
+						url: uri,
+						type: "POST",
+						headers: headers,
+						dataType: "json",
+						data: JSON.stringify(params),
+						success: function(response) {
+							if (response.result == false) {
+								alert("댓글 삭제에 실패하였습니다.");
+								return false;
+							}
+							ajaxPrint();
+							content.value = "";
+						},
+						error: function(xhr, status, error) {
+							alert("에러가 발생하였습니다.");
+							return false;
+						}
+					});
+				}
+				
 				function insertComment(boardIdx) {
 
 					var content = document.getElementById("content");
+					
+					var user = /*[[ ${user} ]]*/ -1;
+					
+					if (user == -1) {
+						if (confirm("로그인이 필요합니다.")) {
+							var uri = /*[[ @{/account/signOnForm} ]]*/ null;
+							location.href="http://localhost:8081" + uri;
+						}
+					}
+					
 					if (isEmpty(content.value) == true) {
 						content.setAttribute("placeholder", "댓글을 입력해 주세요.");
 						content.focus();
@@ -263,7 +365,6 @@
 								return false;
 							}
 							ajaxPrint();
-							// printCommentList();
 							content.value = "";
 						},
 						error: function(xhr, status, error) {

@@ -46,7 +46,8 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns("/account/**", "/post/createPost", "/post/updatePost",
-						"/post/deletePost", "/post/deleteComment", "/item/wish", "/item/registerItem", "/item/editItem", "/comments", "/comment/delete", "/comment/update")
+						"/post/deletePost", "/post/deleteComment", "/item/wish", "/item/registerItem", 
+						"/item/editItem", "/comments", "/comment/delete", "/comment/update", "/wish/list")
 				.excludePathPatterns("/account/signOnForm", "/account/signOff", "/account/newAccount/**");
 		
 		registry.addInterceptor(loggerInterceptor)

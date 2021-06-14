@@ -29,6 +29,10 @@ layout:decorate="~{mainlayout}">
 
               <form id="quickForm" action="#" th:action="@{/account/signOnForm}" th:object="${account}" method="post">
                 <div style="width:500px; text-align:center">
+                	<div th:if="${signonForwardAction != null}">
+                	<input type="hidden" name="signonForwardAction" th:value="${signonForwardAction}"/>
+               
+                	</div>
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">아이디</label>

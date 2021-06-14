@@ -52,7 +52,7 @@ public class SignOnController {
 	@PostMapping
 	public ModelAndView handleLogin(HttpServletRequest req, HttpServletResponse res,
 			@ModelAttribute("account") Account account,  BindingResult result,
-			@RequestParam(value="forwardAction", required=false) String forwardAction,
+			@RequestParam(value="signonForwardAction", required=false) String forwardAction,
 			Model model) {
 		logger.info("handleLogin()");
 		

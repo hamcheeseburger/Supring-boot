@@ -27,7 +27,7 @@ public class InsertCommentController {
 	@PostMapping(value = "/comments")
 	public boolean registerComment(@RequestBody Comment params, HttpServletRequest request) {
 		logger.info("댓글 등록");
-
+		logger.info("비밀댓글 여부 : " + params.isSecret());
 		// params에 usersession을 통해 user_id 삽입하기
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
@@ -78,7 +78,7 @@ public class InsertCommentController {
 	@PostMapping(value = "/comment/delete")
 	public boolean deleteComment(@RequestBody Comment params, HttpServletRequest request) {
 		logger.info("댓글 삭제");
-
+		
 		// params에 usersession을 통해 user_id 삽입하기
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();

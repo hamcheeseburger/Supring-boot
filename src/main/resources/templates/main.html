@@ -10,6 +10,8 @@ layout:decorate="~{mainlayout}">
 <body>
 
 <div layout:fragment="custom-content"> 
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
 	<div class="main-search" align="center">
 	<form th:action="@{/main/search}" th:method="POST">
 		<div class="input-group" style="width:500px">
@@ -68,7 +70,9 @@ layout:decorate="~{mainlayout}">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="item3 : ${item3List}">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item3.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <a href="#!">
+                			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item3.images[0].base64Image}}" alt="액박이미지" /></a>
+                              
                             <div class="card-body">
                                 <h4 class="card-title"><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></h4>
                                 <p class="card-text" th:text="${item3.content}"></p>
@@ -138,9 +142,6 @@ layout:decorate="~{mainlayout}">
                 </div>
             </div>
         </aside>
-        <script>
-        	
-        </script>
  </div>
 </body>
 </html>

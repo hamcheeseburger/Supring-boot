@@ -38,7 +38,7 @@
                        <li th:if="${session.userSession != null}" class="nav-item">
                        		<a class="nav-link" th:href="@{/wish/list}">찜한 목록</a>
                        </li>
-                       
+<!--                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
@@ -57,7 +57,7 @@
                                 <a class="dropdown-item" href="404.html">404</a>
                                 <a class="dropdown-item" href="pricing.html">Pricing Table</a>
                             </div>
-                        </li>
+                        </li> -->
                         <li th:if="${session.userSession != null}" class="nav-item"><a class="nav-link" href=# th:href="@{/account/signOff}">로그아웃</a></li>
                     </ul>
                 </div>

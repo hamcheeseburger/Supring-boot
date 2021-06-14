@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.example.supringboot.controller.AdminInterceptor;
 import com.example.supringboot.controller.MainPageInterceptor;
 import com.example.supringboot.controller.SignOnInterceptor;
 
@@ -25,13 +26,16 @@ import com.example.supringboot.interceptor.*;
 public class MvcConfig implements WebMvcConfigurer {
 	
 	@Autowired
-	private SignOnInterceptor interceptor;
+	private SignOnInterceptor loginInterceptor;
 	
 	@Autowired
 	private LoggerInterceptor loggerInterceptor;
 	
 	@Autowired
 	private MainPageInterceptor mainInterceptor;
+	
+	@Autowired
+	private AdminInterceptor adminInterceptor;
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -40,8 +44,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(interceptor)
-				.addPathPatterns("/account/**")
+		registry.addInterceptor(loginInterceptor)
+				.addPathPatterns("/account/**", "/post/createPost", "/post/updatePost",
+						"/post/deletePost", "/post/deleteComment", "/item/wish", "/item/registerItem", "/item/editItem", "/comments", "/comment/delete", "/comment/update")
 				.excludePathPatterns("/account/signOnForm", "/account/signOff", "/account/newAccount/**");
 		
 		registry.addInterceptor(loggerInterceptor)
@@ -50,6 +55,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	
 		registry.addInterceptor(mainInterceptor)
 				.addPathPatterns("/");
+		
+		registry.addInterceptor(adminInterceptor)
+				.addPathPatterns("/admin/*");
 	}
 	
 	@Bean

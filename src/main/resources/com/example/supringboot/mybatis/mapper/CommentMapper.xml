@@ -37,7 +37,7 @@
 			SELECT COMMT_SEQ.nextval AS comment_id FROM DUAL
 		</selectKey>
 		insert into commt (comment_id, post_id, user_id, content, created_dt, modified_dt, secret)
-		values (#{comment_id}, #{post_id}, #{user.user_id}, #{content}, SYSDATE, SYSDATE, 0)
+		values (#{comment_id}, #{post_id}, #{user.user_id}, #{content}, SYSDATE, SYSDATE, #{secret})
 	</insert>
 
 	<!-- 해당 게시글에 달린 댓글 목록 가져오기 -->

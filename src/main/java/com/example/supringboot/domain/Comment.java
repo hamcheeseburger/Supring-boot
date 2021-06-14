@@ -11,7 +11,8 @@ public class Comment extends Common implements Serializable {
 	private String content; // 댓글 내용
 	private Timestamp created_dt; // 댓글 게시일
 	private Timestamp modified_dt; // 댓글 수정일
-	private int secret; // 비밀댓글 여부 (1: 비밀댓글, 0: 공개댓글)
+//	private int secret; // 비밀댓글 여부 (1: 비밀댓글, 0: 공개댓글)
+	private boolean secret;
 	
 //	paging으로 인해 user name을 바로 저장하는 필드 필요
 	private String name;
@@ -33,7 +34,7 @@ public class Comment extends Common implements Serializable {
 	}
 	
 	public Comment(int comment_id, Post post, Account user, String content, Timestamp created_dt, Timestamp modified_dt,
-			int secret) {
+			boolean secret) {
 		super();
 		this.comment_id = comment_id;
 		this.post = post;
@@ -104,12 +105,20 @@ public class Comment extends Common implements Serializable {
 	public void setModified_dt(Timestamp modified_dt) {
 		this.modified_dt = modified_dt;
 	}
-	public int getSecret() {
+//	public int getSecret() {
+//		return secret;
+//	}
+//	public void setSecret(int secret) {
+//		this.secret = secret;
+//	}
+//	
+
+	public boolean isSecret() {
 		return secret;
 	}
-	public void setSecret(int secret) {
+
+	public void setSecret(boolean secret) {
 		this.secret = secret;
 	}
-	
 	
 }

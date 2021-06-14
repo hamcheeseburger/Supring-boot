@@ -76,6 +76,13 @@
 	order by p.created_dt desc
 </select>
 -->
+
+<select id="getPostWriter" parameterType="int" resultType="Post">
+	select a.user_id
+	FROM POST p, ACCOUNT a
+	WHERE p.user_id = a.user_id and p.post_id=#{post_id}
+</select>
+
 <select id="getAllPost" parameterType="Post" resultType="Post">
 	
 	SELECT post_id, trade_type, title, name, created_dt

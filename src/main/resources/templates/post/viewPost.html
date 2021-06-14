@@ -57,7 +57,8 @@
 				<div class="form-group">
 					<label for="inp-type-2" class="col-sm-2 control-label">작성자</label>
 					<div class="col-sm-10">
-						<p class="form-control" th:text="*{user.name}"></p>
+						<p class="form-control" th:text="*{user.name}" ></p>
+						<p id="writerId" th:text="*{user.user_id}" style="display:none;"></p>
 					</div>
 				</div>
 				
@@ -152,9 +153,15 @@
 					<h4 class="box-title pull-left">Comment</h4>
 					<!-- /.box-title -->
 				</div>
-
+						<div class="form-group mb-0">
+                    		<div class="custom-control custom-checkbox">
+                      			<input type="checkbox" name="saveId" class="custom-control-input" id="exampleCheck1">
+                      			<label class="custom-control-label" for="exampleCheck1">비밀댓글</label>
+                    		</div>
+                 		 </div>
 				<form class="form-horizontal form-view">
 					<div class="input-group margin-bottom-20">
+				
 						<input type="text" id="content" class="form-control" />
 						<div class="input-group-btn">
 							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${post.post_id} ]])">
@@ -174,7 +181,7 @@
 	<th:block layout:fragment="script">
 			<script th:inline="javascript">
 				/*<![CDATA[*/
-	
+					
 				function deletePost(idx) {
 	
 					if (confirm(idx + "번 게시글을 삭제할까요?")) {
@@ -202,7 +209,9 @@
 				function ajaxPrint() {
 					
 					var uri = /*[[ @{/comments/} + ${post.post_id} ]]*/ null;
+					var writerId = Number(document.getElementById("writerId").innerText);
 					
+					console.log("작성자 아이디 : " + writerId);
 					$.ajax({			/* Ajax 호출을 위해  JQuery 이용 */
 						url: uri,
 						type: 'GET',
@@ -217,6 +226,17 @@
 								
 								Array.prototype.forEach.call(commentList, comment => {
 									console.log(comment['content']);
+									console.log(comment['secret']);
+									var user = /*[[ ${user} ]]*/ -1;
+									console.log("내아이디" + user);
+									if(comment['secret'] == true && user != writerId && user != comment.user['user_id']) {
+										commentsHtml += `
+											<li>
+											<div id="cid${comment['comment_id']}">
+												<span class="desc" id=${comment['comment_id']} style="color:green;">비밀댓글입니다.</span>
+												
+												<span class="time">${comment['str_created_dt']}</span>`;
+									}else if(comment['secret'] == true  && (user == writerId || user == comment.user['user_id'])){
 									
 									commentsHtml += `
 										<li>
@@ -224,14 +244,26 @@
 												<span class="name">
 													${comment.user['name']}
 												</span>
-												
+												<span class = "desc" style="color:green;">비밀댓글입니다.</span>
 												<span class="desc" id=${comment['comment_id']} >${comment['content']}</span>
 												
 												<span class="time">${comment['str_created_dt']}</span>
 									`;
-									
-									var user = /*[[ ${user} ]]*/ -1;
-
+	
+									}else if(comment['secret'] == false) {
+										commentsHtml += `
+											<li>
+												<div id="cid${comment['comment_id']}">
+													<span class="name">
+														${comment.user['name']}
+													</span>
+													
+													<span class="desc" id=${comment['comment_id']} >${comment['content']}</span>
+													
+													<span class="time">${comment['str_created_dt']}</span>
+										`;
+										
+									}
 									if (user != -1 && user == comment.user['user_id']) {
 										commentsHtml += `
 											<div align="right">
@@ -333,7 +365,8 @@
 				function insertComment(boardIdx) {
 
 					var content = document.getElementById("content");
-					
+					var secret = document.getElementById("exampleCheck1");
+					console.log(secret.checked);
 					var user = /*[[ ${user} ]]*/ -1;
 					
 					if (user == -1) {
@@ -351,8 +384,8 @@
 
 					var uri = /*[[ @{/comments} ]]*/ null;
 					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-					var params = {"post_id": boardIdx, "content": content.value};
-
+					var params = {"post_id": boardIdx, "content": content.value, "secret" : secret.checked};
+					console.log(params);
 					$.ajax({
 						url: uri,
 						type: "POST",
@@ -385,6 +418,10 @@
 							var commentsHtml = "";
 							
 							$(response.commentList).each(function(idx, comment) {
+								if(comment.secret == true) {
+									console.log(comment.content + "비밀댓글임");
+								}
+								
 								commentsHtml += `
 									<li>
 										<span class="name">${comment.user.name}</span>

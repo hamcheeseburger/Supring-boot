@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.supringboot.domain.Comment;
 import com.example.supringboot.service.CommentService;
+import com.example.supringboot.service.PostService;
 @RestController
 public class GetAllCommentList {
 private static final Logger logger = LoggerFactory.getLogger(GetAllCommentList.class);
@@ -24,10 +25,15 @@ private static final Logger logger = LoggerFactory.getLogger(GetAllCommentList.c
 @Autowired
 private CommentService commentService;
 
+@Autowired
+private PostService postService;
 
 @GetMapping(value = "/comments/{post_id}")
 public List<Comment> getCommentList(@PathVariable("post_id") Long idx, @ModelAttribute("params") Comment comment) {
 	int post_id = idx.intValue();
+	
+	postService.getDetailPost(post_id);
+	
 	ArrayList<Comment> commentList = commentService.getAllCommentList(post_id);
 	logger.info("GetAllCommentList() : " + commentList);
 

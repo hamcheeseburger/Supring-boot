@@ -33,7 +33,7 @@ public class ViewItemController {
 	
 	// 공구 식품 목록 보기
 	@RequestMapping("/item/list")
-	public ModelAndView itemList(@RequestParam(required=false, defaultValue="-1") Integer cat_id,
+	public ModelAndView itemList(@RequestParam(required=false, defaultValue="-1", name="cat_id") Integer cat_id,
 			@ModelAttribute("params") Item item, Model model) {
 		System.out.println("cat_id : " + cat_id);
 		

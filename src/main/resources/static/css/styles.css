@@ -57,6 +57,10 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
+.row-inline-block.text-center > * {
+  text-align: center;
+}
+
 
 body {
   margin: 0;

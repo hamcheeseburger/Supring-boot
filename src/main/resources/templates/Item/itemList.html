@@ -8,7 +8,9 @@
 
 </head>
 <body>
+
 	<div layout:fragment="custom-content" align="center">
+	<th:block layout:fragment="add-css"></th:block>
 		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:white;">
 			<div class="container">
                 <a th:href="@{/item/list}" class="nav-link"><b>카테고리</b></a>
@@ -70,11 +72,11 @@
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
-                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
-                                식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
-                                가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
-                                <strong class="card-text" th:text="${item.percentage} + '% 달성'"></strong> <br/>
-                                상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
+                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4> <br/>
+                                <b style="size:15px;"class="card-text" th:text="${item.food.name}" ></b> <br/>
+                                가격 : <b class="card-text" th:text="${item.item_price}" ></b> <br/>
+                                <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
+                                상태 : <b class="card-text" th:text="${item.item_status}"></b> <br/>
                             </div>
                         </div>
                         
@@ -109,7 +111,7 @@
                 </div>
   			</div>
 		</div> -->
-		<th:block>
+		<th:block >
 			<nav th:replace="post/fragments/common :: pagination"></nav>
 		</th:block>
 		
@@ -125,6 +127,15 @@
 				
 								</script>
 							</th:block>
+			 <!-- Google Font: Source Sans Pro -->
+		 
+		 <!-- Theme style -->
+		 
+		 
+		<!-- board -->
+		<link rel="stylesheet" th:href="@{/board/css/style.css}" />
+
+
 	</div>
 
 </body>

@@ -74,7 +74,7 @@ layout:decorate="~{mainlayout}">
                 			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item3.images[0].base64Image}}" alt="액박이미지" /></a>
                               
                             <div class="card-body">
-                                <h4 class="card-title"><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></h4>
+                                <h4 class="card-title"><b><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></b></h4>
                                 <p class="card-text" th:text="${item3.content}"></p>
                                 <b th:text="${item3.percentage} + '% 달성'"></b>
                             </div>
@@ -98,8 +98,8 @@ layout:decorate="~{mainlayout}">
                         <div class="card h-100">
                             <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post3.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h4 class="card-title"><a th:href="@{/post/viewPost(post_id=${post3.post_id})}" th:text="${post3.title}">Project One</a></h4>
-                                <th:block class="card-text" th:text="${post3.content}"></th:block><br />
+                                <h4 class="card-title"><b><a th:href="@{/post/viewPost(post_id=${post3.post_id})}" th:text="${post3.title}">Project One</a></b></h4>
+                                <p class="card-text" th:text="${post3.content}"></p><br />
                             	<b class="card-text" style="color:gray;" th:text="${post3.user.name}"></b>
                             </div>
                         </div>

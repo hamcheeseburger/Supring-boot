@@ -95,8 +95,10 @@ public class Criteria {
 			String [] splited = queryString.split("&");
 			String [] query = splited[splited.length - 1].split("=");
 //			cat_id는 맨뒤 파라미터로 전달 되므로..
-			key = query[0];
-			value = query[1];
+			if(query.length == 2) {
+				key = query[0];
+				value = query[1];
+			}
 		}
 		
 		if(queryString != null && key.equals("cat_id")) {

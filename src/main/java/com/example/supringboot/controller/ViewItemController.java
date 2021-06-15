@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,8 @@ public class ViewItemController {
 	
 	// 공구 식품 목록 보기
 	@RequestMapping("/item/list")
-	public ModelAndView itemList(@RequestParam(required=false, defaultValue="-1") Integer cat_id) {
+	public ModelAndView itemList(@RequestParam(required=false, defaultValue="-1") Integer cat_id,
+			@ModelAttribute("params") Item item, Model model) {
 		System.out.println("cat_id : " + cat_id);
 		
 		ModelAndView mav = new ModelAndView("/Item/itemList");
@@ -41,7 +43,7 @@ public class ViewItemController {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 //			List<Item> allList = wishService.getAllItem();
 			List<Item> goingList = wishService.getGoingItem();
-			List<Item> endList = wishService.getEndItem();
+//			List<Item> endList = wishService.getEndItem();
 		
 //			map.put("allItemList", allList);
 //			map.put("allItemCount", allList.size());
@@ -49,8 +51,8 @@ public class ViewItemController {
 			map.put("goingItemList", goingList);
 			map.put("goingItemCount", goingList.size());
 		
-			map.put("endItemList", endList);
-			map.put("endItemCount", endList.size());
+//			map.put("endItemList", endList);
+//			map.put("endItemCount", endList.size());
 
 			mav.addObject("map", map);
 		}else {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 // 공동구매
 @SuppressWarnings("serial")
-public class Item implements Serializable {
+public class Item extends Common implements Serializable {
 	private int item_id; // 기본키
 	private Food food; // 등록할 식품 객체
 	private int user_id; // 게시한 관리자 기본키

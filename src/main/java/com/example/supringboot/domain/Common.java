@@ -12,6 +12,4 @@ public class Common extends Criteria{
 	public void setPaginationInfo(PaginationInfo paginationInfo) {
 		this.paginationInfo = paginationInfo;
 	}
-	
-	
 }

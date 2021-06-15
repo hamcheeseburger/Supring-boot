@@ -25,18 +25,18 @@ public class LikedItemTest {
 	MybatisItemDao tmpDao;
 	
 //	@Test
-	@Ignore
-	public void selectAllItem_test() {
-		List<Item> list = tmpDao.getAllItemList();
-		
-		for (Item i : list) {
-			System.out.println("item_id: " + i.getItem_id());
-			System.out.println("title: " + i.getTitle());
-			System.out.println("content: " + i.getContent());
-			System.out.println("end_dt: " + i.getEnd_dt());
-		}
-		System.out.println();
-	}
+//	@Ignore
+//	public void selectAllItem_test() {
+//		List<Item> list = tmpDao.getAllItemList();
+//		
+//		for (Item i : list) {
+//			System.out.println("item_id: " + i.getItem_id());
+//			System.out.println("title: " + i.getTitle());
+//			System.out.println("content: " + i.getContent());
+//			System.out.println("end_dt: " + i.getEnd_dt());
+//		}
+//		System.out.println();
+//	}
 	
 //	@Test
 	@Ignore

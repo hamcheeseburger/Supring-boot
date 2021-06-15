@@ -77,12 +77,12 @@ public class WishServiceImpl implements WishService {
 		return wishDao.getOneWishItem(liked_id);
 	}
 
-	
-	// 공구식품 관련 코드 -> 임시로 여기에 작성
-	@Override
-	public List<Item> getAllItem() {
-		return itemDao.getAllItemList();
-	}
+//	
+//	// 공구식품 관련 코드 -> 임시로 여기에 작성
+//	@Override
+//	public List<Item> getAllItem() {
+//		return itemDao.getAllItemList();
+//	}
 
 	@Override
 	public List<Item> getGoingItem() {
@@ -119,4 +119,6 @@ public class WishServiceImpl implements WishService {
 	public boolean applyUpdate(Order_reg order) {
 		return orderDao.applyUpdate(order);
 	}
+	
+	
 }

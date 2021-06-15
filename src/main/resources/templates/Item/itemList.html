@@ -56,14 +56,14 @@
   			</div>
 		</div>
 		
-		<div th:if="${map}" class="py-5 bg-light">
+		<div th:if="${itemList}" class="py-5 bg-light">
 			<div class="container">
-				<h2 align="center">진행중인 식품 목록</h2>
+				<h2 align="center"> 식품 목록</h2>
                 <div class="row">
-                	<div th:if="${map.goingItemCount == 0}">
+                	<div th:if="${itemList.size() == 0}">
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
-                    <div th:each="item : ${map.goingItemList}" class="col-lg-4 col-sm-6 mb-4">
+                    <div th:each="item : ${itemList}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
                             <b th:if="${item.images.size == 0}">사진 없음</b>
 							<a href="#" th:if="${item.images.size != 0}">
@@ -109,9 +109,22 @@
                 </div>
   			</div>
 		</div> -->
-<!-- 		<th:block> -->
-<!-- 			<nav th:replace="post/fragments/common :: pagination"></nav> -->
-<!-- 		</th:block> -->
+		<th:block>
+			<nav th:replace="post/fragments/common :: pagination"></nav>
+		</th:block>
+		
+		<th:block layout:fragment="script">
+								<script th:inline="javascript">
+									/*<![CDATA[*/
+						
+									function movePage(uri, queryString) {
+										console.log(uri);
+										console.log(queryString);
+										location.href = uri + queryString;
+									}
+				
+								</script>
+							</th:block>
 	</div>
 
 </body>

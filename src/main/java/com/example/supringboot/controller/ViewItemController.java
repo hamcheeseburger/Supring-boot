@@ -40,23 +40,27 @@ public class ViewItemController {
 		ModelAndView mav = new ModelAndView("/Item/itemList");
 		
 		if(cat_id == -1) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
+//			HashMap<String, Object> map = new HashMap<String, Object>();
 //			List<Item> allList = wishService.getAllItem();
-			List<Item> goingList = wishService.getGoingItem();
+//			List<Item> goingList = wishService.getGoingItem();
 //			List<Item> endList = wishService.getEndItem();
 		
 //			map.put("allItemList", allList);
 //			map.put("allItemCount", allList.size());
 		
-			map.put("goingItemList", goingList);
-			map.put("goingItemCount", goingList.size());
+//			map.put("goingItemList", goingList);
+//			map.put("goingItemCount", goingList.size());
 		
 //			map.put("endItemList", endList);
 //			map.put("endItemCount", endList.size());
 
-			mav.addObject("map", map);
+//			mav.addObject("map", map);
+			
+			ArrayList<Item> itemList = itemService.getItemList(item);
+			mav.addObject("itemList", itemList);
 		}else {
-			ArrayList<Item> catItemList = itemService.selectItemWithCategory(cat_id);
+			item.setCat_id(cat_id);
+			ArrayList<Item> catItemList = itemService.selectItemWithCategory(item);
 			Category cat = itemService.getCategoryById(cat_id);
 			
 			mav.addObject("catName", cat.getCat_name());

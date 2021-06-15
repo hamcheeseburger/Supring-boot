@@ -25,7 +25,7 @@ public interface ItemDao {
 	public int progressItem(int item_id);
 	
 	// 공구식품 목록 조회 -> 
-	public List<Item> getAllItemList();
+	public ArrayList<Item> getAllItemList(Item item);
 	// 진행중인 공구식품 목록 조회
 	public List<Item> getGoingItemList();
 	// 성공 또는 실패한 공구식품 목록 조회 -> 마감일 지난 공구식품?
@@ -40,9 +40,13 @@ public interface ItemDao {
 	
 	public ArrayList<Item> searchItemFromMain(String keyword);
 	
-	public ArrayList<Item> selectItemWithCategory(int cat_id);
+	public ArrayList<Item> selectItemWithCategory(Item item);
 	
 	public ArrayList<Category> selectAllCategory();
 	
 	public Category getCategoryById(int cat_id);
+	
+	public int selectItemTotalCount(Item item);
+	
+	public int selectItemCatCount(int cat_id);
 }

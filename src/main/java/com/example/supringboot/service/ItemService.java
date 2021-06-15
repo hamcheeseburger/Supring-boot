@@ -34,9 +34,11 @@ public interface ItemService {
 	// Item 최신글 3개 가져오기
 	List<Item> getItemLatest3Rows();
 	
-	public ArrayList<Item> selectItemWithCategory(int cat_id);
+	public ArrayList<Item> selectItemWithCategory(Item item);
 	
 	public ArrayList<Category> selectAllCategory();
 	
 	public Category getCategoryById(int cat_id);
+	
+	public ArrayList<Item> getItemList(Item item);
 }

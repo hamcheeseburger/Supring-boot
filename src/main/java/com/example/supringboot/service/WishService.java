@@ -39,7 +39,7 @@ public interface WishService {
 	
 	// 공구식품 관련 -> 일단 여기에 작성
 	// 공구식품 목록 가져오기
-	List<Item> getAllItem();
+//	List<Item> getAllItem();
 	
 	// 공구식품 목록 가져오기
 	List<Item> getGoingItem();

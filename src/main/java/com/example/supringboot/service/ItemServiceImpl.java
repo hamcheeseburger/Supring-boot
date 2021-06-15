@@ -19,6 +19,7 @@ import com.example.supringboot.dao.ItemDao;
 import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
+import com.example.supringboot.domain.PaginationInfo;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -121,11 +122,42 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public ArrayList<Item> selectItemWithCategory(int cat_id) {
+	public ArrayList<Item> selectItemWithCategory(Item item) {
 		// TODO Auto-generated method stub
-		return itemDao.selectItemWithCategory(cat_id);
+		System.out.println("[selectItemWithCategory] " + item.getItem_id());
+		ArrayList<Item> itemList = null;
+		int totalCount = itemDao.selectItemCatCount(item.getCat_id());
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.selectItemWithCategory(item);
+		}
+		
+		return itemList;
 	}
 
+	@Override
+	public ArrayList<Item> getItemList(Item item) {
+		// TODO Auto-generated method stub
+		System.out.println("[getItemList] " + item.getItem_id());
+		ArrayList<Item> itemList = null;
+		int totalCount = itemDao.selectItemTotalCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getAllItemList(item);
+		}
+		
+		return itemList;
+	}
 	@Override
 	public ArrayList<Category> selectAllCategory() {
 		// TODO Auto-generated method stub
@@ -136,6 +168,7 @@ public class ItemServiceImpl implements ItemService{
 	public Category getCategoryById(int cat_id) {
 		return itemDao.getCategoryById(cat_id);
 	}
+
 	
 	
 }

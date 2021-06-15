@@ -29,14 +29,39 @@
 		</collection>
 	</resultMap>
 
-	<select id="getAllItem" resultMap="itemResult">
-		SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
+	<select id="getAllItem" parameterType="Item" resultMap="itemResult">
+		SELECT * FROM     
+(SELECT * FROM
+(SELECT ROWNUM AS SEQ, item_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+			item_price, ship_price, item_status, food_id, cat_id, name, image_id, image, numOfRegister
+FROM
+(SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.cat_id, f.name, im.image_id, im.image,
 			(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 		FROM item i LEFT JOIN image im ON i.item_id = im.item_id
-			INNER JOIN food f ON i.food_id = f.food_id
-	</select>
+			INNER JOIN food f ON i.food_id = f.food_id ORDER BY i.item_id DESC)
+)
+		<![CDATA[
+		 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
+		]]>
 
+	</select>
+	
+	<select id="selectItemWithCategory" parameterType="Item" resultMap="searchItemFromMainResultMap">
+		SELECT * FROM     
+(SELECT * FROM
+(SELECT ROWNUM AS SEQ, item_id, title, content, item_status, item_price, min_quantity,numOfRegister,
+		name, cat_id, image_id, image
+FROM
+(SELECT i.item_id, i.title, i.content, i.item_status, i.item_price, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister,
+		f.name, f.cat_id, im.image_id, im.image
+		FROM Item i JOIN Food f ON i.food_id = f.food_id JOIN Image im ON i.item_id = im.item_id, Category c
+		WHERE f.cat_id=7 and c.cat_id=f.cat_id and i.item_status='ongoing' ORDER BY i.item_id DESC)
+)<![CDATA[
+		 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
+		]]>
+	</select>
+	
 	<select id="getGoingItemList" resultMap="itemResult">
 		SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
 			i.item_price, i.ship_price, i.item_status, f.food_id, f.cat_id, f.name, im.image_id, im.image,
@@ -210,13 +235,7 @@
 					ORDER BY i.item_id) where rownum <= 4
 		]]>
 	</select>
-	
-	<select id="selectItemWithCategory" parameterType="int" resultMap="searchItemFromMainResultMap">
-		SELECT i.item_id, i.title, i.content, i.item_status, i.item_price, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister,
-		f.name, f.cat_id, im.image_id, im.image
-		FROM Item i JOIN Food f ON i.food_id = f.food_id JOIN Image im ON i.item_id = im.item_id, Category c
-		WHERE f.cat_id=#{cat_id} and c.cat_id=f.cat_id and i.item_status='ongoing'
-	</select>
+
 	
 	<select id="selectAllCategory" resultType="Category">
 		SELECT * FROM category
@@ -225,5 +244,15 @@
 	<select id="getCategoryById" parameterType="int" resultType="Category">
 		SELECT * FROM category
 		WHERE cat_id=#{cat_id}
+	</select>
+	
+	<select id="selectItemTotalCount" parameterType="Item" resultType="int">
+		SELECT count(*)
+		FROM ITEM
+	</select>
+	
+	<select id="selectItemCatCount" parameterType="int" resultType="int">
+		select count(*) from item i, food f, category c
+WHERE i.food_id = f.food_id and f.cat_id = c.cat_id and i.item_status = 'ongoing' and c.cat_id = #{cat_id}
 	</select>
 </mapper>

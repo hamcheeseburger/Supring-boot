@@ -37,7 +37,7 @@ public interface ItemMapper {
 	public int progressItem(@Param("item_id") int item_id);
 	
 	// 공구식품 목록 조회
-	public List<Item> getAllItem() throws DataAccessException;
+	public ArrayList<Item> getAllItem(Item item) throws DataAccessException;
 	// 진행중인 공구식품 목록 조회
 	public List<Item> getGoingItemList() throws DataAccessException;
 	// 성공 또는 실패한 공구식품 목록 조회 -> 마감일 지난 공구식품?
@@ -52,9 +52,13 @@ public interface ItemMapper {
 
 	public ArrayList<Item> searchItemFromMain(String keyword) throws DataAccessException;
 	
-	public ArrayList<Item> selectItemWithCategory(int cat_id) throws DataAccessException;
+	public ArrayList<Item> selectItemWithCategory(Item item) throws DataAccessException;
 	
 	public ArrayList<Category> selectAllCategory() throws DataAccessException;
 	
-	public Category getCategoryById(@Param("cat_id") int cat_id) throws DataAccessException;
+	public Category getCategoryById(int cat_id) throws DataAccessException;
+
+	public int selectItemTotalCount(Item item) throws DataAccessException;
+
+	public int selectItemCatCount(int cat_id) throws DataAccessException;
 }

@@ -61,8 +61,8 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public List<Item> getAllItemList() {
-		return itemMapper.getAllItem();
+	public ArrayList<Item> getAllItemList(Item item) {
+		return itemMapper.getAllItem(item);
 	}
 
 	@Override
@@ -117,9 +117,9 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public ArrayList<Item> selectItemWithCategory(int cat_id) {
+	public ArrayList<Item> selectItemWithCategory(Item item) {
 		// TODO Auto-generated method stub
-		return itemMapper.selectItemWithCategory(cat_id);
+		return itemMapper.selectItemWithCategory(item);
 	}
 
 	@Override
@@ -132,4 +132,17 @@ public class MybatisItemDao implements ItemDao {
 	public Category getCategoryById(int cat_id) {
 		return itemMapper.getCategoryById(cat_id);
 	}
+
+	@Override
+	public int selectItemTotalCount(Item item) {
+		// TODO Auto-generated method stub
+		return itemMapper.selectItemTotalCount(item);
+	}
+
+	@Override
+	public int selectItemCatCount(int cat_id) {
+		// TODO Auto-generated method stub
+		return itemMapper.selectItemCatCount(cat_id);
+	}
+	
 }

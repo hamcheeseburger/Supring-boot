@@ -22,7 +22,7 @@ public class Criteria {
 
 	public Criteria() {
 		this.currentPageNo = 1;
-		this.recordsPerPage = 10;
+		this.recordsPerPage = 6;
 		this.pageSize = 10;
 	}
 
@@ -80,6 +80,47 @@ public class Criteria {
 				.queryParam("searchKeyword", searchKeyword)
 				.build()
 				.encode();
+
+		return uriComponents.toUriString();
+	}
+	
+	public String makeQueryString(int pageNo, String queryString) {
+		System.out.println("[makeQueryString] " + queryString);
+		UriComponents uriComponents;
+		
+		String key = "";
+		String value = "";
+		
+		if(queryString != null) {
+			String [] splited = queryString.split("&");
+			String [] query = splited[splited.length - 1].split("=");
+//			cat_id는 맨뒤 파라미터로 전달 되므로..
+			key = query[0];
+			value = query[1];
+		}
+		
+		if(queryString != null && key.equals("cat_id")) {
+			uriComponents = UriComponentsBuilder.newInstance()
+						.queryParam("currentPageNo", pageNo)
+						.queryParam("recordsPerPage", recordsPerPage)
+						.queryParam("pageSize", pageSize)
+						.queryParam("searchType", searchType)
+						.queryParam("searchKeyword", searchKeyword)
+						.queryParam("cat_id", value)
+						.build()
+						.encode();
+			
+		}else {
+			uriComponents = UriComponentsBuilder.newInstance()
+					.queryParam("currentPageNo", pageNo)
+					.queryParam("recordsPerPage", recordsPerPage)
+					.queryParam("pageSize", pageSize)
+					.queryParam("searchType", searchType)
+					.queryParam("searchKeyword", searchKeyword)
+					.build()
+					.encode();
+		}
+		
 
 		return uriComponents.toUriString();
 	}

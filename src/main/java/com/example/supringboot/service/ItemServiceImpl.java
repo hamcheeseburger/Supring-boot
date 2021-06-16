@@ -1,6 +1,5 @@
 package com.example.supringboot.service;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -169,6 +168,19 @@ public class ItemServiceImpl implements ItemService{
 		return itemDao.getCategoryById(cat_id);
 	}
 
+	@Override
+	public ArrayList<Item> getGoingItem(Item item) {
+		return itemDao.getGoingItemList(item);
+	}
+
+	@Override
+	public ArrayList<Item> getEndItem(Item item) {
+		return itemDao.getEndItemList(item);
+	}
 	
+	@Override
+	public Item getDetailItem(int item_id) {
+		return itemDao.getDetailItem(item_id);
+	}
 	
 }

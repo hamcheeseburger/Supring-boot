@@ -13,7 +13,11 @@
 	<th:block layout:fragment="add-css"></th:block>
 		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:white;">
 			<div class="container">
-                <a th:href="@{/item/list}" class="nav-link"><b>카테고리</b></a>
+				
+				<button>진행중인 공구</button>
+				<button>지난 공구</button>
+			
+                <a th:href="@{/item/list}" class="nav-link"><b>전체</b></a>
                 <div class="collapse navbar-collapse">
                     
                     <ul class="navbar-nav ml-auto">

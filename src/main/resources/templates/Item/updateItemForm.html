@@ -13,7 +13,7 @@ layout:decorate="~{mainlayout}" >
 
 <h1 align="center">공동 구매 상품 확인</h1>
 
-<form class="form-horizontal" method="POST" action="#" th:action="@{/item/updateItem(itemId=${item.item_id})}">
+<form class="form-horizontal" method="POST" th:object="${item}" action="#" th:action="@{/item/updateItem(itemId=${item.item_id})}">
 	<div class="form-inline form-group">
 		<label for="file" class="col-sm-2 control-label">등록 이미지</label>
 		<div class="col-sm-10">
@@ -28,7 +28,8 @@ layout:decorate="~{mainlayout}" >
 		<label for="title" class="col-sm-2 control-label">상품 제목</label>
 		<div class="col-sm-10">
 			<input class="form-control" th:field="${item.title}" type="text" name="title">
-			<!--<b th:errors="*{title}"></b>-->
+			<b th:errors="*{title}">왜 에러가 있는데</b>
+			<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
       	</div>
 	</div>
 	
@@ -36,6 +37,7 @@ layout:decorate="~{mainlayout}" >
 		<label for="item_price" class="col-sm-2 control-label">상품 금액</label>
 		<div class="col-sm-10">
 			<input class="form-control" th:field="${item.item_price}" type="text" name="item_price">
+			<b th:errors="${item.item_price}"></b>
       	</div>
 	</div>
 	
@@ -43,15 +45,16 @@ layout:decorate="~{mainlayout}" >
 		<label for="ship_price" class="col-sm-2 control-label">배송비</label>
 		<div class="col-sm-10">
 			<input class="form-control" th:field="${item.ship_price}" type="text" name="ship_price">
+      		<b th:errors="*{ship_price}"></b>
       	</div>
 	</div>
 	
 	<div class="form-inline form-group">
 		<label for="date" class="col-sm-2 control-label">기간</label>
-		<div class="col-sm-10">
+		<div class="col-sm-10"> <!-- th:field="${#dates.format(item.created_dt, 'yyyy-MM-dd HH:mm')}"-->
 			<input class="form-control" th:field="${item.created_dt}" type="text" name="created_dt" placeholder="공구시작일"> ~ 
 			<input class="form-control" th:field="${item.end_dt}" type="text" placeholder="공구마감일" name="end_dt">
-			<!-- <b th:errors="*{created_dt}"></b> <b th:errors="*{end_dt}"></b>-->
+			<b th:errors="*{created_dt}"></b> <b th:errors="*{end_dt}"></b>
       	</div>
 	</div>
 	
@@ -59,14 +62,14 @@ layout:decorate="~{mainlayout}" >
 		<label for="min_quantity" class="col-sm-2 control-label">목표 수량</label>
 		<div class="col-sm-10">
 			<input class="form-control" th:field="${item.min_quantity}" type="text" name="min_quantity">
-			<!--<b th:errors="*{min_quantity}"></b>-->
+			<b th:errors="*{min_quantity}"></b>
       	</div>
 	</div>
 	
 	<div class="form-inline form-group">
 		<label for="ship_price" class="col-sm-2 control-label">상세 설명</label>
 		<div class="col-sm-10">
-			<textarea class="form-control" th:field="${item.content}" name="content" cols="50" rows="10"></textarea>
+			<textarea class="form-control" th:field="${item.content}" name="content" cols="50" rows="15"></textarea>
       	</div>
 	</div>
 	<!-- ////////////////////영양 정보 칸//////////////// -->
@@ -127,83 +130,6 @@ layout:decorate="~{mainlayout}" >
 			<input class="form-control" th:onclick="'location.href=\''+ @{/item/adminList} + '\''"  type="button" value="목록보기">
       	</div>
 	</div>
-	
-	<!--
-	<table border="1">
-		<tr>
-			<td>등록사진</td>
-			<td th:if="${item.images.size == 0}">사진 없음</td>
-			<td th:if="${item.images.size != 0}">
-				<a href="#"> <img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /> </a>
-			</td>
-		</tr>
-		<tr>
-			<td>상품제목</td>
-			<td><input th:value="${item.title}" type="text" style="width: 300" name="title"></td>
-		</tr>
-		<tr>
-			<td>상품 금액</td>
-			<td><input th:value="${item.item_price}" type="text" style="width: 300" name="price"></td>
-		</tr>
-		<tr>
-			<td>배송비</td>
-			<td><input th:value="${item.ship_price}" type="text" style="width: 300" name="ship_price"></td>
-		</tr>
-		<tr>
-			<td>기간</td>
-			<td>
-				<input th:value="${item.created_dt}" type="text" style="width: 300" name="created_dt" placeholder="년도/월/일"> &nbsp; ~ &nbsp;
-				<input th:value="${item.end_dt}" type="text" style="width: 300" name="end_dt" placeholder="년도/월/일">
-			</td>
-		</tr>
-		<tr>
-			<td>목표 수량</td>
-			<td><input th:value="${item.min_quantity}" type="text" style="width: 300" name="minQuantity"></td>
-		</tr>
-		<tr>
-			<td>상세 설명</td>
-			<td><textarea th:text="${item.content}" cols="80" rows="10" name="content"></textarea></td>
-		</tr>
-		<tr></tr>
-		<tr>
-			<td>영양 정보</td>
-			<td><table>
-				<tr>
-					<th>1회 제공량: &nbsp;</th>
-					<td th:text="${foodInfo.serving_size}">serving_size</td>
-				</tr>
-				<tr>
-					<th>제공량 단위: &nbsp; </th>
-					<td th:text="${foodInfo.serving_size_unit}?:'정보없음'">serving_size_unit</td>
-				</tr>
-				<tr>
-					<th>열량(kcal): &nbsp;</th>
-					<td th:text="${foodInfo.calories}?:'정보없음'">calories</td>
-				</tr>
-				<tr>
-					<th>단백질: &nbsp;</th>
-					<td th:text="${foodInfo.protein}?:'정보없음'">protein</td>
-				</tr>
-				<tr>
-					<th>지방: &nbsp;</th>
-					<td th:text="${foodInfo.grease}?:'정보없음'">grease</td>
-				</tr>
-				<tr>
-					<th>탄수화물: &nbsp;</th>
-					<td th:text="${foodInfo.carbohydrate}?:'정보없음'">carbohydrate</td>
-				</tr>
-				<tr>
-					<th>당류: &nbsp;</th>
-					<td th:text="${foodInfo.sugars}?:'정보없음'">sugars</td>
-				</tr>
-			</table></td>
-		</tr>
-		<tr>
-			<td><input type="submit" value="수정하기"> </td>
-			<td><input th:onclick="'location.href=\''+ @{/item/deleteItem(itemId=${item.item_id})} + '\''"  type="button" value="삭제하기"> </td>
-		</tr>
-	</table><br/>
-	-->
 </form>
 
 	</div>

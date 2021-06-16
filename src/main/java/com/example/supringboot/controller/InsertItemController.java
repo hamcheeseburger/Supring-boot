@@ -60,7 +60,6 @@ public class InsertItemController {
 	//현재 로그인한 관리자의 공구목록
 	@RequestMapping("/item/adminList")
 	public String adminList(HttpServletRequest request, ModelMap model) throws Exception{
-		//int user_id = 41;	//현재 db에 있는 임의의admin계정 -> 추후 현재 로그인한 아이디로 변경
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
 		List<Item> itemList = itemService.getItemListByAdmin(user_id);
@@ -78,14 +77,19 @@ public class InsertItemController {
 			model.put("itemForm", new ItemForm());
 			return "/Item/registerItemForm";
 		}
-		else{
+		else {
 			System.out.println("키워드 있을 때");
-			ArrayList<Food> foodList = (ArrayList<Food>) this.itemService.searchFoodList(keyword);
-			model.put("foodList", foodList);
-			model.put("keyword", keyword);
-			model.put("itemForm", new ItemForm());
-			System.out.println("확인:" + foodList.get(0).getName());
-			return "/Item/registerItemForm";
+			try {
+				ArrayList<Food> foodList = (ArrayList<Food>) this.itemService.searchFoodList(keyword);
+				model.put("foodList", foodList);
+				model.put("keyword", keyword);
+				model.put("itemForm", new ItemForm());
+				System.out.println("확인:" + foodList.get(0).getName());
+				return "/Item/registerItemForm";
+			}catch(Exception e) {
+				model.put("noKeyword", "검색한 제품이 존재하지 않습니다.");
+				return "/Item/registerItemForm";
+			}
 		}
 	}
 
@@ -97,13 +101,6 @@ public class InsertItemController {
 			@Valid @ModelAttribute("itemForm") ItemForm itemForm,
 			BindingResult errors, Model model) throws Exception{
 
-		System.out.println("진입~~~~~~~~~~~~~~~~~~~~~~~~~");
-		if(keyword.isEmpty() || keyword==null) {
-			System.out.println("키워드가 없다잉~~~~~~~~~~~~~~~");
-			model.addAttribute("itemForm", itemForm);
-			model.addAttribute("msg", "상품 검색 먼저 수행해주세요!");
-			return "Item/registerItemForm";
-		}
 		System.out.println("상품명: " + itemForm.getFood_id());
 		System.out.println("제목:" + itemForm.getTitle());
 		System.out.println("상품금액: " + itemForm.getItem_price());
@@ -116,7 +113,7 @@ public class InsertItemController {
 		Food food = itemService.getFood(itemForm.getFood_id());
 		itemForm.setFood(food);
 		
-		new ItemFormValidator().validate(itemForm, errors);
+		//new ItemFormValidator().validate(itemForm, errors);
 		
 		//검증 오류 발생 시
 		if(errors.hasErrors()) {
@@ -139,6 +136,7 @@ public class InsertItemController {
 		
 		Timestamp create_time = null, end_time = null, modify_time = null;
 		Date endParseDate = null;
+		
 		//공구 날짜 Timestamp 변환
 		try {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -181,79 +179,5 @@ public class InsertItemController {
 		
 		return "redirect:/item/adminList"; //admin_List로 리다이렉트 하기
 	}
-	
-	/*
-	//공구 등록-itemForm 미사용
-	@PostMapping("/item/registerItem")
-	public String insertItem(@RequestParam("food")int food_id,
-			@RequestParam("title") @Valid @NotBlank String title,
-			@RequestParam("price") @Valid @NotNull @PositiveOrZero int price,
-			@RequestParam("ship_price") @Valid @NotNull @PositiveOrZero int ship_price,
-			@RequestParam("created_dt") @Valid @Pattern(regexp="^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$") String created_dt,
-			@RequestParam("end_dt") @Valid @Pattern(regexp="^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$") String end_dt,
-			@RequestParam("minQuantity") @Valid @NotNull @PositiveOrZero int minQuantity,
-			@RequestParam("content") @Valid @NotBlank String content,
-			@RequestParam("images")@Valid @NotEmpty MultipartFile file,
-			ModelMap model, BindingResult result) throws Exception {
-		
-		System.out.println("오류 검증");
-		//new ItemValidator().validate(item, result);
-		if(result.hasErrors()) {
-			System.out.println("오류 발견");
-			return "/Item/registerItemForm";
-		}
-		
-		System.out.println(food_id);
-		Food food = itemService.getFood(food_id);
-		Timestamp create_time = null, end_time = null, modify_time = null;
-		Date endParseDate = null;
-		
-		//공구 날짜 Timestamp 변환
-		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		    Date createdParsedDate = (Date) dateFormat.parse(created_dt);
-		    endParseDate = (Date) dateFormat.parse(end_dt);
-		    Date modifyParseDate = new Date();
-		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
-		    end_time = new java.sql.Timestamp(endParseDate.getTime());
-		    modify_time = new java.sql.Timestamp(modifyParseDate.getTime());
-		} catch(Exception e) { }
-		
-		//이미지 처리
-		System.out.println("이미지 처리 시작");
-		ArrayList<Image> imageList = new ArrayList<Image>();
-		if (file != null) {
-			MultipartFile imageFile = file;
-			System.out.println("이미지 받아오기");
-			try {
-				byte[] imageContentBytes = imageFile.getBytes();
-				Image image = new Image(); 
-				image.setImage(imageContentBytes);
-				imageList.add(image);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		//수정필요: 세번째 현재 유저아이디 가져오기(admin계정)
-//		Item item = new Item(0, food, 41, price, ship_price, title, content, end_time, minQuantity, create_time, 
-//				modify_time, "ongoing", imageList, 0);
-		
-		Item item = new Item(0, food, 41, price, ship_price, title, content, end_time, minQuantity, create_time, 
-				modify_time, "ongoing", imageList, 0);
-		
-		if(item.getImages() != null)
-			item.setImages(imageList);
-		
-		itemService.insertItem(item);
-		System.out.println("insert item_id : " + item.getItem_id());
-		
-		//itemService.startScheduler(item.getItem_id(), endParseDate);
-		System.out.println("디비등록완료");
-		return "redirect:/item/adminList"; //admin_List로 리다이렉트 하기
-		//return "/Item/updateItemForm";
-		
-	}
-	*/
 	
 }

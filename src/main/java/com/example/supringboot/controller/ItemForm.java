@@ -56,6 +56,7 @@ public class ItemForm implements Serializable{
 	private String str_ship_price; //배송비
 	
 	@NotBlank(message = "상품가격은 필수 입력 값입니다.")
+	@PositiveOrZero(message = "상품 가격은 0이상의 양수 값입니다.")
 	private String str_item_price; //상품가격
 	
 	@NotBlank(message = "상품의 최소수량은 필수 입력 값입니다.")

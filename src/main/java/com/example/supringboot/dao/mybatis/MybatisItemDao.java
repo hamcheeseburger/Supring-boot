@@ -71,13 +71,13 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public List<Item> getGoingItemList() {
-		return itemMapper.getGoingItemList();
+	public ArrayList<Item> getGoingItemList(Item item) {
+		return itemMapper.getGoingItemList(item);
 	}
 
 	@Override
-	public List<Item> getEndItemList() {
-		return itemMapper.getEndItemList();
+	public ArrayList<Item> getEndItemList(Item item) {
+		return itemMapper.getEndItemList(item);
 	}
 
 	@Override

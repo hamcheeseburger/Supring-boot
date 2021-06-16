@@ -27,9 +27,9 @@ public interface ItemDao {
 	// 공구식품 목록 조회 -> 
 	public ArrayList<Item> getAllItemList(Item item);
 	// 진행중인 공구식품 목록 조회
-	public List<Item> getGoingItemList();
+	public ArrayList<Item> getGoingItemList(Item item);
 	// 성공 또는 실패한 공구식품 목록 조회 -> 마감일 지난 공구식품?
-	public List<Item> getEndItemList();
+	public ArrayList<Item> getEndItemList(Item item);
 	// 특정 공구식품 정보조회
 	public Item getDetailItem(int item_id);
 	

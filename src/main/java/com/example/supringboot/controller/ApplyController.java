@@ -1,41 +1,39 @@
 package com.example.supringboot.controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.domain.Account;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.Order_reg;
+import com.example.supringboot.service.ApplyService;
 import com.example.supringboot.service.ApplyValidator;
-import com.example.supringboot.service.WishServiceImpl;
+import com.example.supringboot.service.ItemService;
 
 @Controller
 @SessionAttributes({"applyForm"})
 public class ApplyController {
 	
 	@Autowired
-	private WishServiceImpl wishService;
+	private ItemService itemService;
+	
+	@Autowired
+	private ApplyService applyService;
 	
 	@Autowired
 	private ApplyValidator applyValidator;
@@ -81,7 +79,7 @@ public class ApplyController {
 			
 			int amount = Integer.parseInt(request.getParameter("amount")); // 공구 신청할 수량
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
-			Item item = wishService.getDetailItem(itemId);
+			Item item = itemService.getDetailItem(itemId);
 			System.out.println("food name: " + item.getFood().getName());
 			int total = amount * item.getItem_price() + item.getShip_price(); // 총 금액
 			int itemTotal = amount * item.getItem_price();
@@ -104,18 +102,18 @@ public class ApplyController {
 			return applyFormView;
 		}
 		
-		wishService.applyItem(applyForm.getOrder());
+		applyService.applyItem(applyForm.getOrder());
 
 		status.setComplete();
 		return applySuccess; // 공구신청내역 상세보기 페이지
 	}
 	
-	@RequestMapping("item/applying/cancel")
+	@RequestMapping("item/apply/cancel")
 	public String cancelApplying(HttpServletRequest request, @RequestParam int applyId) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();
 		
-		if (wishService.cancelItem(applyId, userId)) {
+		if (applyService.cancelItem(applyId, userId)) {
 			return "redirect:/account/myOrderList"; // 신청 취소하면 신청 내역 리스트 페이지로 이동
 		}
 		else {
@@ -130,7 +128,7 @@ public class ApplyController {
 		int userId = userSession.getAccount().getUser_id();
 		
 		System.out.println("신청 번호: " + applyId);
-		Order_reg apply = wishService.getOrderById(applyId, userId);
+		Order_reg apply = applyService.getOrderById(applyId, userId);
 		System.out.println("신청 식품: " + apply.getItem().getFood().getName());
 		System.out.println("신청자 이름: " + apply.getUser().getName());
 		
@@ -146,7 +144,7 @@ public class ApplyController {
 		int userId = userSession.getAccount().getUser_id();
 		
 		ApplyForm applyForm = new ApplyForm();
-		applyForm.setOrder(wishService.getOrderById(applyId, userId));
+		applyForm.setOrder(applyService.getOrderById(applyId, userId));
 		
 		int itemTotal = applyForm.getOrder().getQuantity() * applyForm.getOrder().getItem().getItem_price();
 		applyForm.setItemTotalPrice(itemTotal);
@@ -166,7 +164,7 @@ public class ApplyController {
 			return editApplyView;
 		}
 		
-		wishService.applyUpdate(applyForm.getOrder());
+		applyService.applyUpdate(applyForm.getOrder());
 
 		status.setComplete();
 		return applySuccess; // 공구신청내역 상세보기 페이지

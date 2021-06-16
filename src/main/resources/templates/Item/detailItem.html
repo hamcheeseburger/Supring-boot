@@ -11,7 +11,6 @@
 	<div layout:fragment="custom-content" align="center">
 		<section class="py-5">
 			<div class="container">
-			<h2 align="center">공동구매 식품 상세보기</h2>
 		
 				<p th:text="'카테고리: ' + ${category.cat_name}"></p>
 				<p th:if="${detail.images.size == 0}">사진 없음</p>
@@ -28,20 +27,20 @@
 				<p th:text="'최소 수량: ' + ${detail.min_quantity}"></p>
 				<p th:text="'진행 상황: ' + ${detail.item_status}"></p>
 				<p th:text="'신청자 수: ' + ${detail.numOfRegister}"></p>
-				<p th:text="'시작일: ' + ${detail.created_dt}"></p>
-				<p th:text="'마감일: ' + ${detail.end_dt}"></p>
+				<p th:text="'시작일: ' + ${#dates.format(detail.created_dt, 'yyyy/MM/dd  HH:mm')}"></p>
+				<p th:text="'마감일: ' + ${#dates.format(detail.end_dt, 'yyyy/MM/dd  HH:mm')}"></p>
 				
 				<form name="wish" id="insertWish" method="post" action="#" >
-					<input type="number" id="amount" name="amount" value="1" min="1" />
+					<input type="number" id="amount" name="amount" value="1" min="1" th:if="${detail.item_status == 'ongoing'}" />
 					<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
-					<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" />
+					<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" th:if="${detail.item_status == 'ongoing'}" />
 					
 					<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
 						type="submit" value="수정하기" onclick="javascript: form.action='/item/updateItemForm';" />
-					<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
+					<input th:if="${session.userSession != null && session.userSession.account.admin == true}"
 						type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
 					
-					<input th:if="${session.userSession.account.admin != true}"
+					<input th:if="${session.userSession.account.admin != true && detail.item_status == 'ongoing'}"
 						type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
 				</form>
 			</div>

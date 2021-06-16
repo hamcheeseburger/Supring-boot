@@ -22,11 +22,12 @@
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${orderReg.item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
-                                <h5 class="card-title"><a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:text="${orderReg.item.food.name}"></a></h5>
-                                수량 : <strong class="card-text" th:text="${orderReg.quantity}" ></strong> <br/>
-                                총 금액 : <strong class="card-text" th:text="${orderReg.ord_price}"></strong> <br/>
-                                진행 상태 : <strong class="card-text" th:text="${orderReg.item.item_status}"></strong> <br/>
-                                신청일 : <strong class="card-text" th:text="${orderReg.ord_reg_dt}"></strong> <br/>
+                                <h5 class="card-title"><a th:text="${orderReg.item.food.name}"></a></h5> <br />
+                                <h4><b class="card-text"><a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:text="${orderReg.item.title}"></a></b> </h4>
+                                수량 : <b class="card-text" th:text="${orderReg.quantity}" ></b> <br/>
+                                총 금액 : <b class="card-text" th:text="${orderReg.ord_price}"></b> <br/>
+                                진행 상태 : <b class="card-text" th:text="${orderReg.item.item_status}"></b> <br/>
+                                신청일 : <b class="card-text" th:text="${orderReg.ord_reg_dt}"></b> <br/>
                                 <a th:href="@{/item/apply/confirm(applyId=${orderReg.order_reg_id})}">신청내역 보기</a>
                             </div>
                         </div>

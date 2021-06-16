@@ -58,6 +58,10 @@ public class ViewItemController {
 			
 			ArrayList<Item> itemList = itemService.getItemList(item);
 			mav.addObject("itemList", itemList);
+			
+			if (itemList == null) {
+				mav.addObject("itemSize", 0);
+			}
 		}else {
 			item.setCat_id(cat_id);
 			ArrayList<Item> catItemList = itemService.selectItemWithCategory(item);
@@ -65,6 +69,10 @@ public class ViewItemController {
 			
 			mav.addObject("catName", cat.getCat_name());
 			mav.addObject("catItemList", catItemList);
+			
+			if (catItemList == null) {
+				mav.addObject("catSize", 0);
+			}
 		}
 		return mav;
 	}

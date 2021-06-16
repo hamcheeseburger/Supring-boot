@@ -110,7 +110,7 @@ public class ApplyController {
 		return applySuccess; // 공구신청내역 상세보기 페이지
 	}
 	
-	@RequestMapping("item/applying/cancel")
+	@RequestMapping("item/apply/cancel")
 	public String cancelApplying(HttpServletRequest request, @RequestParam int applyId) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();

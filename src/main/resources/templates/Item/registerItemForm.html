@@ -6,6 +6,16 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 <meta charset="UTF-8">
 
 <title>공구식품 등록</title>
+<script>
+ function confirm(){
+	 if(searchFood.keyword.placeholder == ""){
+		 alert('상품 먼저 검색해주세요!')
+		 searchFood.keyword.focus()
+		 return false
+	 }
+	 registerItem.submit()
+ }
+</script>
 </head>
 
 <body>
@@ -23,18 +33,9 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
        		<input type="submit" class="form-control" value="검색">
       	</div>
 	</div>
-	<!-- 
-	<table>
-		<tr>
-			<td>상품 검색</td>
-			<td><input th:placeholder="${keyword}" type="text" style="width: 500" name="keyword"></td>
-			<td><input type="submit" value="검색"/> </td>
-		</tr>
-	</table>
-	-->
 </form>
 
-<form class="form-horizontal" method="POST" enctype="multipart/form-data" th:object="${itemForm}"> <!-- action="/item/adminList" -->
+<form class="form-horizontal" name="registerItem" method="POST" enctype="multipart/form-data" th:object="${itemForm}"> <!-- action="/item/adminList" -->
 	<div class="form-inline form-group">
 		<label for="food_id" class="col-sm-2 control-label">상품 검색</label>
 		<div class="col-sm-10">
@@ -56,16 +57,16 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 	<div class="form-inline form-group">
 		<label for="item_price" class="col-sm-2 control-label">상품 금액</label>
 		<div class="col-sm-10">
-			<input class="form-control" th:field="*{item_price}" type="text" name="item_price">
-			<b th:errors="*{item_price}"></b>
+			<input class="form-control" th:field="*{str_item_price}" type="text" name="str_item_price">
+			<b th:errors="*{str_item_price}"></b>
       	</div>
 	</div>
 	
 	<div class="form-inline form-group">
 		<label for="ship_price" class="col-sm-2 control-label">배송비</label>
 		<div class="col-sm-10">
-			<input class="form-control" th:field="*{ship_price}" type="text" name="ship_price">
-			<b th:errors="*{ship_price}"></b>
+			<input class="form-control" th:field="*{str_ship_price}" type="text" name="str_ship_price">
+			<b th:errors="*{str_ship_price}"></b>
       	</div>
 	</div>
 	
@@ -81,8 +82,8 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 	<div class="form-inline form-group">
 		<label for="min_quantity" class="col-sm-2 control-label">목표 수량</label>
 		<div class="col-sm-10">
-			<input class="form-control" th:field="*{min_quantity}" type="number" name="min_quantity">
-			<b th:errors="*{min_quantity}"></b>
+			<input class="form-control" th:field="*{str_min_quantity}" type="number" name="min_quantity">
+			<b th:errors="*{str_min_quantity}"></b>
       	</div>
 	</div>
 	
@@ -95,75 +96,74 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 	</div>
 	
 	<div class="form-inline form-group">
-		<label for="ship_price" class="col-sm-2 control-label">사진 등록</label>
+		<label for="file" class="col-sm-2 control-label">사진 등록</label>
 		<div class="col-sm-10">
 			<input class="form-control" accept="image/*" type="file" name="file">
       	</div>
 	</div>
 	
+	<div class="form-inline form-group">
+		<label for="preview" class="col-sm-2 control-label">미리보기</label>
+			<div class="form-control" id="preview">	</div>
+	</div>
+	
+	
 	<br/>
 	<div class="form-inline form-group">
 		<div align="center" class="col-sm-10">
-			<input class="form-control" type="submit" value="등록하기">
+			<input class="form-control" type="button" value="등록하기" onClick="confirm()">
 			<input class="form-control" th:onclick="'location.href=\''+ @{/admin/itemList} + '\''"  type="button" value="목록보기">
       	</div>
 	</div>
-	
-	<!-- 
-	<table>
-		<tr>
-			<td>상품명</td>
-			<td>
-			<select name="food_id" onClick="getFoodInfo()">
-					<option th:if="${foodname != null}" th:text="${foodname}" th:value="${foodId}"></option>
-					<option th:each="f : ${foodList}" th:text="${f.name}" th:value="${f.food_id}">임시</option>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td>상품 제목</td>
-			<td><input th:field="*{title}" type="text" style="width: 300" name="title">
-			<span th:errors="*{title}"></span></td>
-		</tr>
-		<tr>
-			<td>상품 금액</td>
-			<td><input th:field="*{item_price}" type="text" style="width: 300" name="item_price">
-			<span th:errors="*{item_price}"></span></td>
-		</tr>
-		<tr>
-			<td>배송비</td>
-			<td><input th:field="*{ship_price}" type="text" style="width: 300" name="ship_price">
-			<span th:errors="*{ship_price}"></span></td>
-		</tr>
-		<tr>
-			<td>기간</td>
-			<td><input th:field="*{created_dt}" type="text" style="width: 300" name="created_dt" placeholder="공구시작일"> &nbsp; ~ &nbsp;
-				<input th:field="*{end_dt}" type="text" style="width: 300" name="end_dt" placeholder="공구마감일">
-				<span th:errors="*{created_dt}"></span><span th:errors="*{end_dt}"></span></td>
-		</tr>
-		<tr>
-			<td>목표 수량</td>
-			<td><input th:field="*{min_quantity}" type="text" style="width: 300" name="min_quantity">
-			<span th:errors="*{min_quantity}"></span></td>
-		</tr>
-		<tr>
-			<td>상세 설명</td>
-			<td><textarea th:field="*{content}" cols="80" rows="10" name="content"></textarea></td>
-		</tr>
-		<tr></tr>
-		<tr>
-			<td>사진 등록</td>
-			<td><input type="file" name="file" accept="image/*"></td>
-		</tr> 
-	</table>
-	
-	<br/>
-	<p align="center">
-	<input type="submit" value="등록하기">
-	</p>
-	-->
 </form>
-
+	<script th:inline="javascript">
+	 
+	//$("#ch").click(function(){
+     //    alert('Test1 버튼 클릭');
+     //});
+	 
+		var upload = document.querySelector('#file');
+		var preview = document.querySelector('#preview');
+		
+		upload.addEventListener('change',function (e) {
+			var pre_img = preview.childNodes[0];
+		    var get_file = e.target.files;
+		    var image = document.createElement('img');
+		
+		    while(preview.hasChildNodes())
+		    {
+		 		preview.removeChild(preview.firstChild);		   	
+		  	}
+		    
+		    /* FileReader 객체 생성 */
+		    var reader = new FileReader();
+		
+		    /* reader 시작시 함수 구현 */
+		    reader.onload = (function (aImg) {
+		        console.log(1);
+		
+		        return function (e) {
+		            console.log(3);
+		            /* base64 인코딩 된 스트링 데이터 */
+		            aImg.src = e.target.result
+		        }
+		    })(image)
+		
+		    if(get_file){
+		        /* 
+		            get_file[0] 을 읽어서 read 행위가 종료되면 loadend 이벤트가 트리거 되고 
+		            onload 에 설정했던 return 으로 넘어간다.
+		            이와 함게 base64 인코딩 된 스트링 데이터가 result 속성에 담겨진다.
+		        */
+		        reader.readAsDataURL(get_file[0]);
+		        console.log(2);
+		    }
+			image.style.cssText = 'width: auto; height: auto; max-width: 200px; max-height: 200px;'
+		    preview.appendChild(image);
+			//preview.replaceChild(image, pre_img);
+		})
+	
+	</script>
 	</div>
 	</section>
 	</div>

@@ -27,5 +27,16 @@ public class MybatisAdminDao implements AdminDao{
 		// TODO Auto-generated method stub
 		return adminMapper.selectItemOrderRegs(item_id);
 	}
+	
+	@Override
+	public ArrayList<Item> getOngoingItemListByAdmin(int user_id) {
+		// TODO Auto-generated method stub
+		return adminMapper.getOngoingItemListByAdmin(user_id);
+	}
 
+	@Override
+	public ArrayList<Item> getExpiredItemListByAdmin(int user_id) {
+		// TODO Auto-generated method stub
+		return adminMapper.getExpiredItemListByAdmin(user_id);
+	}
 }

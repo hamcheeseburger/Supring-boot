@@ -1,5 +1,6 @@
 package com.example.supringboot.controller;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,13 +42,10 @@ public class AdminPageController {
 		
 		logger.info("user_id : " + user_id);
 		
-		ArrayList<Item> itemList = supringService.getAdminItemList(user_id);
-		
-		for(Item item : itemList) {
-			System.out.println(item.getTitle());
-		}
-		
-		modelAndView.addObject("itemList", itemList)
+		HashMap<String, ArrayList<Item>> hashmap = supringService.getAdminItemList(user_id);
+			
+		modelAndView.addObject("ongoingItemList", hashmap.get("ongoingItemList"))
+			.addObject("expiredItemList", hashmap.get("expiredItemList"))
 			.addObject("selection", 0);
 		
 		return modelAndView;

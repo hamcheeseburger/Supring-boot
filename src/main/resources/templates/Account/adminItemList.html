@@ -10,30 +10,60 @@
  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
             <div class="container">
-                <h2 class="mb-4">등록한 '같이 먹어요' 목록</h2>
+                <h4 class="mb-4"><b>진행 목록</b></h4>
                 <div class="row">
-                	<div th:if="${#lists.isEmpty(itemList)}">
+                	<div th:if="${#lists.isEmpty(ongoingItemList)}">
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
-                    <div th:each="item : ${itemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
+                    <div th:each="item : ${ongoingItemList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100" >
                             <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
                                 <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
-                                목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/>
-                                현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/>
-                                상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
-                                등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/>
-                                마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/>
+                                달성율 : <b class="card-text" th:text="${item.percentage} + '% (' + ${item.numOfRegister} + '/' + ${item.min_quantity} + ')'"></b> <br/>
+                                상태 : <strong class="card-text" th:text="${item.item_status_korean}"></strong> <br/>
+                                
+                                
+                                등록일 : <strong class="card-text" th:text="${#dates.format(item?.created_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
+                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
                                 <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>
 
                             </div>
                         </div>
                         
                     </div>
+                </div>       
                 </div>
+                
+                
+                <div class="container">
+                <h4 class="mb-4"><b>마감 목록</b></h4>
+                <div class="row">
+                	<div th:if="${#lists.isEmpty(expiredItemList)}">
+                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	</div>
+                    <div th:each="item : ${expiredItemList}" class="col-lg-4 col-sm-6 mb-4">
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
+                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                            <div class="card-body">
+                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
+                                식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
+                                식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
+                                달성율 : <b class="card-text" th:text="${item.percentage} + '% (' + ${item.numOfRegister} + '/' + ${item.min_quantity} + ')'"></b> <br/>
+                                상태 : <strong class="card-text" th:text="${item.item_status_korean}"></strong> <br/>
+                                
+                                
+                                등록일 : <strong class="card-text" th:text="${#dates.format(item?.created_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
+                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
+                                <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>       
                 </div>
                 <!-- Modal -->
 				<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">

@@ -33,7 +33,7 @@
 											<td
 												th:text="${#temporals.format( row.created_dt, 'yyyy/MM/dd' )}"></td>
 											-->
-											<td th:text="${comment.created_dt}"></td>
+											<td th:text="${#dates.format(comment.created_dt, 'yyyy/MM/dd  HH:mm')}"></td>
 										</tr>
 										<tr th:unless="${!#lists.isEmpty( commentList )}">
 											<td colspan="4">조회된 결과가 없습니다.</td>

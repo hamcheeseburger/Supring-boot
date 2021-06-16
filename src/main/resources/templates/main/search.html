@@ -28,8 +28,9 @@ layout:decorate="~{mainlayout}">
                         <div class="card h-100">
                             <a th:href="@{/item/detail(itemId=${item.item_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
-                                <h6 class="card-title"><b th:text="${item.title}"></b></h6>
-                                <p class="card-text" th:text="${item.content}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+                                <h6 class="card-title"><b th:text="${item.title}"></b></h6><br />
+                                <p class="card-text" th:text="${item.content}"></p>
+                              	<b class="card-text" th:text="${item.percentage} + '% 달성'"></b>
                             </div>
                         </div>
                     </div>
@@ -51,7 +52,9 @@ layout:decorate="~{mainlayout}">
                             <a th:href="@{/post/viewPost(post_id=${post.post_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" alt="액박이미지" /></a>
                             <div class="card-body">
                                 <h6 class="card-title"><b th:text="${post.title}"></b></h6>
-                                <p class="card-text" style="color:gray;" th:text="${post.user.name}"></p>
+       
+                            	<p class="card-text" th:text="${post.content}"></p><br />
+                            	<b class="card-text" style="color:gray;" th:text="${post.user.name} + '(' + ${post.user.login_id} + ')'"></b>
                             </div>
                         </div>
                     </div>

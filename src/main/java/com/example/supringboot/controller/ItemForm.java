@@ -33,8 +33,6 @@ public class ItemForm implements Serializable{
 	message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
 	private String end_dt; // 공동구매 만료일
 	
-	@NotNull(message = "상품의 최소수량은 필수 입력 값입니다.")
-	@PositiveOrZero(message = "수량은 0이상의 양수 값입니다.")
 	private int min_quantity; // 공동구매 최소수량(목표수량)
 	
 	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
@@ -45,20 +43,24 @@ public class ItemForm implements Serializable{
 	private String modified_dt; // 내용 수정일
 	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:fail, 성공:success)
 	
-	@NotNull(message = "상품가격은 필수 입력 값입니다.")
 	private int item_price; // 식품 가격
-	
-	@NotNull(message = "배송가격은 필수 입력 값입니다.")
-	@PositiveOrZero(message = "배송 가격은 0이상의 양수 값입니다.")
 	private int ship_price; // 배송 가격
 	
 	private MultipartFile file; //이미지파일 
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
 	
-	private String str_ship_price;
-	private String str_item_price;
-	private String str_min_quantity;
+	//금액 입력 필드
+	@NotBlank(message = "배송가격은 필수 입력 값입니다.")
+	@PositiveOrZero(message = "배송 가격은 0이상의 양수 값입니다.")
+	private String str_ship_price; //배송비
+	
+	@NotBlank(message = "상품가격은 필수 입력 값입니다.")
+	private String str_item_price; //상품가격
+	
+	@NotBlank(message = "상품의 최소수량은 필수 입력 값입니다.")
+	@PositiveOrZero(message = "수량은 0이상의 양수 값입니다.")
+	private String str_min_quantity; //목표수량
 	
 	public ItemForm() {
 		super();
@@ -85,30 +87,14 @@ public class ItemForm implements Serializable{
 	}
 	
 	//
-	public String getStr_ship_price() {
-		return str_ship_price;
-	}
+	public String getStr_ship_price() {		return str_ship_price;	}
+	public void setStr_ship_price(String str_ship_price) {	this.str_ship_price = str_ship_price;	}
 
-	public void setStr_ship_price(String str_ship_price) {
-		this.str_ship_price = str_ship_price;
-	}
+	public String getStr_item_price() {	return str_item_price;	}
+	public void setStr_item_price(String str_item_price) {	this.str_item_price = str_item_price;	}
 
-	public String getStr_item_price() {
-		return str_item_price;
-	}
-
-	public void setStr_item_price(String str_item_price) {
-		this.str_item_price = str_item_price;
-	}
-
-	public String getStr_min_quantity() {
-		return str_min_quantity;
-	}
-
-	public void setStr_min_quantity(String str_min_quantity) {
-		this.str_min_quantity = str_min_quantity;
-	}
-	//
+	public String getStr_min_quantity() {	return str_min_quantity;	}
+	public void setStr_min_quantity(String str_min_quantity) {	this.str_min_quantity = str_min_quantity;	}
 	
 	public int getItem_id() {
 		return item_id;

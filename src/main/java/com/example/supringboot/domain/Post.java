@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import com.example.supringboot.util.Const;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
@@ -33,6 +35,7 @@ public class Post extends Common implements Serializable {
 	
 //	paging으로 인해 user name을 바로 저장하는 필드 필요
 	private String name;
+	private String trade_type_korean;
 //	날짜 String으로 변환하여 저장하는 필드
 	private String str_modified_dt;
 	private String str_created_dt;
@@ -42,41 +45,6 @@ public class Post extends Common implements Serializable {
 		super();
 	}
 	
-	
-	
-	public Post(int post_id, Account user, Category category, String title, String content, String food_name, int price,
-			String trade_type, int trade_status, Timestamp created_dt, Timestamp modified_dt, int quantity, String unit,
-			Timestamp exp_dt, int ship_type, ArrayList<Image> images, ArrayList<Comment> comments,
-			String trade_status_string, String ship_type_string, String name, String str_modified_dt,
-			String str_created_dt, String str_exp_dt) {
-		super();
-		this.post_id = post_id;
-		this.user = user;
-		this.category = category;
-		this.title = title;
-		this.content = content;
-		this.food_name = food_name;
-		this.price = price;
-		this.trade_type = trade_type;
-		this.trade_status = trade_status;
-		this.created_dt = created_dt;
-		this.modified_dt = modified_dt;
-		this.quantity = quantity;
-		this.unit = unit;
-		this.exp_dt = exp_dt;
-		this.ship_type = ship_type;
-		this.images = images;
-		this.comments = comments;
-		this.trade_status_string = trade_status_string;
-		this.ship_type_string = ship_type_string;
-		this.name = name;
-		this.str_modified_dt = str_modified_dt;
-		this.str_created_dt = str_created_dt;
-		this.str_exp_dt = str_exp_dt;
-	}
-
-
-
 	public Post(int post_id, Account user, Category category, String title, String content, String food_name, int price,
 			String trade_type, int trade_status, Timestamp created_dt, Timestamp modified_dt, int quantity, String unit,
 			Timestamp exp_dt, int ship_type, ArrayList<Image> images, ArrayList<Comment> comments) {
@@ -147,6 +115,11 @@ public class Post extends Common implements Serializable {
 	}
 	public void setTrade_type(String trade_type) {
 		this.trade_type = trade_type;
+		if(trade_type.equals("payment")) {
+			trade_type_korean = Const.PAYMENT;
+		}else if(trade_type.equals("trade")) {
+			trade_type_korean = Const.TRADE;
+		}
 	}
 	public int getTrade_status() {
 		return trade_status;
@@ -154,9 +127,9 @@ public class Post extends Common implements Serializable {
 	public void setTrade_status(int trade_status) {
 		this.trade_status = trade_status;
 		if(trade_status == 0) {
-			this.trade_status_string = "거래중";
+			this.trade_status_string = Const.TRADE_ONGOING;
 		} else if (trade_status == 1) {
-			this.trade_status_string = "거래 완료";
+			this.trade_status_string = Const.TRADE_COMPLETE;
 		}
 	}
 	public Timestamp getCreated_dt() {
@@ -195,9 +168,9 @@ public class Post extends Common implements Serializable {
 	public void setShip_type(int ship_type) {
 		this.ship_type = ship_type;
 		if(ship_type == 0) {
-			this.ship_type_string = "직거래";
+			this.ship_type_string = Const.TRADE_MEET;
 		} else if (ship_type == 1) {
-			this.ship_type_string = "배송";
+			this.ship_type_string = Const.TRADE_SHIP;
 		}
 	}
 	public ArrayList<Image> getImages() {
@@ -277,5 +250,13 @@ public class Post extends Common implements Serializable {
 	public String toString() {
 		return 
 				"게시글 id" + getPost_id() + "/n";
+	}
+
+	public String getTrade_type_korean() {
+		return trade_type_korean;
+	}
+
+	public void setTrade_type_korean(String trade_type_korean) {
+		this.trade_type_korean = trade_type_korean;
 	}
 }

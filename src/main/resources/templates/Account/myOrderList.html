@@ -16,9 +16,9 @@
                 <h4 class="mb-4"><b>진행중인 상품 목록</b></h4>
                 <div class="row">       	
                     <div th:each="orderReg : ${orderRegs}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${orderReg.item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
+                        <div class="card h-100" >
                             <b th:if="${orderReg.item.images.size == 0}">사진 없음</b>
-							<a href="#" th:if="${orderReg.item.images.size != 0}">
+							<a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:if="${orderReg.item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${orderReg.item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
@@ -26,8 +26,8 @@
                                 <h4><b class="card-text"><a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:text="${orderReg.item.title}"></a></b> </h4>
                                 수량 : <b class="card-text" th:text="${orderReg.quantity}" ></b> <br/>
                                 총 금액 : <b class="card-text" th:text="${orderReg.ord_price}"></b> <br/>
-                                진행 상태 : <b class="card-text" th:text="${orderReg.item.item_status}"></b> <br/>
-                                신청일 : <b class="card-text" th:text="${orderReg.ord_reg_dt}"></b> <br/>
+                                진행 상태 : <b class="card-text" th:text="${orderReg.item.item_status_korean}"></b> <br/>
+                                신청일 : <b class="card-text" th:text="${#dates.format(orderReg.ord_reg_dt, 'yyyy/MM/dd  HH:mm')}"></b> <br/>
                                 <a th:href="@{/item/apply/confirm(applyId=${orderReg.order_reg_id})}">신청내역 보기</a>
                             </div>
                         </div>
@@ -39,21 +39,22 @@
                 </div>
                 </div>
                 <div class="container">
-                <h4 class="mb-4"><b>성공한 상품 목록</b></h4>
+                <h4 class="mb-4"><b>마감일이 지난 상품 목록</b></h4>
                 <div class="row">
                     <div th:each="order : ${orders}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100">
+                        <div class="card h-100" th:classappend="${order.item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
                         	<b th:if="${order.item.images.size == 0}">사진 없음</b>
-							<a href="#" th:if="${order.item.images.size != 0}">
+							<a th:href="@{/item/detail(itemId=${order.item.item_id})}" th:if="${order.item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${order.item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <!-- <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${order.item.images[0].base64Image}}" alt="액박이미지" /></a> -->
-                            <div class="card-body">
-                                <h5 class="card-title"><a th:href="@{/item/detail(itemId=${order.item.item_id})}" th:text="${order.item.food.name}"></a></h5>
-                                수량 : <strong class="card-text" th:text="${order.quantity}" ></strong> <br/>
-                                총 금액 : <strong class="card-text" th:text="${order.ord_price}"></strong> <br/>
-                                진행 상태 : <strong class="card-text" th:text="${order.item.item_status}"></strong> <br/>
-                                신청일 : <strong class="card-text" th:text="${order.ord_reg_dt}"></strong> <br/>
+                            <div class="card-body" >
+                                <h5 class="card-title"><a th:href="@{/item/detail(itemId=${order.item.item_id})}" th:text="${order.item.food.name}"></a></h5><br />
+                                <h4><b class="card-text"><a th:href="@{/item/detail(itemId=${order.item.item_id})}" th:text="${order.item.title}"></a></b> </h4>
+                                수량 : <b class="card-text" th:text="${order.quantity}" ></b> <br/>
+                                총 금액 : <b class="card-text" th:text="${order.ord_price}"></b> <br/>
+                                진행 상태 : <b class="card-text" th:text="${order.item.item_status_korean}"></b> <br/>
+                                신청일 : <b class="card-text" th:text="${#dates.format(order.ord_reg_dt, 'yyyy/MM/dd  HH:mm')}"></b> <br/>
                                 <a th:href="@{/item/apply/confirm(applyId=${order.order_reg_id})}">신청내역 보기</a>
                             </div>
                         </div>

@@ -41,4 +41,13 @@ public interface ItemService {
 	public Category getCategoryById(int cat_id);
 	
 	public ArrayList<Item> getItemList(Item item);
+	
+	// 진행중인 공구식품 목록 가져오기
+	ArrayList<Item> getGoingItem(Item item);
+			
+	// 마감일 지난 공구식품 목록 가져오기
+	ArrayList<Item> getEndItem(Item item);
+		
+	// 특정 공구식품 상세 보기
+	Item getDetailItem(int item_id);
 }

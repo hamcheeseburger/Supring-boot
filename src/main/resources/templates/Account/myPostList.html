@@ -18,7 +18,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><a href="#!" th:text="${post.food_name}"></a></h5><br />
                                 <h4 class="card-text"><b><a th:href="@{/post/viewPost(post_id=${post.post_id})}" th:text="${post.title}"></a></b></h4>
-                                거래타입 : <strong class="card-text" th:text="${post.trade_type}"></strong> <br/>
+                                거래타입 : <strong class="card-text" th:text="${post.trade_type_korean}"></strong> <br/>
                            
                                 <th:block th:if="${post.trade_type == 'payment'}">
                                 	판매가격 : <strong class="card-text" th:text="${post.price}"></strong> <br/>

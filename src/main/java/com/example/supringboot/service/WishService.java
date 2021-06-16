@@ -2,8 +2,6 @@ package com.example.supringboot.service;
 
 import java.util.List;
 
-import com.example.supringboot.domain.Item;
-import com.example.supringboot.domain.Order_reg;
 import com.example.supringboot.domain.WishItem;
 
 public interface WishService {
@@ -37,26 +35,4 @@ public interface WishService {
 	// liked_id로 찜한 식품 가져오기
 	public WishItem getOneWishItem(int liked_id);
 	
-	// 공구식품 관련 -> 일단 여기에 작성
-	// 공구식품 목록 가져오기
-//	List<Item> getAllItem();
-	
-	// 공구식품 목록 가져오기
-	List<Item> getGoingItem();
-		
-	// 공구식품 목록 가져오기
-	List<Item> getEndItem();
-	
-	// 특정 공구식품 상세 보기
-	Item getDetailItem(int item_id);
-	
-	// 공구 신청 관련 -> 임시로 여기에 작성
-	// 공구 신청하기
-	boolean applyItem(Order_reg order);
-	// 공구 신청 취소하기
-	boolean cancelItem(int order_reg_id, int user_id);
-	// 특정 공구 신청 내역 가져오기
-	Order_reg getOrderById(int order_reg_id, int user_id);
-	// 공구 신청 내역 수정하기
-	boolean applyUpdate(Order_reg order);
 }

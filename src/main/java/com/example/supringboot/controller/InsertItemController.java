@@ -96,7 +96,14 @@ public class InsertItemController {
 			@RequestParam(value="keyword", required=false) String keyword,
 			@Valid @ModelAttribute("itemForm") ItemForm itemForm,
 			BindingResult errors, Model model) throws Exception{
-		
+
+		System.out.println("진입~~~~~~~~~~~~~~~~~~~~~~~~~");
+		if(keyword.isEmpty() || keyword==null) {
+			System.out.println("키워드가 없다잉~~~~~~~~~~~~~~~");
+			model.addAttribute("itemForm", itemForm);
+			model.addAttribute("msg", "상품 검색 먼저 수행해주세요!");
+			return "Item/registerItemForm";
+		}
 		System.out.println("상품명: " + itemForm.getFood_id());
 		System.out.println("제목:" + itemForm.getTitle());
 		System.out.println("상품금액: " + itemForm.getItem_price());
@@ -108,7 +115,9 @@ public class InsertItemController {
 		
 		Food food = itemService.getFood(itemForm.getFood_id());
 		itemForm.setFood(food);
-		//new ItemFormValidator().validate(itemForm, errors);
+		
+		new ItemFormValidator().validate(itemForm, errors);
+		
 		//검증 오류 발생 시
 		if(errors.hasErrors()) {
 			System.out.println("검증 오류 발생");
@@ -117,16 +126,16 @@ public class InsertItemController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("foodname", food.getName());
 			model.addAttribute("foodId", food.getFood_id());
+			
 			Map<String, String> validatorResult = itemService.validateHandling(errors);
 			for(String key: validatorResult.keySet())
 				model.addAttribute(key, validatorResult.get(key));
 			return "Item/registerItemForm";
 		}
 		
-		System.out.println("진행상황1");
+		//현재 세션 아이디
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
-		System.out.println("진행상황2");
 		
 		Timestamp create_time = null, end_time = null, modify_time = null;
 		Date endParseDate = null;
@@ -140,7 +149,6 @@ public class InsertItemController {
 		    end_time = new java.sql.Timestamp(endParseDate.getTime());
 		    modify_time = new java.sql.Timestamp(modifyParseDate.getTime());
 		} catch(Exception e) { }
-		System.out.println("진행상황3");
 		
 		//이미지 처리
 		System.out.println("이미지 처리 시작");
@@ -158,15 +166,12 @@ public class InsertItemController {
 			}
 		}
 		
-		System.out.println("진행상황4");
-		//세션 아이디
-		Item item = new Item(0, food, user_id, itemForm.getItem_price(), itemForm.getShip_price(), itemForm.getTitle(), 
-				itemForm.getContent(), end_time, itemForm.getMin_quantity(), create_time, 
-				modify_time, "ongoing", imageList, 0);
+		Item item = new Item(0, food, user_id, Integer.parseInt( itemForm.getStr_item_price() ), Integer.parseInt( itemForm.getStr_ship_price() ),
+				itemForm.getTitle(), itemForm.getContent(), end_time, Integer.parseInt(itemForm.getStr_min_quantity()),
+				create_time, modify_time, "ongoing", imageList, 0);
 		
 		if(item.getImages() != null)
 			item.setImages(imageList);
-		System.out.println("진행상황5");
 		
 		itemService.insertItem(item);
 		System.out.println("디비등록완료");

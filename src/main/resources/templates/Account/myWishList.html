@@ -18,7 +18,8 @@
                             	<a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${wish.item.images[0].base64Image}}" alt="액박이미지" /></a>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="#!" th:text="${wish.item.food.name}"></a></h4>
+                                <h4 class="card-title"><a th:text="${wish.item.food.name}"></a></h4><br/>
+                                <h4><b><a th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:text="${wish.item.title}"></a></b></h4>
                                 가격 : <strong class="card-text" th:text="${wish.item.item_price}" ></strong> <br/>
                                 수량 : <form name="update" id="updateWish" method="post" action="#" th:action="@{/account/wish/update}">
 									<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />

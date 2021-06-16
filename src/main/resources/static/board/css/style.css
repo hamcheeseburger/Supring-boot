@@ -1288,6 +1288,12 @@ Version 1.0
 .list-group-item:last-child {
   border-radius: 0px;
   border-color: rgba(120, 130, 140, 0.13);
+  
+}
+
+.list-group-item-clicked {
+	background-color: rgba(120, 130, 140, 0.13);
+	
 }
 .table-purchases a {
   color: #ccc;

@@ -80,7 +80,7 @@ public class ViewItemController {
 	// 특정 공구 식품 보기
 	@RequestMapping("/item/detail")
 	public String detailItem(@RequestParam int itemId, ModelMap model) {
-		Item item = wishService.getDetailItem(itemId);
+		Item item = itemService.getDetailItem(itemId);
 		System.out.println("detail food name: " + item.getFood().getName());
 		
 		Category cat = itemService.getCategoryById(item.getFood().getCat_id());

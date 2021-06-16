@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.service.ItemService;
-import com.example.supringboot.service.WishServiceImpl;
 
 @Controller
 public class UpdateItemController {
@@ -26,14 +24,11 @@ public class UpdateItemController {
 		this.itemService = itemservice;
 	}
 	
-	@Autowired
-	private WishServiceImpl wishService;
-	
 	//공구 수정페이지로 이동
 	@RequestMapping("/item/updateItemForm")
 	public String updateItemForm(@RequestParam int itemId, ModelMap model) {
 		System.out.println("공구 수정 페이지");
-		Item item = wishService.getDetailItem(itemId);
+		Item item = itemService.getDetailItem(itemId);
 		Food food = itemService.getFood(item.getFood().getFood_id());
 		System.out.println("콘텐츠: " + item.getContent());
 		System.out.println("제목: " +item.getTitle());
@@ -60,7 +55,7 @@ public class UpdateItemController {
 		System.out.println( "," + title + "," + price + "," + ship_price +","
 				+ created_dt + "," + created_dt + "," + end_dt + "," + minQuantity + "," + content);
 		
-		Item item = wishService.getDetailItem(item_id);
+		Item item = itemService.getDetailItem(item_id);
 		System.out.println("itemID: " + item.getItem_id());
 		System.out.println("itemTitle: " + item.getTitle());
 		System.out.println("itemPrice: " + item.getItem_price());

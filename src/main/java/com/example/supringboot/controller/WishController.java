@@ -7,22 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.domain.WishItem;
-import com.example.supringboot.service.WishServiceImpl;
+import com.example.supringboot.service.WishService;
 
 @Controller
-//@SessionAttributes({"userSession"})
 public class WishController {
 	
 	@Autowired
-	private WishServiceImpl wishService;
+	private WishService wishService;
 	
 	// 공구식품 찜하기
 	@RequestMapping("/wish/add")

@@ -23,7 +23,7 @@ public interface SupringBootFacade {
 	
 	ArrayList<Comment> getMyCommentList(int user_id);
 	
-	ArrayList<Item> getAdminItemList(int user_id);
+	HashMap<String, ArrayList<Item>> getAdminItemList(int user_id);
 	
 	ArrayList<Order_reg> getAdminRegisterList(int item_id);
 

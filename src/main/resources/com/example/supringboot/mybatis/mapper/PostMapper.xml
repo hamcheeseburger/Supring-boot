@@ -310,7 +310,7 @@ WHERE ROWNUM <= #{recordsPerPage}
 	<select id="getPostLatest3Rows" resultMap="searchPostFromMainResultMap">
 		<![CDATA[
 		select * from 
-		(SELECT p.post_id, p.title, p.content, p.trade_status, p.trade_type, im.image_id, im.image, a.user_id, a.name
+		(SELECT p.post_id, p.title, p.content, p.trade_status, p.trade_type, im.image_id, im.image, a.user_id, a.name, a.login_id
 		 FROM Post p, Image im, Account a where p.trade_status = 0 and p.post_id = im.post_id and a.user_id = p.user_id ORDER BY post_id desc)
 		 where rownum <= 4]]>
 	</select>
@@ -324,7 +324,7 @@ WHERE ROWNUM <= #{recordsPerPage}
 		<result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
 		<association property="user" column="user_id" javaType="Account">
 			<id property="user_id" column="user_id" />
-		
+			<result property="login_id" column="login_id" />
 			<result property="name" column="name" />
 		
 		</association>
@@ -336,7 +336,7 @@ WHERE ROWNUM <= #{recordsPerPage}
 	
 	<select id="searchPostFromMain" parameterType="String" resultMap="searchPostFromMainResultMap">
 		<![CDATA[select * from 
-			(select p.post_id, p.title, p.food_name, a.user_id, a.name, im.image_id, im.image from Post p, Image im, Account a
+			(select p.post_id, p.title, p.food_name, p.content, a.user_id, a.name, a.login_id, im.image_id, im.image from Post p, Image im, Account a
 			where p.post_id = im.post_id and p.user_id = a.user_id and (p.food_name like '%' ||  #{keyword} || '%' or p.title like '%' ||  #{keyword} || '%') ORDER BY p.post_id)
 			where rownum <= 4]]>
 	</select>

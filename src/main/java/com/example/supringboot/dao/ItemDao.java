@@ -49,4 +49,5 @@ public interface ItemDao {
 	public int selectItemTotalCount(Item item);
 	
 	public int selectItemCatCount(int cat_id);
+
 }

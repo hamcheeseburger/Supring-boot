@@ -61,4 +61,6 @@ public interface ItemMapper {
 	public int selectItemTotalCount(Item item) throws DataAccessException;
 
 	public int selectItemCatCount(int cat_id) throws DataAccessException;
+	
+	
 }

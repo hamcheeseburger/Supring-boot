@@ -84,9 +84,17 @@ public class SupringBootImpl implements SupringBootFacade{
 
 
 	@Override
-	public ArrayList<Item> getAdminItemList(int user_id) {
+	public HashMap<String, ArrayList<Item>> getAdminItemList(int user_id) {
 		// TODO Auto-generated method stub
-		return adminDao.selectAdminItems(user_id);
+		HashMap<String, ArrayList<Item>> map = new HashMap<String, ArrayList<Item>>();
+		
+		ArrayList<Item> ongoingItemList = adminDao.getOngoingItemListByAdmin(user_id);
+		ArrayList<Item> expiredItemList = adminDao.getExpiredItemListByAdmin(user_id);
+	
+		map.put("ongoingItemList", ongoingItemList);
+		map.put("expiredItemList", expiredItemList);
+		
+		return map;
 	}
 
 

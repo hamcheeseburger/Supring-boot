@@ -33,11 +33,50 @@ public class Post extends Common implements Serializable {
 	
 //	paging으로 인해 user name을 바로 저장하는 필드 필요
 	private String name;
-	
+//	날짜 String으로 변환하여 저장하는 필드
+	private String str_modified_dt;
+	private String str_created_dt;
+	private String str_exp_dt;
+
 	public Post() {
 		super();
 	}
 	
+	
+	
+	public Post(int post_id, Account user, Category category, String title, String content, String food_name, int price,
+			String trade_type, int trade_status, Timestamp created_dt, Timestamp modified_dt, int quantity, String unit,
+			Timestamp exp_dt, int ship_type, ArrayList<Image> images, ArrayList<Comment> comments,
+			String trade_status_string, String ship_type_string, String name, String str_modified_dt,
+			String str_created_dt, String str_exp_dt) {
+		super();
+		this.post_id = post_id;
+		this.user = user;
+		this.category = category;
+		this.title = title;
+		this.content = content;
+		this.food_name = food_name;
+		this.price = price;
+		this.trade_type = trade_type;
+		this.trade_status = trade_status;
+		this.created_dt = created_dt;
+		this.modified_dt = modified_dt;
+		this.quantity = quantity;
+		this.unit = unit;
+		this.exp_dt = exp_dt;
+		this.ship_type = ship_type;
+		this.images = images;
+		this.comments = comments;
+		this.trade_status_string = trade_status_string;
+		this.ship_type_string = ship_type_string;
+		this.name = name;
+		this.str_modified_dt = str_modified_dt;
+		this.str_created_dt = str_created_dt;
+		this.str_exp_dt = str_exp_dt;
+	}
+
+
+
 	public Post(int post_id, Account user, Category category, String title, String content, String food_name, int price,
 			String trade_type, int trade_status, Timestamp created_dt, Timestamp modified_dt, int quantity, String unit,
 			Timestamp exp_dt, int ship_type, ArrayList<Image> images, ArrayList<Comment> comments) {
@@ -197,6 +236,43 @@ public class Post extends Common implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
+	public String getStr_modified_dt() {
+		return str_modified_dt;
+	}
+
+
+
+	public void setStr_modified_dt(String str_modified_dt) {
+		this.str_modified_dt = str_modified_dt;
+	}
+
+
+
+	public String getStr_created_dt() {
+		return str_created_dt;
+	}
+
+
+
+	public void setStr_created_dt(String str_created_dt) {
+		this.str_created_dt = str_created_dt;
+	}
+
+
+
+	public String getStr_exp_dt() {
+		return str_exp_dt;
+	}
+
+
+
+	public void setStr_exp_dt(String str_exp_dt) {
+		this.str_exp_dt = str_exp_dt;
+	}
+
+
 
 	public String toString() {
 		return 

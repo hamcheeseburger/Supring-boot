@@ -246,7 +246,7 @@ WHERE ROWNUM <= #{recordsPerPage}
 	insert into post (post_id, user_id, title, content, food_name, trade_type,
 	trade_status, created_dt, modified_dt, price, quantity, unit, exp_dt, ship_type)
 	values (#{post_id}, #{user.user_id}, #{title}, #{content}, #{food_name},
-	#{trade_type}, #{trade_status}, SYSDATE, SYSDATE, #{price}, #{quantity}, #{unit}, #{exp_dt,jdbcType=TIMESTAMP},
+	#{trade_type}, #{trade_status}, SYSDATE, SYSDATE, #{price,jdbcType=INTEGER}, #{quantity}, #{unit}, #{exp_dt,jdbcType=TIMESTAMP},
 	#{ship_type})
 </insert>
 

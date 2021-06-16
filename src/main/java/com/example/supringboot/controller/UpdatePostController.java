@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.constant.Method;
 import com.example.supringboot.domain.Image;
@@ -62,7 +63,7 @@ public class UpdatePostController extends UiUtils{
 
 	@GetMapping(value = "/post/updatePost")
 	public String updatePostForm(@RequestParam(value = "post_id", required = false) Long idx, 
-			Model model, @ModelAttribute("postForm") PostForm postForm) {
+			Model model, @ModelAttribute("postForm") PostForm postForm, HttpServletRequest request) {
 		
 //		dao에서 Post 객체를 받아온 후 Service에서 PostForm으로 변환한 후 전달받는다.
 		int post_id = idx.intValue();
@@ -70,6 +71,18 @@ public class UpdatePostController extends UiUtils{
 		if (post == null) {
 			return "redirect:/post/getPostList";
 		}
+		
+		// 사용자 검증
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		int user_id = -1;
+		if (userSession != null) {
+			user_id = userSession.getAccount().getUser_id();
+		}
+		if (post.getUser().getUser_id() != user_id) {
+			return showMessageWithRedirect("접근에 실패하였습니다.", "/post/getPostList", Method.GET, null, model);
+		}
+		
 //		Service에서 Post => PostForm으로 변환한다.
 		postForm = postService.postToPostForm(post);
 		logger.info("postUpdate() - updatePostForm의 post의 image: " + post.getImages().get(0).getImage());
@@ -84,8 +97,7 @@ public class UpdatePostController extends UiUtils{
 	public String updatePost(HttpServletRequest request,
 			@Valid @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, SessionStatus sessionStatus, 
 			Model model) {
-		
-		
+
 		new PostInsertValidator().validate(postForm, bindingResult);
 		
 		if (bindingResult.hasErrors()) {

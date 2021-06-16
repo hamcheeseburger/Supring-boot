@@ -65,7 +65,7 @@
 				<div class="form-group">
 					<label for="inp-type-5" class="col-sm-2 control-label">작성일</label>
 					<div class="col-sm-10">
-						<p class="form-control" th:text="*{created_dt}"></p>
+						<p class="form-control" th:text="*{str_created_dt}"></p>
 					</div>
 				</div>
 
@@ -123,7 +123,7 @@
 				<div class="form-group">
 					<label for="inp-type-5" class="col-sm-2 control-label">유통기한</label>
 					<div class="col-sm-10">
-						<p class="form-control" th:text="*{exp_dt}"></p>
+						<p class="form-control" th:text="*{str_exp_dt}"></p>
 					</div>
 				</div>
 				
@@ -139,9 +139,11 @@
 
 			<div class="btn_wrap text-center">
 				<a th:href="@{/post/getPostList}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-				<a th:href="@{/post/updatePost( post_id=${post.post_id} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
-				<button type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deletePost([[ ${post.post_id} ]])">삭제하기</button>
+				<a th:if="${user} == ${post.user.user_id}" th:href="@{/post/updatePost( post_id=${post.post_id} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
+				<button th:if="${user} == ${post.user.user_id}" type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deletePost([[ ${post.post_id} ]])">삭제하기</button>
 			</div>
+			
+			
 		</div>
 		<!-- /.card-content -->
 	</th:block>

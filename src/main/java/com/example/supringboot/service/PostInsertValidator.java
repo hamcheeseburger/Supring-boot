@@ -34,16 +34,20 @@ public class PostInsertValidator implements Validator {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "str_quantity", "required", "수량은 필수 항목입니다.");
 		
-		try {
-//			공백이거나 소수가 들어왔을때 에러 삽입
-			int price = Integer.parseInt(postForm.getStr_price());
-			if (price < 0) {
-				errors.rejectValue("str_price", "numberFormatException", "1 이상의 정수만 입력 가능합니다.");
+//		가격은 '판매'일때만 입력되어야 함!
+		String trade_type = postForm.getTrade_type();
+		if (trade_type.equals("payment")) {
+			try {
+	//			공백이거나 소수가 들어왔을때 에러 삽입
+				int price = Integer.parseInt(postForm.getStr_price());
+				if (price < 0) {
+					errors.rejectValue("str_price", "numberFormatException", "0 이상의 정수만 입력 가능합니다.");
+				}
+			} catch (Exception e) {
+				errors.rejectValue("str_price", "numberFormatException", "0 이상의 정수만 입력 가능합니다.");
 			}
-		} catch (Exception e) {
-			errors.rejectValue("str_price", "numberFormatException", "1 이상의 정수만 입력 가능합니다.");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "str_price", "required", "가격은 필수 항목입니다.");
 		}
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "str_price", "required", "수량은 필수 항목입니다.");
 	}
 
 }

@@ -54,7 +54,9 @@ public class InsertPostController extends UiUtils {
 //	HttpServlet이 매개변수로 들어가면 오류남
 	@ModelAttribute("postForm")
 	public PostForm formBacking() {
-		return new PostForm();
+		PostForm postForm = new PostForm();
+		postForm.setTrade_type("payment");
+		return postForm;
 	}
 	
 	@ModelAttribute("trade_types")
@@ -120,7 +122,7 @@ public class InsertPostController extends UiUtils {
 				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/post/getPostList", Method.GET, null, model);
 			}
 			else {
-				//	게시글 등록 성공시 session에서 삭제해야 할까?
+				//	게시글 등록 성공시 session에서 삭제
 				sessionStatus.setComplete();
 				
 			} 
@@ -130,6 +132,7 @@ public class InsertPostController extends UiUtils {
 		} 
 		catch (Exception e) {
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+			e.printStackTrace();
 			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/post/getPostList", Method.GET, null, model);
 		}
 		//		게시글 확인하는 페이지로 리다이렉트할 것

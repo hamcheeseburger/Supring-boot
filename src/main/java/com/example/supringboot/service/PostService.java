@@ -19,5 +19,7 @@ public interface PostService {
 	
 	public PostForm postToPostForm(Post post);
 	
+	public Post timestampToStr(Post post);
+	
 	public ArrayList<Post> getPostLatest3Rows();
 }

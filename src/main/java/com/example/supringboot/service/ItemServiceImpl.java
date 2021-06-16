@@ -170,12 +170,36 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public ArrayList<Item> getGoingItem(Item item) {
-		return itemDao.getGoingItemList(item);
+		ArrayList<Item> itemList = null;
+		int totalCount = itemDao.selectGoingItemCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getGoingItemList(item);
+		}
+		
+		return itemList;
 	}
 
 	@Override
 	public ArrayList<Item> getEndItem(Item item) {
-		return itemDao.getEndItemList(item);
+		ArrayList<Item> itemList = null;
+		int totalCount = itemDao.selectEndItemCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getEndItemList(item);
+		}
+		
+		return itemList;
 	}
 	
 	@Override

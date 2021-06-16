@@ -73,5 +73,11 @@
 			ship_zip = #{ship_zip}, card_type = #{card_type}, card_num = #{card_num}, card_exp_dt = #{card_exp_dt}
 		WHERE order_reg_id = #{order_reg_id}
 	</update>
+	
+	<select id="isApply" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM order_reg
+		WHERE user_id=#{user_id} AND item_id=#{item_id}
+	</select>
 
 </mapper>

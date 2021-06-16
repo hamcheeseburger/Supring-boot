@@ -51,4 +51,15 @@ public class MybatisApplyDao implements ApplyDao {
 			return false;	
 		}
 	}
+
+	@Override
+	public boolean isApply(int user_id, int item_id) {
+		int result = orderMapper.isApply(user_id, item_id);
+		
+		if (result > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

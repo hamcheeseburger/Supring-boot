@@ -15,4 +15,8 @@ public interface AdminMapper {
 	ArrayList<Item> selectItemsWithAdminId(@Param("user_id") int user_id) throws DataAccessException;
 	// 공동구매 신청서 및 신청자 목록
 	ArrayList<Order_reg> selectItemOrderRegs(@Param("item_id") int item_id) throws DataAccessException;
+
+	public ArrayList<Item> getOngoingItemListByAdmin(int user_id) throws DataAccessException;
+	
+	public ArrayList<Item> getExpiredItemListByAdmin(int user_id) throws DataAccessException;
 }

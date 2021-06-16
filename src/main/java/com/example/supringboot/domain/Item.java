@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import com.example.supringboot.util.Const;
+
 // 공동구매
 @SuppressWarnings("serial")
 public class Item extends Common implements Serializable {
@@ -23,6 +25,7 @@ public class Item extends Common implements Serializable {
 	private int numOfRegister; // 신청수
 	private int percentage;
 	private int cat_id;
+	private String item_status_korean;
 	
 	public Item() {
 		super();
@@ -121,6 +124,13 @@ public class Item extends Common implements Serializable {
 	}
 	public void setItem_status(String item_status) {
 		this.item_status = item_status;
+		if(item_status.equals("ongoing")) {
+			item_status_korean = Const.ONGOING;
+		} else if(item_status.equals("fail")) {
+			item_status_korean = Const.FAIL;
+		} else {
+			item_status_korean = Const.SUCCESS;
+		}
 	}
 	public ArrayList<Image> getImages() {
 		return images;
@@ -160,6 +170,14 @@ public class Item extends Common implements Serializable {
 
 	public void setCat_id(int cat_id) {
 		this.cat_id = cat_id;
+	}
+
+	public String getItem_status_korean() {
+		return item_status_korean;
+	}
+
+	public void setItem_status_korean(String item_status_korean) {
+		this.item_status_korean = item_status_korean;
 	}
 
 }

@@ -10,4 +10,9 @@ public interface AdminDao {
 	public ArrayList<Item> selectAdminItems(int user_id);
 	// 공동구매 신청서 및 신청자 목록
 	public ArrayList<Order_reg> selectItemOrderRegs(int item_id);
+	
+	
+	public ArrayList<Item> getOngoingItemListByAdmin(int user_id);
+	
+	public ArrayList<Item> getExpiredItemListByAdmin(int user_id);
 }

@@ -11,4 +11,6 @@ public interface ApplyDao {
 	public Order_reg getOnOrderById(int order_reg_id, int user_id);
 	// 공구 수정
 	public boolean applyUpdate(Order_reg order);
+	// 공구 신청 했는지 확인
+	public boolean isApply(int user_id, int item_id);
 }

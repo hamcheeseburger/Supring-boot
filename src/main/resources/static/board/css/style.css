@@ -1295,6 +1295,11 @@ Version 1.0
 	background-color: rgba(120, 130, 140, 0.13);
 	
 }
+
+.fail {
+	background-color: rgb(226, 226, 226);
+}
+
 .table-purchases a {
   color: #ccc;
 }

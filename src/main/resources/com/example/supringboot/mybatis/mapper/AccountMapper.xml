@@ -80,7 +80,7 @@
 		FROM Item i INNER JOIN Order_reg o ON i.item_id = o.item_id
 			 LEFT JOIN Image im ON i.item_id = im.item_id 
 			 INNER JOIN Food f ON i.food_id = f.food_id
-		WHERE o.user_id=#{user_id} and i.item_status !='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
+		WHERE o.user_id=#{user_id} and i.item_status ='ongoing' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
 	</select>
 	
 	<!-- 성공한 공구신청목록 출력 select -->
@@ -97,7 +97,7 @@
 		FROM Item i INNER JOIN Order_reg o ON i.item_id = o.item_id
 			 LEFT JOIN Image im ON i.item_id = im.item_id 
 			 INNER JOIN Food f ON i.food_id = f.food_id
-		WHERE o.user_id=#{user_id} and i.item_status ='success' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
+		WHERE o.user_id=#{user_id} and i.item_status !='ongoing' ORDER BY i.item_status DESC, o.ord_reg_dt DESC
 	</select>
 	
 	<resultMap id="associPostAccountImage" type="Post">

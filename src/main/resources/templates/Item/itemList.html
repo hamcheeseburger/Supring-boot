@@ -6,30 +6,61 @@
 <meta charset="UTF-8">
 <title>공동구매 식품 목록</title>
 
+<style>
+	.btn-group button {
+	    background-color: #6c757d;
+	    border: 1px solid black;
+	    color: white;
+	    padding: 10px 24px;
+	    cursor: pointer;
+	    float: left;
+	}
+	
+	/* Clear floats (clearfix hack) */
+	.btn-group:after {
+	    content: "";
+	    clear: both;
+	    display: table;
+	}
+	
+	.btn-group button:not(:last-child) {
+	    border-right: none;
+	}
+	
+	.btn-group button:hover {
+	    background-color: #8C8A8F;
+	}
+</style>
+
 </head>
 <body>
 
 	<div layout:fragment="custom-content" align="center">
-	<th:block layout:fragment="add-css"></th:block>
-		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:white;">
+	
+		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#f5f7fa;">
 			<div class="container">
+				<div class="btn-group">
+					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=all)} + '\''"
+						th:style="${status == 'all' ? 'background-color: #8C8A8F;' : ''}">전체</button>
+					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=going)} + '\''"
+						th:style="${status == 'going' ? 'background-color: #8C8A8F;' : ''}">진행중인 공구</button>
+					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=end)} + '\''"
+						th:style="${status == 'end' ? 'background-color: #8C8A8F;' : ''}">지난 공구</button>
+				</div>
 				
-				<button>진행중인 공구</button>
-				<button>지난 공구</button>
-			
-                <a th:href="@{/item/list}" class="nav-link"><b>전체</b></a>
+               <!--  <a th:href="@{/item/list}" class="nav-link"><b>카테고리</b></a> -->
+
                 <div class="collapse navbar-collapse">
                     
                     <ul class="navbar-nav ml-auto">
                
                         <li class="nav-item" th:each="category : ${categoryList}">
-                        	<a th:href="@{/item/list(cat_id=${category.cat_id})}" class="nav-link"><b th:text="${category.cat_name}" style="color:black;"></b></a>
+                        	<b><a th:href="@{/item/list(cat_id=${category.cat_id})}" class="nav-link" th:text="${category.cat_name}" style="color:black;"></a></b>
                         </li>
                        
                     </ul>
                 </div>
             </div>
-          
         </nav>
 		
 		<div class="container" th:if="${catSize == 0}">
@@ -43,6 +74,7 @@
                     <div th:each="item : ${catItemList}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}"
                         	style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''">
+                        	
                             <b th:if="${item.images.size == 0}">사진 없음</b>
 							<a href="#" th:if="${item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
@@ -54,7 +86,7 @@
                                 <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
 <!--                                 목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/> -->
 <!--                                 현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/> -->
-                                상태 : <b class="card-text" th:text="${item.item_status}"></b> <br/>
+                               <!--  상태 : <b class="card-text" th:text="${item.item_status_korean}"></b> <br/> -->
 <!--                                 등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/> -->
 <!--                                 마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/>  -->
                          
@@ -68,12 +100,15 @@
 		</div>
 		
 		<div class="container" th:if="${itemSize == 0}">
-			<h2 align="left"> 공구 식품 목록</h2> <br/>
 			<b class="mb-4">목록이 존재하지 않습니다.</b>
 		</div>
 		<div th:if="${itemList}" class="py-5 bg-light">
 			<div class="container">
-				<h2 align="left"> 공구 식품 목록</h2> <br/>
+				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b></h2>
+				<h2 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h2>
+				<h2 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h2>
+				<br/>
+				
                 <div class="row">
                 	<div th:if="${itemList.size() == 0}">
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
@@ -90,7 +125,7 @@
                                 <b style="size:15px;"class="card-text" th:text="${item.food.name}" ></b> <br/>
                                 가격 : <b class="card-text" th:text="${item.item_price}" ></b> <br/>
                                 <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
-                                상태 : <b class="card-text" th:text="${item.item_status}"></b> <br/>
+                               <!--  상태 : <b class="card-text" th:text="${item.item_status_korean}"></b> <br/> -->
                             </div>
                         </div>
                         
@@ -98,33 +133,7 @@
                 </div>
   			</div>
 		</div>
-<!-- 		
-		<div th:if="${map}" class="py-5 bg-light">
-			<div class="container">
-				<h2 align="center">마감일이 지난 식품 목록</h2>
-                <div class="row">
-                	<div th:if="${map.endItemCount == 0}">
-                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
-                	</div>
-                    <div th:each="item : ${map.endItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
-                            <b th:if="${item.images.size == 0}">사진 없음</b>
-							<a href="#" th:if="${item.images.size != 0}">
-								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
-							</a>
-                            <div class="card-body">
-                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
-                                식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
-                                가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
-                                <strong class="card-text" th:text="${item.percentage} + '% 달성'"></strong> <br/>
-                                상태 : <strong class="card-text" th:text="${item.item_status}"></strong> <br/>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-  			</div>
-		</div> -->
+
 		<th:block >
 			<nav th:replace="post/fragments/common :: pagination"></nav>
 		</th:block>
@@ -132,11 +141,11 @@
 		<th:block layout:fragment="script">
 								<script th:inline="javascript">
 									/*<![CDATA[*/
-						
+									var status = /*[[${status}]]*/
 									function movePage(uri, queryString) {
 										console.log(uri);
 										console.log(queryString);
-										location.href = uri + queryString;
+										location.href = uri + queryString + "&status=" + status;
 									}
 				
 								</script>

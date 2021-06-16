@@ -35,8 +35,10 @@ public class PostServiceImpl implements PostService{
 		post.setTitle(postForm.getTitle());
 		post.setContent(postForm.getContent());
 		post.setFood_name(postForm.getFood_name());
-//		str_quantity를 int형으로 변환 후 삽입
-		post.setPrice(Integer.parseInt(postForm.getStr_price()));
+//		str_quantity를 int형으로 변환 후 삽입 (거래방식이 교환일 경우 price는 없다.)
+		if (postForm.getStr_price() != null && !postForm.getStr_price().equals("")) {
+			post.setPrice(Integer.parseInt(postForm.getStr_price()));
+		}	
 		post.setTrade_type(postForm.getTrade_type());
 		post.setTrade_status(postForm.getTrade_status());
 //		str_quantity를 int형으로 변환 후 삽입
@@ -120,15 +122,22 @@ public class PostServiceImpl implements PostService{
 		
 		post.setPaginationInfo(paginationInfo);
 		
-		if (postCnt > 0)
+		ArrayList<Post> transferedPostList = new ArrayList<Post>();
+		if (postCnt > 0) {
 			postList = postDao.getAllPostList(post);
-		
-		return postList;
+//			Post 객체의 timestamp 필드를 string형으로 변환함.
+			for (Post p: postList) {
+				transferedPostList.add(timestampToStr(p));
+			}
+		}
+//		return postList;
+		return transferedPostList;
 	}
 	
 	@Override
 	public Post getDetailPost(int post_id) {
 		Post post = postDao.detailPost(post_id);
+		post = timestampToStr(post);
 		return post;
 	}
 	
@@ -158,7 +167,7 @@ public class PostServiceImpl implements PostService{
 		postForm.setShip_type(post.getShip_type());
 		postForm.setImages(post.getImages());
 //		댓글은 삽입 필요없음 (게시글 수정에 안쓰임)
-//		file 필드가 자꾸 파일 첨부 안해도 null이 아닌거로 인식되어 BLOB에 null 이 들어감....
+//		file 필드가 파일 첨부 안해도 null이 아닌거로 인식되어 BLOB에 null 이 들어감
 		postForm.setFile(null);
 		
 		return postForm;
@@ -175,6 +184,46 @@ public class PostServiceImpl implements PostService{
 	public ArrayList<Post> getPostLatest3Rows() {
 		// TODO Auto-generated method stub
 		return postDao.getPostLatest3Rows();
+	}
+	
+	@Override
+	public Post timestampToStr(Post post) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String cString = "";
+		String mString = "";
+		String eString = "";
+		
+		if (post.getCreated_dt() != null) {
+			try {
+				cString = formatter.format(post.getCreated_dt());
+				String[] splited = cString.split(" ");
+				post.setStr_created_dt(splited[0]);
+//				post.setStr_created_dt(cString);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
+		if (post.getModified_dt() != null) {
+			try {
+				mString = formatter.format(post.getModified_dt());
+				post.setStr_modified_dt(mString);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
+		if (post.getExp_dt() != null) {
+			try {
+				eString = formatter.format(post.getExp_dt());
+				// 유통기한은 시간은 저장하지 않는다.
+				String[] splited = eString.split(" ");
+				post.setStr_exp_dt(splited[0]);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		return post;
 	}
 	
 }

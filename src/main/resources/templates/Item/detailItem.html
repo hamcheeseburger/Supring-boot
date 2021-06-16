@@ -35,10 +35,12 @@
 					<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 					<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" th:if="${detail.item_status == 'ongoing'}" />
 					
-					<input th:if="${session.userSession != null && session.userSession.account.admin == true}" 
-						type="submit" value="수정하기" onclick="javascript: form.action='/item/updateItemForm';" />
-					<input th:if="${session.userSession != null && session.userSession.account.admin == true}"
-						type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
+					<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
+								session.userSession.account.user_id == detail.user_id}" 
+						type="submit" value="수정" onclick="javascript: form.action='/item/updateItemForm';" />
+					<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
+								session.userSession.account.user_id == detail.user_id}"
+						type="submit" value="삭제" onclick="javascript: form.action='/item/deleteItem';" />
 					
 					<input th:if="${session.userSession != null && session.userSession.account.admin != true && 
 							detail.item_status == 'ongoing'}"

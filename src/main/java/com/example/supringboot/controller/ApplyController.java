@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.example.supringboot.domain.Account;
@@ -38,16 +39,16 @@ public class ApplyController {
 	@Autowired
 	private ApplyValidator applyValidator;
 	
-	@Value("item/applyForm")
+	@Value("Item/applyForm")
 	private String applyFormView;
 	
-	@Value("item/editApply")
+	@Value("Item/editApply")
 	private String editApplyView;
 	
-	@Value("item/viewApply")
+	@Value("Item/viewApply")
 	private String viewApply;
 	
-	@Value("item/applySuccess")
+	@Value("Item/applySuccess")
 	private String applySuccess;
 	
 	@ModelAttribute("applyForm")
@@ -67,7 +68,7 @@ public class ApplyController {
 	// 공구 신청하기 -> 공구 식품 상세페이지에서 버튼 클릭, 찜하기 목록에서 각 식품 옆에 주문하기 버튼 클릭?
 	@RequestMapping("/item/applyForm")
 	public String orderForm(HttpServletRequest request, 
-			@ModelAttribute("applyForm") ApplyForm applyForm) {
+			@ModelAttribute("applyForm") ApplyForm applyForm, ModelMap model, RedirectAttributes redirectAttr) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
 		// 로그인된 사용자가 아닐 경우 로그인 페이지로 이동시키기
@@ -79,15 +80,30 @@ public class ApplyController {
 			
 			int amount = Integer.parseInt(request.getParameter("amount")); // 공구 신청할 수량
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
-			Item item = itemService.getDetailItem(itemId);
-			System.out.println("food name: " + item.getFood().getName());
-			int total = amount * item.getItem_price() + item.getShip_price(); // 총 금액
-			int itemTotal = amount * item.getItem_price();
-			applyForm.setItemTotalPrice(itemTotal);
 			
-			applyForm.getOrder().initOrder(account, item, amount, total);
+			// 이미 공구 신청을 한건지 확인
+			boolean isApply = applyService.isApplyItem(account.getUser_id(), itemId);
 			
-			return applyFormView;
+			if (isApply) {
+				redirectAttr.addFlashAttribute("isApply", isApply);
+				
+				// 이미 신청한 경우 이전 페이지로 이동
+				String referer = request.getHeader("Referer");
+				System.out.println("이전 페이지: " + referer);
+				return "redirect:" + referer;
+			}
+			else {
+				Item item = itemService.getDetailItem(itemId);
+				
+				int total = amount * item.getItem_price() + item.getShip_price(); // 총 금액
+				int itemTotal = amount * item.getItem_price();
+				applyForm.setItemTotalPrice(itemTotal);
+				
+				applyForm.getOrder().initOrder(account, item, amount, total);
+				
+				return applyFormView;
+			}
+			
 		}
 		
 	}

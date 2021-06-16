@@ -34,4 +34,9 @@ public class ApplyServiceImpl implements ApplyService {
 	public boolean applyUpdate(Order_reg order) {
 		return orderDao.applyUpdate(order);
 	}
+
+	@Override
+	public boolean isApplyItem(int user_id, int item_id) {
+		return orderDao.isApply(user_id, item_id);
+	}
 }

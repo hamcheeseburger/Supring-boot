@@ -75,10 +75,7 @@ public class ViewItemController {
 		Item item = itemService.getDetailItem(itemId);
 		System.out.println("detail food name: " + item.getFood().getName());
 		
-		Category cat = itemService.getCategoryById(item.getFood().getCat_id());
-		
 		model.put("detail", item);
-		model.put("category", cat);
 		
 		return "/Item/detailItem";
 	}

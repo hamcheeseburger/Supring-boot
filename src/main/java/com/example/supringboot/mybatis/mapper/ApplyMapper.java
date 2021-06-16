@@ -16,4 +16,6 @@ public interface ApplyMapper {
 	public Order_reg getOneOrderById(@Param("order_reg_id") int order_reg_id, @Param("user_id") int user_id) throws DataAccessException;
 	// 공구 수정
 	public int applyUpdate(Order_reg order);
+	// 공구 신청 했는지 확인
+	public int isApply(@Param("user_id") int user_id, @Param("item_id") int item_id);
 }

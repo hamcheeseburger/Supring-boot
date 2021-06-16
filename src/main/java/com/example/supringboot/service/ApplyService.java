@@ -11,4 +11,6 @@ public interface ApplyService {
 	Order_reg getOrderById(int order_reg_id, int user_id);
 	// 공구 신청 내역 수정하기
 	boolean applyUpdate(Order_reg order);
+	
+	boolean isApplyItem(int user_id, int item_id);
 }

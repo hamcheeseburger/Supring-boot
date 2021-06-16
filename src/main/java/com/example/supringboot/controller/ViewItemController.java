@@ -1,8 +1,6 @@
 package com.example.supringboot.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.service.ItemService;
-import com.example.supringboot.service.WishServiceImpl;
 
 @Controller
-public class ViewItemController {
-	@Autowired
-	private WishServiceImpl wishService;
-	
+public class ViewItemController {	
 	@Autowired
 	private ItemService itemService;
 	
@@ -34,34 +28,32 @@ public class ViewItemController {
 	// 공구 식품 목록 보기
 	@RequestMapping("/item/list")
 	public ModelAndView itemList(@RequestParam(required=false, defaultValue="-1", name="cat_id") Integer cat_id,
+			@RequestParam(required=false, defaultValue="going", name="status") String status,
 			@ModelAttribute("params") Item item, Model model) {
 		System.out.println("cat_id : " + cat_id);
 		
 		ModelAndView mav = new ModelAndView("/Item/itemList");
 		
 		if(cat_id == -1) {
-//			HashMap<String, Object> map = new HashMap<String, Object>();
-//			List<Item> allList = wishService.getAllItem();
-//			List<Item> goingList = wishService.getGoingItem();
-//			List<Item> endList = wishService.getEndItem();
-		
-//			map.put("allItemList", allList);
-//			map.put("allItemCount", allList.size());
-		
-//			map.put("goingItemList", goingList);
-//			map.put("goingItemCount", goingList.size());
-		
-//			map.put("endItemList", endList);
-//			map.put("endItemCount", endList.size());
-
-//			mav.addObject("map", map);
+			ArrayList<Item> itemList = null;
 			
-			ArrayList<Item> itemList = itemService.getItemList(item);
+			if (status.equals("all")) {
+				itemList = itemService.getItemList(item);
+			}
+			else if (status.equals("going")) {
+				itemList = itemService.getGoingItem(item);
+			}
+			else if (status.equals("end")) {
+				itemList = itemService.getEndItem(item);
+			}
+			
+			mav.addObject("status", status);
 			mav.addObject("itemList", itemList);
 			
 			if (itemList == null) {
 				mav.addObject("itemSize", 0);
 			}
+			
 		}else {
 			item.setCat_id(cat_id);
 			ArrayList<Item> catItemList = itemService.selectItemWithCategory(item);

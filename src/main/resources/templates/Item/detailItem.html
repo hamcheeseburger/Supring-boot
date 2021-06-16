@@ -40,7 +40,8 @@
 					<input th:if="${session.userSession != null && session.userSession.account.admin == true}"
 						type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
 					
-					<input th:if="${session.userSession.account.admin != true && detail.item_status == 'ongoing'}"
+					<input th:if="${session.userSession != null && session.userSession.account.admin != true && 
+							detail.item_status == 'ongoing'}"
 						type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
 				</form>
 			</div>

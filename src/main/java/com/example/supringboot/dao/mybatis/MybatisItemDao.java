@@ -11,8 +11,6 @@ import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Image;
 import com.example.supringboot.domain.Item;
-import com.example.supringboot.domain.Order_reg;
-import com.example.supringboot.mybatis.mapper.AdminMapper;
 import com.example.supringboot.mybatis.mapper.ImageMapper;
 import com.example.supringboot.mybatis.mapper.ItemMapper;
 
@@ -143,6 +141,16 @@ public class MybatisItemDao implements ItemDao {
 	public int selectItemCatCount(int cat_id) {
 		// TODO Auto-generated method stub
 		return itemMapper.selectItemCatCount(cat_id);
+	}
+
+	@Override
+	public int selectGoingItemCount(Item item) {
+		return itemMapper.selectGoingItemCount(item);
+	}
+
+	@Override
+	public int selectEndItemCount(Item item) {
+		return itemMapper.selectEndItemCount(item);
 	}
 	
 }

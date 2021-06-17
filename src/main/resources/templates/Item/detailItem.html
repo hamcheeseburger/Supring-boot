@@ -61,17 +61,22 @@
 							마감일<br/>
 							<b class="detail" th:text="${#dates.format(detail.end_dt, 'yyyy/MM/dd  HH:mm')}"></b><br/><br/>
 							
-							<form name="wish" id="insertWish" method="post" >
+							<form name="wish" id="insertWish" method="post">
 								<span>수량 선택</span> &nbsp;&nbsp;&nbsp;
 								<input type="number" id="amount" name="amount" value="1" min="1" th:if="${detail.item_status == 'ongoing'}" />
 								<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 								<br/><br/>
 								
-								<input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" 
+								<!-- <input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" 
+									th:if="${detail.item_status == 'ongoing'}" /> -->
+								
+								<input type="submit" value="찜하기" th:attr="onclick=|wishButton('${detail.item_id}')|"  
 									th:if="${detail.item_status == 'ongoing'}" />
 									
 								<input th:if="${detail.item_status == 'ongoing'}"
-									type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
+									type="submit" value="공구 신청" th:attr="onclick=|registerButton('${detail.item_id}')|" />
+								
+								<input type='hidden' id='hiddeninput' name='previousUrl'/>
 								
 								<br/><br/>
 								<!--<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
@@ -152,6 +157,32 @@
 
 			</div>
 		</section>
+		
+		<script th:inline="javascript">
+			function wishButton(item_id) {
+				console.log(item_id);
+				console.log("wishButton");
+				var form = document.getElementById("insertWish");
+				var uri = /*[[ @{/wish/add} ]]*/ null;
+				var hidden = document.getElementById("hiddeninput");
+
+				hidden.setAttribute('value', '/item/detail?itemId=' + item_id);
+
+				form.setAttribute('action', uri);
+				form.submit();
+			}
+			
+			function registerButton(item_id) {
+				var form = document.getElementById("insertWish");
+				var uri = /*[[ @{/item/applyForm} ]]*/ null;
+				var hidden = document.getElementById("hiddeninput");
+
+				hidden.setAttribute('value', '/item/detail?itemId=' + item_id);
+
+				form.setAttribute('action', uri);
+				form.submit();
+			}
+		</script>
 	</div>
 	
 

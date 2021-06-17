@@ -44,8 +44,12 @@ public class SignOnController {
 	}
 	
 	@GetMapping
-	public String signOnForm() {
+	public String signOnForm(@RequestParam(name="previousUrl", required=false) String url, Model model) {
 		logger.info("signOnForm()");
+		logger.info(url);
+		if(url != null) {
+			model.addAttribute("signonForwardAction", url);
+		}
 		return signOnFormView;
 	}
 	

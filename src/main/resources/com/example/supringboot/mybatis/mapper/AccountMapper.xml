@@ -35,7 +35,8 @@
 	addr1=#{addr1},
 	addr2=#{addr2},
 	zip=#{zip},
-	phone=#{phone}
+	phone=#{phone},
+	password=#{password}
 	WHERE login_id=#{login_id}
  </update>
  

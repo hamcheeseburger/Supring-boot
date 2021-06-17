@@ -13,7 +13,9 @@ public class AccountForm implements Serializable{
 	private boolean newAccount;
 	private String repeatedPassword;
 //	private String emailDomain;
-	
+	private String updatePassword;
+	private String newPassword;
+	private String newPasswordCheck;
 	
 	public AccountForm() {
 		this.account = new Account();
@@ -44,6 +46,30 @@ public class AccountForm implements Serializable{
 		this.repeatedPassword = repeatedPassword;
 	}
 
+	public String getUpdatePassword() {
+		return updatePassword;
+	}
+
+	public void setUpdatePassword(String updatePassword) {
+		this.updatePassword = updatePassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getNewPasswordCheck() {
+		return newPasswordCheck;
+	}
+
+	public void setNewPasswordCheck(String newPasswordCheck) {
+		this.newPasswordCheck = newPasswordCheck;
+	}
+
 //	public String getEmailDomain() {
 //		return emailDomain;
 //	}
@@ -51,4 +77,5 @@ public class AccountForm implements Serializable{
 //	public void setEmailDomain(String emailDomain) {
 //		this.emailDomain = emailDomain;
 //	}
+	
 }

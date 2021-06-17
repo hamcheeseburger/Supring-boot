@@ -35,7 +35,7 @@
 </head>
 <body>
 
-	<div layout:fragment="custom-content" align="center">
+	<div layout:fragment="custom-content">
 	
 		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#f5f7fa;">
 			<div class="container">
@@ -72,7 +72,7 @@
 				<h2 align="left" th:text="${catName}">카테고리</h2> <br/>
                 <div class="row">
                     <div th:each="item : ${catItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}"
+                        <div class="card h-100"
                         	style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''">
                         	
                             <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
@@ -82,16 +82,11 @@
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
-                                <h4 class ="card-title" th:text="${item.title}"></h4> <br/>
-                                <b style="size:15px;"class="card-text" th:text="${item.food.name}" ></b> <br/>
+                                <h4 class ="card-title" th:text="${item.food.name}"></h4> <br/>
+                                <div align="right" style="font-size:11px"><a th:text="${item.item_status_korean}"></a></div>
+                                <b style="size:15px;"class="card-text" th:text="${item.title}" ></b> <br/>
                                 가격 : <b class="card-text" th:text="${item.item_price}" ></b> <br/>
                                 <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
-<!--                                 목표수량 : <strong class="card-text" th:text="${item.min_quantity}"></strong> <br/> -->
-<!--                                 현재수량 : <strong class="card-text" th:text="${item.numOfRegister}"></strong> <br/> -->
-                               <!--  상태 : <b class="card-text" th:text="${item.item_status_korean}"></b> <br/> -->
-<!--                                 등록일 : <strong class="card-text" th:text="${item?.created_dt}"></strong> <br/> -->
-<!--                                 마감일 : <strong class="card-text" th:text="${item?.end_dt}"></strong> <br/>  -->
-                         
 
                             </div>
                         </div>
@@ -106,9 +101,9 @@
 		</div>
 		<div th:if="${itemList}" class="py-5 bg-light">
 			<div class="container">
-				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b></h2>
-				<h2 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h2>
-				<h2 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h2>
+				<h3 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b></h3>
+				<h3 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h3>
+				<h3 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h3>
 				<br/>
 				
                 <div class="row">
@@ -116,20 +111,21 @@
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
                     <div th:each="item : ${itemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}"
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 
+                        							(item.item_status == 'success' ? 'success' : 'card h-100')}"
                         	style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''" >
                             <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
                             	<img class="card-img-top" src="/img/no_image.png" alt="..." />
                             </a>
-							<a href="#" th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
+							<a th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
-                                <h4 class ="card-title" th:text="${item.title}"></h4> <br/>
-                                <b style="size:15px;"class="card-text" th:text="${item.food.name}" ></b> <br/>
+                                <h5 class ="card-title"><a th:text="${item.food.name}"></a></h5>
+                                <div align="right" style="font-size:11px"><a th:text="${item.item_status_korean}"></a></div>
+                                <h4><b style="size:15px;"class="card-text" th:text="${item.title}" ></b></h4>
                                 가격 : <b class="card-text" th:text="${item.item_price}" ></b> <br/>
                                 <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
-                               <!--  상태 : <b class="card-text" th:text="${item.item_status_korean}"></b> <br/> -->
                             </div>
                         </div>
                         

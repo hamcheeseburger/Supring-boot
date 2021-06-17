@@ -108,7 +108,7 @@ public class ApplyController {
 		
 	}
 	
-	@RequestMapping("/item/apply/success")
+	@RequestMapping("/item/apply")
 	public String applySubmit(@ModelAttribute("applyForm") ApplyForm applyForm,
 			BindingResult result,
 			SessionStatus status) {

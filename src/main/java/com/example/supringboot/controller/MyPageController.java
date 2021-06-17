@@ -141,15 +141,11 @@ public class MyPageController {
 		int user_id = userSession.getAccount().getUser_id();
 		logger.info("user_id : " + user_id);
 		
-		ArrayList<Post> postList = supringService.getMyPostList(user_id);
-		
-		for(Post post: postList) {
-			System.out.println(post.getTitle());
-		}
-		
-		modelAndView.addObject("postList", postList);
-		
-		System.out.println("[myPostList]");
+		HashMap<String, ArrayList<Post>> map = supringService.getMyPostList(user_id);
+			
+		modelAndView.addObject("postList", map.get("postList"));
+		modelAndView.addObject("completePostList", map.get("completePostList"));
+
 		return modelAndView;
 	}
 	

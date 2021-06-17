@@ -19,7 +19,7 @@ public interface SupringBootFacade {
 	
 	Account getAccountById(int user_id);
 	
-	ArrayList<Post> getMyPostList(int user_id);
+	HashMap<String, ArrayList<Post>> getMyPostList(int user_id);
 	
 	ArrayList<Comment> getMyCommentList(int user_id);
 	

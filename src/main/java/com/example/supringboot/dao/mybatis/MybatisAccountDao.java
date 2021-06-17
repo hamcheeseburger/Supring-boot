@@ -97,6 +97,12 @@ public class MybatisAccountDao implements AccountDao {
 		// TODO Auto-generated method stub
 		return accountMapper.getAccountById(user_id);
 	}
+
+	@Override
+	public ArrayList<Post> selectCompletePostWithUserId(int user_id) {
+		// TODO Auto-generated method stub
+		return accountMapper.selectCompletePostWithUserId(user_id);
+	}
 	
 	
 }

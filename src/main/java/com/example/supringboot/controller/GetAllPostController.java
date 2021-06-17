@@ -34,7 +34,7 @@ public class GetAllPostController {
 			Model model, HttpServletRequest request) {
 		ArrayList<Post> postList = postService.getPostList(post);
 		model.addAttribute("postList", postList);
-
+		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
 		int user_id = -1;

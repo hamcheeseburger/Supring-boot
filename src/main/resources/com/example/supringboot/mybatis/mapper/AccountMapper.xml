@@ -35,7 +35,8 @@
 	addr1=#{addr1},
 	addr2=#{addr2},
 	zip=#{zip},
-	phone=#{phone}
+	phone=#{phone},
+	password=#{password}
 	WHERE login_id=#{login_id}
  </update>
  
@@ -131,7 +132,15 @@
 		p.created_dt, p.modified_dt, p.price, p.quantity, p.unit, p.exp_dt,
 		a.user_id, a.name, i.image_id, i.image, p.ship_type
 		FROM Post p, Account a, Image i
-		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id ORDER BY p.trade_status
+		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id and p.trade_status=0 ORDER BY p.post_id DESC
+	</select>
+	
+	<select id="selectCompletePostWithUserId" parameterType="int" resultMap="associPostAccountImage">
+		SELECT p.post_id, p.title, p.food_name, p.trade_type, p.trade_status,
+		p.created_dt, p.modified_dt, p.price, p.quantity, p.unit, p.exp_dt,
+		a.user_id, a.name, i.image_id, i.image, p.ship_type
+		FROM Post p, Account a, Image i
+		WHERE a.user_id = #{user_id} and p.user_id = a.user_id and i.post_id = p.post_id and p.trade_status=1 ORDER BY p.post_id DESC
 	</select>
 	
 	<resultMap id="associCommtPostAccount" type="Comment">

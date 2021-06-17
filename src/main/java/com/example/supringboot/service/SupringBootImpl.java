@@ -70,9 +70,16 @@ public class SupringBootImpl implements SupringBootFacade{
 
 
 	@Override
-	public ArrayList<Post> getMyPostList(int user_id) {
+	public HashMap<String, ArrayList<Post>> getMyPostList(int user_id) {
 		// TODO Auto-generated method stub
-		return accountDao.selectMyPosts(user_id);
+		ArrayList<Post> postList = accountDao.selectMyPosts(user_id);
+		ArrayList<Post> completePostList = accountDao.selectCompletePostWithUserId(user_id);
+		
+		HashMap<String, ArrayList<Post>> map = new HashMap<String, ArrayList<Post>>();
+		map.put("postList", postList);
+		map.put("completePostList", completePostList);
+		
+		return map;
 	}
 
 

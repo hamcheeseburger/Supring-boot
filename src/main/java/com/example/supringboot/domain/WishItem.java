@@ -10,7 +10,7 @@ public class WishItem implements Serializable {
 	private int user_id;
 	private Item item;
 	private int amount;
-	private int likedPrice; // 특정 식품의 총 합계
+	private int likedPrice; // 특정 식품의 총 합계 금액
 
 	/* JavaBeans Properties */
 

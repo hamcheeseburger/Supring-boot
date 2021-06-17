@@ -58,22 +58,14 @@ public class WishController {
 		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
-		// 로그인하지 않았을 경우 어떻게 처리할지 생각해야함
-		
 		int userId = userSession.getAccount().getUser_id();
 		System.out.println("user_id: " + userId);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<WishItem> list = wishService.getLikedItem(userId);
-		// 찜한 식품 전체 금액
-		int totalPrice = wishService.totalMoney(userId);
 		
-		if (list.isEmpty()) {
-			System.out.println("비어있음");
-		} else {
-			System.out.println("식품 이름: " + list.get(0).getItem().getFood().getName());	
-			System.out.println("totalPrice: " + totalPrice);
-		}
+		// 찜한 식품 전체 금액 - 배송비 포함
+		int totalPrice = wishService.totalMoney(userId);
 		
 		map.put("wishList", list);
 		map.put("wishListCount", list.size());

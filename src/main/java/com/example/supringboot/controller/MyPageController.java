@@ -60,7 +60,7 @@ public class MyPageController {
 		AccountForm accountForm = new AccountForm();
 		int user_id = userSession.getAccount().getUser_id();
 		accountForm.setAccount(supringService.getAccountById(user_id));
-		
+		logger.info(accountForm.getAccount().getPassword());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(myPageView);
 		modelAndView.addObject("accountForm", accountForm)
@@ -70,8 +70,13 @@ public class MyPageController {
 	
 	@PostMapping("/account/editAccount")
 	public ModelAndView editAccount(HttpServletRequest request,
-			@ModelAttribute("accountForm") AccountForm accountForm,  BindingResult result) {
+			@ModelAttribute("accountForm") AccountForm accountForm, BindingResult result) {
+		logger.info(accountForm.getUpdatePassword());
+		logger.info(accountForm.getNewPassword());
+		logger.info(accountForm.getNewPasswordCheck());
+		
 		Account account = accountForm.getAccount();
+		logger.info(account.getPassword()); // null..
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(myPageView);
@@ -80,8 +85,22 @@ public class MyPageController {
 		logger.info("account.login_id : " + account.getLogin_id());
 		
 		editAccountFormValidator.validate(accountForm, result);
+		Account accountForPassword = supringService.getAccountById(account.getUser_id());
 		
+		if(!accountForm.getUpdatePassword().equals("") && !supringService.passwordCheck(accountForm.getUpdatePassword(), accountForPassword.getPassword())) {
+			result.rejectValue("updatePassword", "passwordNotMatch", "비밀번호가 틀렸습니다.");
+		}
+		
+		// error가 있다면 update 하지 않게 return
 		if(result.getErrorCount() > 0) return modelAndView;
+		
+		// 새로운 비밀번호로 update
+		if(!accountForm.getNewPassword().equals("")) {
+			String newPassword = supringService.hashPassword(accountForm.getNewPassword());
+			account.setPassword(newPassword);
+		}else { // 새로운 비밀번호가 없다면 원래 password로 update
+			account.setPassword(accountForPassword.getPassword());
+		}
 		
 		if (supringService.updateAccount(account)) {
 			modelAndView.addObject("message", "수정에 성공하였습니다.");
@@ -122,15 +141,11 @@ public class MyPageController {
 		int user_id = userSession.getAccount().getUser_id();
 		logger.info("user_id : " + user_id);
 		
-		ArrayList<Post> postList = supringService.getMyPostList(user_id);
-		
-		for(Post post: postList) {
-			System.out.println(post.getTitle());
-		}
-		
-		modelAndView.addObject("postList", postList);
-		
-		System.out.println("[myPostList]");
+		HashMap<String, ArrayList<Post>> map = supringService.getMyPostList(user_id);
+			
+		modelAndView.addObject("postList", map.get("postList"));
+		modelAndView.addObject("completePostList", map.get("completePostList"));
+
 		return modelAndView;
 	}
 	

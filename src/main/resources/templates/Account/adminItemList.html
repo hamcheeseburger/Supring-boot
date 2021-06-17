@@ -16,8 +16,14 @@
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
                     <div th:each="item : ${ongoingItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" >
-                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                        <div class="card h-100">
+   
+                            <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}" th:href="@{/item/detail(itemId=${item.item_id})}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+                            <a th:if="${item.images.size != 0 and item.images[0].base64Image != null}" th:href="@{/item/detail(itemId=${item.item_id})}">
+                            	<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+                            </a>
                             <div class="card-body">
                                 <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
@@ -45,8 +51,14 @@
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
                     <div th:each="item : ${expiredItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
-                            <a href="#!"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 'card h-100'}">
+                            
+                            <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}" th:href="@{/item/detail(itemId=${item.item_id})}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+                            <a th:if="${item.images.size != 0 and item.images[0].base64Image != null}" th:href="@{/item/detail(itemId=${item.item_id})}">
+                            	<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+                            </a>
                             <div class="card-body">
                                 <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>

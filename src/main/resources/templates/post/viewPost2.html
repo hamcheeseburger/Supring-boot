@@ -30,7 +30,7 @@
 				<h2 th:text="${post.title}">공구 제목</h2><br/>
 				
 				<table>
-					<tr>
+					<tr> <!--  -->
 						<td style="padding-right:50px;">				
 							<p th:if="${post.images.size == 0 or post.images[0].base64Image == null}">
 								<img class="card-img-top" src="/img/no_image.png" style="width:400px; height:auto;" alt="..." />

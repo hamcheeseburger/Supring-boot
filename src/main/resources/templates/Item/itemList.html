@@ -32,6 +32,8 @@
 	}
 </style>
 
+<th:block layout:fragment="add-css"></th:block>
+
 </head>
 <body>
 
@@ -104,9 +106,35 @@
 		</div>
 		<div th:if="${itemList}" class="py-5 bg-light">
 			<div class="container">
-				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b></h2>
+				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b> </h2>
 				<h2 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h2>
 				<h2 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h2>
+				<br/>
+				
+				<form th:if="${status=='going'}" class="form-horizontal" method="GET" name="searchByKeyword" th:action="@{/item/list(status=going)}">
+				<div class="container" align="center">
+					<div class="form-inline form-grup"><!-- <div class="btn-grup"> -->
+						<input type="text" id="keyword" class="form-control" placeholder="찾으시는 상품을 검색해주세요(진행중)" name="keyword" style="width:300px;" />
+						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					</div>
+				</div>
+				</form>
+				<form th:if="${status=='all'}" class="form-horizontal" method="GET" name="searchByKeyword" th:action="@{/item/list(status=all)}">
+				<div class="container" align="center">
+					<div class="form-inline form-grup"><!-- <div class="btn-grup"> -->
+						<input type="text" id="keyword" class="form-control" placeholder="찾으시는 상품을 검색해주세요(전체)" name="keyword" style="width:300px;" />
+						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					</div>
+				</div>
+				</form>
+				<form th:if="${status=='end'}" class="form-horizontal" method="GET" name="searchByKeyword" th:action="@{/item/list(status=end)}">
+				<div class="container" align="center">
+					<div class="form-inline form-grup"><!-- <div class="btn-grup"> -->
+						<input type="text" id="keyword" class="form-control" placeholder="찾으시는 상품을 검색해주세요(마감)" name="keyword" style="width:300px;" />
+						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					</div>
+				</div>
+				</form>
 				<br/>
 				
                 <div class="row">

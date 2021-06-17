@@ -206,5 +206,23 @@ public class ItemServiceImpl implements ItemService{
 	public Item getDetailItem(int item_id) {
 		return itemDao.getDetailItem(item_id);
 	}
+
+	//키워드 검색을 통한 공구식품 목록
+	@Override
+	public ArrayList<Item> getItemListByKeyword(String keyword) {
+		return itemDao.getAllItemListByKeyword(keyword);
+	}
+	
+	@Override
+	public ArrayList<Item> getGoingItemByKeyword(Item item, String keyword) {
+		return itemDao.getGoingItemListByKeyword(item, keyword);
+	}
+
+	@Override
+	public ArrayList<Item> getEndItemByKeyword(String keyword) {
+		return itemDao.getEndItemListByKeyword(keyword);
+	}
+
+
 	
 }

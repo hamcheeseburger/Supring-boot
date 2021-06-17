@@ -45,7 +45,24 @@
 			<![CDATA[
 			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
 			]]>
-
+	</select>
+	<select id="getAllItemByKeyword" parameterType="String" resultMap="itemResult">
+		SELECT * FROM     
+			(SELECT * FROM
+				(SELECT ROWNUM AS SEQ, item_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+						item_price, ship_price, item_status, food_id, cat_id, name, image_id, image, numOfRegister
+			FROM
+				(SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
+						i.item_price, i.ship_price, i.item_status, f.food_id, f.cat_id, f.name, im.image_id, im.image,
+						(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+						INNER JOIN food f ON i.food_id = f.food_id
+				WHERE i.title like '%' || #{keyword} || '%' )
+				ORDER BY i.created_dt DESC, i.item_id DESC)
+			) )
+			<!-- <![CDATA[
+			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
+			]]> -->
 	</select>
 	
 	<select id="selectItemWithCategory" parameterType="Item" resultMap="searchItemFromMainResultMap">
@@ -85,6 +102,28 @@
 			]]>
 		
 	</select>
+	<select id="getGoingItemListByKeyword" resultMap="itemResult">
+		SELECT * FROM     
+			(SELECT * FROM
+				(SELECT ROWNUM AS SEQ, item_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+						item_price, ship_price, item_status, food_id, cat_id, name, image_id, image, numOfRegister
+			FROM
+				(SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
+							i.item_price, i.ship_price, i.item_status, f.food_id, f.cat_id, f.name, im.image_id, im.image,
+							(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+					INNER JOIN food f ON i.food_id = f.food_id 
+							
+				WHERE i.title like '%' || #{keyword} || '%' AND i.item_status = 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
+			)
+			)
+			<!--
+			<![CDATA[
+			WHERE SEQ > #{obj.paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{obj.recordsPerPage}
+			]]>
+			-->
+		
+	</select>
 	
 	<select id="getEndItemList" parameterType="Item" resultMap="itemResult">
 		SELECT * FROM     
@@ -102,6 +141,24 @@
 			<![CDATA[
 			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
 			]]>
+	</select>
+	<select id="getEndItemListByKeyword" parameterType="Item" resultMap="itemResult">
+		SELECT * FROM     
+			(SELECT * FROM
+				(SELECT ROWNUM AS SEQ, item_id, title, content, end_dt, min_quantity, created_dt, modified_dt, 
+						item_price, ship_price, item_status, food_id, cat_id, name, image_id, image, numOfRegister
+			FROM
+				(SELECT i.item_id, i.title, i.content, i.end_dt, i.min_quantity, i.created_dt, i.modified_dt, 
+							i.item_price, i.ship_price, i.item_status, f.food_id, f.cat_id, f.name, im.image_id, im.image,
+							(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
+					INNER JOIN food f ON i.food_id = f.food_id 
+				WHERE i.item_status != 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC
+				and i.title like '%' || #{keyword} || '%' )
+			) )
+			<!--<![CDATA[
+			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
+			]]>-->
 	</select>
 	
 	<!-- 추가 -->

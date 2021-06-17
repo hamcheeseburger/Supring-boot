@@ -1,6 +1,7 @@
 package com.example.supringboot.dao.mybatis;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,10 @@ public class MybatisItemDao implements ItemDao {
 	public ArrayList<Item> getAllItemList(Item item) {
 		return itemMapper.getAllItem(item);
 	}
+	@Override //키워드 통한 공구목록 조회
+	public ArrayList<Item> getAllItemListByKeyword(String keyword) {
+		return itemMapper.getAllItemByKeyword(keyword);
+	}
 
 	@Override
 	public Item getDetailItem(int item_id) {
@@ -72,10 +77,18 @@ public class MybatisItemDao implements ItemDao {
 	public ArrayList<Item> getGoingItemList(Item item) {
 		return itemMapper.getGoingItemList(item);
 	}
+	@Override
+	public ArrayList<Item> getGoingItemListByKeyword(Item item, String keyword) {
+		return itemMapper.getGoingItemListByKeyword(item, keyword);
+	}
 
 	@Override
 	public ArrayList<Item> getEndItemList(Item item) {
 		return itemMapper.getEndItemList(item);
+	}
+	@Override
+	public ArrayList<Item> getEndItemListByKeyword(String keyword) {
+		return itemMapper.getEndItemListByKeyword(keyword);
 	}
 
 	@Override

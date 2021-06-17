@@ -45,6 +45,7 @@ public class UpdateItemController {
 		return "/Item/updateItemForm";
 	}
 
+	/*
 	//DB수정
 	@PostMapping("/item/updateItem")
 	public String updateItem(HttpServletRequest request,
@@ -65,6 +66,9 @@ public class UpdateItemController {
 		
 		Item item = itemService.getDetailItem(item_id);
 		itemForm.setImages(item.getImages());
+//		itemForm.setItem_price(Integer.parseInt(itemForm.getStr_item_price()));
+//		itemForm.setShip_price(Integer.parseInt(itemForm.getStr_ship_price()));
+//		itemForm.setMin_quantity(Integer.parseInt(itemForm.getStr_min_quantity()));
 		itemForm.setItem_id(item_id);
 		
 		//검증 오류 발생 시
@@ -116,6 +120,7 @@ public class UpdateItemController {
 		
 		return "redirect:/item/adminList";
 	}
+	*/
 	
 	/*
 	//DB수정
@@ -186,7 +191,7 @@ public class UpdateItemController {
 	}
 	*/
 	
-	/*
+	
 	//DB수정
 	@RequestMapping("/item/updateItem")
 	public String updateItem( @RequestParam(value="itemId") int item_id,
@@ -213,7 +218,7 @@ public class UpdateItemController {
 		Timestamp create_time = null, end_time = null, modify_time = null;
 		//공구 날짜 Timestamp 변환
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		    Date createdParsedDate = (Date) dateFormat.parse(created_dt);
 		    Date endParseDate = (Date) dateFormat.parse(end_dt);
 		    Date modifyParseDate = new Date();
@@ -236,9 +241,9 @@ public class UpdateItemController {
 		System.out.println("itemContent: " + item.getContent());
 		itemService.updateItem(item);
 		
-		return "redirect:/item/adminList";
+		return "redirect:/admin/itemList";
 	}
-	*/
+	
 	
 	@RequestMapping("/item/deleteItem")
 	public String deleteItem (@RequestParam(value="itemId") int item_id) {

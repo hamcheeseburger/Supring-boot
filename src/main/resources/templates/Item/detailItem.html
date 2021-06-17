@@ -74,12 +74,17 @@
 									type="submit" value="공구 신청" onclick="javascript: form.action='/item/applyForm';" />
 								
 								<br/><br/>
+								<!--<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
+											session.userSession.account.user_id == detail.user_id}" 
+									type="submit" value="수정" onclick="javascript: form.action='/item/updateItemForm';" />-->
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
 											session.userSession.account.user_id == detail.user_id}" 
-									type="submit" value="수정" onclick="javascript: form.action='/item/updateItemForm';" />
+									type="button" value="수정하기" 
+									th:onclick="'location.href=\''+ @{/item/updateItemForm(itemId=${detail.item_id})} + '\''"/>
+									
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
 											session.userSession.account.user_id == detail.user_id}"
-									type="submit" value="삭제" onclick="javascript: form.action='/item/deleteItem';" />
+									type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
 								
 							</form>
 						</td>

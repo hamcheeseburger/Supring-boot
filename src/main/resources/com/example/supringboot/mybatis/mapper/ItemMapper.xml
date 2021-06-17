@@ -253,8 +253,9 @@
 	<select id="searchItemFromMain" parameterType="String" resultMap="searchItemFromMainResultMap">
 		<![CDATA[
 			select * from (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
-			from Item i, Food f, Category c, Image im 
-				where i.food_id = f.food_id and f.cat_id = c.cat_id and i.item_id = im.item_id 
+			from Item i INNER JOIN Food f ON i.food_id=f.food_id
+			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
+				where f.cat_id = c.cat_id
 					and (name like '%' ||  #{keyword} || '%' or cat_name like '%' ||  #{keyword} || '%' or title like '%' ||  #{keyword} || '%')
 					ORDER BY i.item_id) where rownum <= 4
 		]]>

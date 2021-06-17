@@ -26,7 +26,13 @@ layout:decorate="~{mainlayout}">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="item : ${itemList}">
                         <div class="card h-100">
-                            <a th:href="@{/item/detail(itemId=${item.item_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                        	<a th:if="${item.images.size == 0}" th:href="@{/item/detail(itemId=${item.item_id})}">
+                            	<img class="card-img-top" src="/img/no_image.png" />
+                            </a>
+							<a th:href="@{/item/detail(itemId=${item.item_id})}" th:if="${item.images.size != 0}">
+								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
+							</a>
+							
                             <div class="card-body">
                                 <h6 class="card-title"><b th:text="${item.title}"></b></h6><br />
                                 <p class="card-text" th:text="${item.content}"></p>

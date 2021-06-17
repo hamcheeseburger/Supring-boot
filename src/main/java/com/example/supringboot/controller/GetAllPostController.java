@@ -23,7 +23,7 @@ import org.springframework.ui.Model;
 public class GetAllPostController {
 	private static final Logger logger = LoggerFactory.getLogger(GetAllPostController.class);
 	
-	@Value("post/postList")
+	@Value("post/postList2")
 	private String postListView;
 	
 	@Autowired

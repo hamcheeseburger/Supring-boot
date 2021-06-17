@@ -56,9 +56,13 @@
 						                        <div class="card h-100"
 						                        	th:style="${row.trade_status == 1 ? 'cursor: pointer; opacity: .3;' : 'cursor: pointer;'}" th:onclick="'location.href=\''+ @{/post/viewPost(post_id=${row.post_id})} + '\''" 
 						                        	>
-						                            <b th:if="${row.images.size == 0}">사진 없음</b>
+						                        
 						                            
-													<a href="#" th:if="${row.images.size != 0}">
+						                             <a th:if="${row.images.size == 0 or row.images[0].base64Image == null}">
+						                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+						                            </a>
+						                            
+													<a href="#" th:if="${row.images.size != 0 and row.images[0].base64Image != null}">
 														<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${row.images[0].base64Image}}" 
 														width="300px" height="300px"  alt="이미지 없음"
 														th:href="|@{/post/viewPost}${params.makeQueryString(params.currentPageNo)}&post_id=${row.post_id}|" />

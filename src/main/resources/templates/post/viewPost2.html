@@ -31,9 +31,11 @@
 				
 				<table>
 					<tr>
-						<td style="padding-right:50px;">
-							<p th:if="${post.images.size == 0}">사진 없음</p>
-							<p th:if="${post.images.size != 0}">
+						<td style="padding-right:50px;">				
+							<p th:if="${post.images.size == 0 or post.images[0].base64Image == null}">
+								<img class="card-img-top" src="/img/no_image.png" style="width:400px; height:auto;" alt="..." />
+							</p>
+							<p th:if="${post.images.size != 0 and post.images[0].base64Image != null}">
 								<img th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" 
 									style="width:400px; height:auto;" alt="액박이미지" />
 							</p>

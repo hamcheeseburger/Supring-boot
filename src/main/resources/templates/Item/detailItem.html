@@ -65,7 +65,8 @@
 							
 							<form name="wish" id="insertWish" method="post">
 								<span>수량 선택</span> &nbsp;&nbsp;&nbsp;
-								<input type="number" id="amount" name="amount" value="1" min="1" th:if="${detail.item_status == 'ongoing'}" />
+								<input type="number" id="amount" name="amount" value="1" min="1" th:if="${detail.item_status == 'ongoing'}" 
+									style="width:80px;"/>
 								<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 								<br/><br/>
 								

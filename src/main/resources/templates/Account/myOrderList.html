@@ -12,12 +12,15 @@
 </head>
 <body>
 <section th:fragment="myOrderList" class="py-5 bg-light">
+            <h3>&nbsp;나의 '같이 먹어요' 목록</h3>
             <div class="container">
                 <h4 class="mb-4"><b>진행중인 상품 목록</b></h4>
                 <div class="row">       	
                     <div th:each="orderReg : ${orderRegs}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100" >
-                            <b th:if="${orderReg.item.images.size == 0}">사진 없음</b>
+                            <a th:if="${orderReg.item.images.size == 0}" th:href="@{/item/detail(itemId=${orderReg.item.item_id})}">
+                            	<img class="card-img-top" src="/img/no_image.png" />
+                            </a>
 							<a th:href="@{/item/detail(itemId=${orderReg.item.item_id})}" th:if="${orderReg.item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${orderReg.item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
@@ -43,7 +46,9 @@
                 <div class="row">
                     <div th:each="order : ${orders}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100" th:classappend="${order.item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}">
-                        	<b th:if="${order.item.images.size == 0}">사진 없음</b>
+                        	<a th:if="${order.item.images.size == 0}" th:href="@{/item/detail(itemId=${order.item.item_id})}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
 							<a th:href="@{/item/detail(itemId=${order.item.item_id})}" th:if="${order.item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${order.item.images[0].base64Image}}" alt="액박이미지" />
 							</a>

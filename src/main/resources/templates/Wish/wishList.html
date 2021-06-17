@@ -6,61 +6,99 @@
 <meta charset="UTF-8">
 <title>찜한 목록</title>
 
+<style>
+	.pad {
+		padding-bottom:40px;
+		padding-right:30px;
+	}
+	
+	#title {
+		color: gray;
+		font-weight:bold;
+		font-size:13px;
+	}
+	
+	.titlePad {
+		padding-right:30px;
+		padding-bottom:15px;
+	}
+	
+	table {
+		font-size:16px;
+		text-align:center;
+	}
+</style>
+
 </head>
 <body>
 
 	<div layout:fragment="custom-content" align="center">
 		<section class="py-5">
 			<div class="container">
-				<h2 align="center">찜한 목록 확인</h2>
+				<h2 align="center">찜한 목록</h2><br/>
 		
-				<table border="1">
-					<tr>
-						<th>사진</th>
-						<th>식품명</th>
-						<th>가격</th>
-						<th>수량</th>
-						<th>총 가격</th>
-						<th>취소</th>
+				<table>
+					<tr th:if="${map.wishListCount == 0}" style="font-size:20px;">
+						<td colspan="6"><b>찜한 목록이 비어있습니다.</b></td>
 					</tr>
-					<tr th:if="${map.wishListCount == 0}">
-						<td colspan="5"><b>찜한 목록이 비어있습니다.</b></td>
+					
+					<tr id="title">
+						<td class="titlePad">&nbsp;</td>
+						<td class="titlePad">식품명</td>
+						<td class="titlePad">수량</td>
+						<td class="titlePad">식품 금액</td>
+						<td class="titlePad">배송비</td>	
 					</tr>
-		
+					
 					<tr th:each="wish, iterStat:${map.wishList}">
-						<td>
-							<p th:if="${wish.item.images.size == 0}">사진 없음</p>
-							<p th:if="${wish.item.images.size != 0}">
-								<a href="#">
-									<img th:src="@{'data:image/jpeg;base64,'+${wish.item.images[0].base64Image}}" width="150px" height="150px" alt="액박이미지" />
-								</a>
-							</p>
+						<td class="pad">
+							<a th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:if="${wish.item.images.size == 0}">
+								<img src="/img/no_image.png" alt="..." width="130px" height="auto" />
+							</a>
+
+							<a th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:if="${wish.item.images.size != 0}">
+								<img th:src="@{'data:image/jpeg;base64,'+${wish.item.images[0].base64Image}}"
+										width="130px" height="auto" alt="액박이미지" />
+							</a>
+								
 						</td>
-						<!-- 식품명 클릭하면 공구식품 상세 페이지로 이동 -->
-						<td>
-							<a href="#" th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:text="${wish.item.food.name}"></a>
+						
+						<td class="pad">
+							<a th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:text="${wish.item.food.name}"></a>
 						</td>
-						<td th:text="${wish.item.item_price}"></td>
-						<td>
-							<form name="update" id="updateWish" method="post" action="#" th:action="@{/wish/update}">
-								<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1" />
+						
+						<td class="pad">
+							<form name="update" id="updateWish" method="post" th:action="@{/wish/update}">
+								<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1"
+									style="width:50px;" />
 								<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
 								<input type="submit" value="수정" />
 							</form>
 						</td>
-						<td th:text="${wish.likedPrice}"></td>
-						<td><a href="#" th:href="@{/wish/remove(likedId=${wish.liked_id})}">삭제</a></td>
+						
+						<td class="pad" th:text="${wish.likedPrice + '원'}"></td>
+						<td class="pad" th:if="${wish.item.ship_price != 0}" 
+							th:text="${wish.item.ship_price} + '원'"></td>
+						<td class="pad" th:if="${wish.item.ship_price == 0}">무료</td>
+						
+						<td class="pad"style="padding-left:20px;">
+							<a th:href="@{/wish/remove(likedId=${wish.liked_id})}">삭제하기</a>
+						</td>
 					</tr>
 					
 					<tr>
-						<td colspan="6" align="right" 
-							th:text="'찜한 식품 금액 합계: ' + ${map.totalPrice} + '원'">
+						<td id="price" colspan="6" align="right" 
+							th:text="${'총 금액: ' + map.totalPrice} + '원'">
 							<b>합계</b>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" align="right" style="padding-top:10px;">
+							<button type="button" th:onclick="'location.href=\''+ @{/wish/remove/list} + '\''">모두 삭제</button>
 						</td>
 					</tr>
 				</table>
 				
-				<button type="button" th:onclick="'location.href=\''+ @{/wish/remove/list} + '\''">모두 삭제</button>
 			</div>
 		</section>
 	</div>

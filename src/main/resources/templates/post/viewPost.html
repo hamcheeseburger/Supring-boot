@@ -350,6 +350,7 @@
 						dataType: "json",
 						data: JSON.stringify(params),
 						success: function(response) {
+							console.log(response);
 							if (response.result == false) {
 								alert("댓글 삭제에 실패하였습니다.");
 								return false;
@@ -372,10 +373,22 @@
 					var user = /*[[ ${user} ]]*/ -1;
 					
 					if (user == -1) {
-						if (confirm("로그인이 필요합니다.")) {
-							var uri = /*[[ @{/account/signOnForm} ]]*/ null;
-							location.href=uri;
-						}
+						var uri = /*[[ @{/account/signOnForm} ]]*/ null;
+						//location.href=uri;
+						var form = document.createElement('form');
+						form.setAttribute('method', 'get');
+						form.setAttribute('action', uri);
+						var hidden = document.createElement('input');
+						hidden.setAttribute('type', 'hidden');
+						hidden.setAttribute('name', 'previousUrl');
+						//hidden.setAttribute('value', '/post/viewPost?post_id=' + boardIdx);
+						hidden.setAttribute('value', window.location.href);
+						form.appendChild(hidden);
+						document.body.appendChild(form);
+						form.submit();
+						/* if (confirm("로그인이 필요합니다.")) {
+							
+						} */
 					}
 					
 					if (isEmpty(content.value) == true) {
@@ -386,7 +399,9 @@
 
 					var uri = /*[[ @{/comments} ]]*/ null;
 					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-					var params = {"post_id": boardIdx, "content": content.value, "secret" : secret.checked};
+					var params = {"post_id": boardIdx, "content": content.value, "secret" : secret.checked, "previousUrl" : "/post/viewPost?post_id=" + boardIdx};
+					
+					console.log(uri);
 					console.log(params);
 					$.ajax({
 						url: uri,
@@ -396,13 +411,18 @@
 						data: JSON.stringify(params),
 						success: function(response) {
 							if (response.result == false) {
-								alert("댓글 등록에 실패하였습니다.");
+								console.log("실패");
+								
 								return false;
 							}
 							ajaxPrint();
 							content.value = "";
-						},
+						}
+					,
 						error: function(xhr, status, error) {
+							console.log(status);
+							console.log(error);
+							
 							alert("에러가 발생하였습니다.");
 							return false;
 						}

@@ -78,7 +78,7 @@
 
 	<!-- 찜한 식품 전체 금액 가져오기 -->
 	<select id="totalMoney" parameterType="int" resultType="int">
-		SELECT NVL(SUM(item_price * amount), 0) price
+		SELECT NVL(SUM(item_price * amount + ship_price), 0) price
 		FROM liked l, item i
 		WHERE l.item_id = i.item_id AND l.user_id = #{user_id}
 	</select>

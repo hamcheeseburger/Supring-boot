@@ -72,10 +72,15 @@ layout:decorate="~{mainlayout}">
                 <h4 class="mb-4"><b>'같이 먹어요' 최신글</b></h4>
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="item3 : ${item3List}">
-                        <div class="card h-100">
+                        <div class="card h-100" style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item3.item_id})} + '\''">
                             <a th:href="@{/item/detail(itemId=${item3.item_id})}">
+                			
+                			<a th:if="${item3.images.size == 0 or item3.images[0].base64Image == null}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+                            <a href="#" th:if="${item3.images.size != 0 and item3.images[0].base64Image != null}">
                 			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item3.images[0].base64Image}}" alt="액박이미지" /></a>
-                              
+                              </a>
                             <div class="card-body">
                                 <h4 class="card-title"><b><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></b></h4>
                                 <p class="card-text" th:text="${item3.content}"></p>
@@ -98,8 +103,14 @@ layout:decorate="~{mainlayout}">
                 <h4 class="mb-4"><b>'나누어 먹어요' 최신글</b></h4>
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 mb-4" th:each="post3 : ${post3List}">
-                        <div class="card h-100">
-                            <a th:href="@{/post/viewPost(post_id=${post3.post_id})}"><img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post3.images[0].base64Image}}" alt="액박이미지" /></a>
+                        <div class="card h-100" style="cursor: pointer;" th:onclick="'location.href=\''+ @{/post/viewPost(post_id=${post3.post_id})} + '\''">
+                            
+                            <a th:if="${post3.images.size == 0 or post3.images[0].base64Image == null}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+                            <a th:if="${post3.images.size != 0 and post3.images[0].base64Image != null}" th:href="@{/post/viewPost(post_id=${post3.post_id})}">
+                            	<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${post3.images[0].base64Image}}" alt="액박이미지" />
+                            </a>
                             <div class="card-body">
                                 <h4 class="card-title"><b><a th:href="@{/post/viewPost(post_id=${post3.post_id})}" th:text="${post3.title}">Project One</a></b></h4>
                                 <p class="card-text" th:text="${post3.content}"></p><br />

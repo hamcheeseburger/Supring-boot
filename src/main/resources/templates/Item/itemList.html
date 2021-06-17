@@ -75,8 +75,10 @@
                         <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}"
                         	style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''">
                         	
-                            <b th:if="${item.images.size == 0}">사진 없음</b>
-							<a href="#" th:if="${item.images.size != 0}">
+                            <a th:if="${item.images.size == 0}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+							<a th:if="${item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
 							</a>
                             <div class="card-body">
@@ -116,7 +118,9 @@
                     <div th:each="item : ${itemList}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'card h-100 fail' : 'card h-100'}"
                         	style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''" >
-                            <b th:if="${item.images.size == 0}">사진 없음</b>
+                            <a th:if="${item.images.size == 0}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
 							<a href="#" th:if="${item.images.size != 0}">
 								<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
 							</a>

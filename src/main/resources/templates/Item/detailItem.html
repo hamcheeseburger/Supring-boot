@@ -34,7 +34,9 @@
 				<table>
 					<tr>
 						<td style="padding-right:50px;">
-							<p th:if="${detail.images.size == 0}">사진 없음</p>
+							<p th:if="${detail.images.size == 0}">
+								<img src="/img/no_image.png" alt="..." width="400px" height="auto" />
+							</p>
 							<p th:if="${detail.images.size != 0}">
 								<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" 
 									style="width:400px; height:auto;" alt="액박이미지" />

@@ -9,4 +9,5 @@ public interface ImageDao {
 	public int deleteImage(int image_id);
 	public Image selectImgage(int post_id);
 	public Image selectImageByItemId(int item_id);
+	public int updateImageWithItem(Image image);
 }

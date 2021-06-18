@@ -81,6 +81,7 @@ public class PostServiceImpl implements PostService{
 //		str_quantity를 int형으로 변환 후 삽입
 		post.setQuantity(Integer.parseInt(postForm.getStr_quantity()));
 		post.setUnit(postForm.getUnit());	
+		
 //		postForm의 날짜를 Timestamp로 변환
 		try {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

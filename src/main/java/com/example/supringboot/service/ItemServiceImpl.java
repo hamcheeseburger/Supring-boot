@@ -14,17 +14,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import com.example.supringboot.dao.ImageDao;
 import com.example.supringboot.dao.ItemDao;
 import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
 import com.example.supringboot.domain.PaginationInfo;
+import com.example.supringboot.mybatis.mapper.ImageMapper;
 
 @Service
 public class ItemServiceImpl implements ItemService{
 
 	@Autowired
 	private ItemDao itemDao;
+	
+	@Autowired
+	private ImageDao imageDao;
+	
+	@Autowired
+	private ImageMapper imMapper;
 	
 	@Autowired		// applicationContext.xml에 정의된 scheduler 객체를 주입 받음
 	private ThreadPoolTaskScheduler scheduler;
@@ -52,8 +60,25 @@ public class ItemServiceImpl implements ItemService{
 	}
 	
 	@Override
-	public int updateItem(Item item) {
-		return itemDao.updateItem(item);
+	public int updateItem(Item item, String fileChanged) {
+		int result = itemDao.updateItem(item);
+		if(result == 1) {
+			if(item.getImages() == null || item.getImages().size() == 0) { 
+				System.out.println("이미지 수정하지 않음");
+				return result;
+			}
+			if(fileChanged.equals("changed")) {
+			int item_id = item.getImages().get(0).getImage_id();
+			if(item_id == 0) {
+				System.out.println("이미지 추가됨");
+				result = imMapper.insertImageWithItem(item.getImages().get(0));
+			}else {
+				System.out.println("이미지 수정됨");
+				result = imageDao.updateImageWithItem(item.getImages().get(0));
+			}
+			}
+		}
+		return result;
 	}
 
 	@Override

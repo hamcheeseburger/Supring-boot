@@ -57,6 +57,8 @@ public class ItemForm implements Serializable{
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
 	
+	private String fileChanged;
+	
 	//금액 입력 필드
 	@NotBlank(message = "배송가격은 필수 입력 값입니다.")
 	@PositiveOrZero(message = "배송 가격은 0이상의 양수 값입니다.")
@@ -218,6 +220,14 @@ public class ItemForm implements Serializable{
 
 	public void setCreated_dt_time(String created_dt_time) {
 		this.created_dt_time = created_dt_time;
+	}
+
+	public String getFileChanged() {
+		return fileChanged;
+	}
+
+	public void setFileChanged(String fileChanged) {
+		this.fileChanged = fileChanged;
 	}
 
 }

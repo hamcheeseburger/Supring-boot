@@ -16,4 +16,5 @@ public interface ImageMapper {
 	int deleteImageByPostId(@Param("post_id") int post_id) throws DataAccessException;
 	Image getImageByPostId(@Param("post_id") int post_id) throws DataAccessException;
 	Image getImageByItemId(@Param("item_id") int item_id) throws DataAccessException;
+	int updateImageWithItem(Image image) throws DataAccessException;
 }

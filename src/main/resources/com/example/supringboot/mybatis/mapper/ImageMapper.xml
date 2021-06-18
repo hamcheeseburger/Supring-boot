@@ -41,6 +41,12 @@
 	values (#{image_id}, #{item_id, jdbcType=NUMERIC}, #{image})
 </insert>
 
+<update id="updateImageWithItem" parameterType="Image">
+	UPDATE Image
+	SET image=#{image}
+	WHERE image_id=#{image_id}
+</update>
+
 <delete id="deleteImage" parameterType="int">
 	delete from image
 	where image_id=#{image_id}

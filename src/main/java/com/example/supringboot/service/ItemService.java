@@ -22,7 +22,7 @@ public interface ItemService {
 	//Food객체 가져오기
 	Food getFood(int food_id);
 	//공구식품 수정
-	int updateItem(Item item);
+	int updateItem(Item item, String fileChaged);
 	//공구식품 삭제
 	int deleteItem(int item_id);
 	//공구진행률 조회

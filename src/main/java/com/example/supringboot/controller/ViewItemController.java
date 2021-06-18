@@ -1,7 +1,6 @@
 package com.example.supringboot.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,9 +61,13 @@ public class ViewItemController {
 				mav.addObject("status", status);
 				mav.addObject("itemList", itemList);
 			
+				int size = 0;
 				if (itemList == null) {
-					mav.addObject("itemSize", 0);
+					size = 0;
+				} else {
+					size = itemList.size();
 				}
+				mav.addObject("itemSize", size);
 			
 			}else {
 				item.setCat_id(cat_id);
@@ -74,60 +77,53 @@ public class ViewItemController {
 				mav.addObject("catName", cat.getCat_name());
 				mav.addObject("catItemList", catItemList);
 			
+				int size = 0;
 				if (catItemList == null) {
-					mav.addObject("catSize", 0);
+					size = 0;
+				} else {
+					size = catItemList.size();
 				}
+				mav.addObject("catSize", size);
+
 			}
 		} else {
 			status = item.getSearchType();
 			//키워드로 검색 시
 			System.out.println("같이먹어요 페이지 이동(키워드: " + keyword +")");
-//			item.setItem_status(status);
 			System.out.println("검색범위(status): " + item.getItem_status());
 			
 			logger.info("param : " + item.getSearchKeyword());
 			logger.info("param : " + item.getSearchType());
-//			HashMap<String, Object> map = new HashMap<String, Object>();
-//			map.put("keyword", keyword);
-//			map.put("item", (Item)item);
 					
-			if(cat_id == -1) {
-				ArrayList<Item> itemList = null;
+			ArrayList<Item> itemList = null;
 			
-				if (status.equals("all")) {
-					System.out.println("전체 검색");
-					itemList = itemService.getItemListByKeyword(item);
-				}
-				else if (status.equals("going")) {
-					System.out.println("진행 중 검색");
-					itemList = itemService.getGoingItemByKeyword(item);
-					System.out.println("검색해온 itemList: " + itemList.size());
-				}
-				else if (status.equals("end")) {
-					System.out.println("마감 검색");
-					itemList = itemService.getEndItemByKeyword(item);
-				}
-			
-				mav.addObject("status", status);
-				mav.addObject("itemList", itemList);
-			
-				if (itemList == null) {
-					mav.addObject("itemSize", 0);
-				}
-			
-			}else {
-				item.setCat_id(cat_id);
-				ArrayList<Item> catItemList = itemService.selectItemWithCategory(item);
-				Category cat = itemService.getCategoryById(cat_id);
-			
-				mav.addObject("catName", cat.getCat_name());
-				mav.addObject("catItemList", catItemList);
-			
-				if (catItemList == null) {
-					mav.addObject("catSize", 0);
-				}
+			if (status.equals("all")) {
+				System.out.println("전체 검색");
+				itemList = itemService.getItemListByKeyword(item);
 			}
+			else if (status.equals("going")) {
+				System.out.println("진행 중 검색");
+				itemList = itemService.getGoingItemByKeyword(item);
+			}
+			else if (status.equals("end")) {
+				System.out.println("마감 검색");
+				itemList = itemService.getEndItemByKeyword(item);
+			}
+		
+			mav.addObject("status", status);
+			mav.addObject("itemList", itemList);
+		
+			int size = 0;
+			if (itemList == null) {
+				size = 0;
+			} else {
+				size = itemList.size();
+			}
+			
+			mav.addObject("itemSize", size);
+			mav.addObject("searchKeyword", keyword);
 		}
+		
 		return mav;
 	}
 	

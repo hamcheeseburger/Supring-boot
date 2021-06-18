@@ -1,8 +1,10 @@
 package com.example.supringboot.controller;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,7 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Image;
+import com.example.supringboot.domain.Item;
 
+/**
+ * @author yoo77
+ *
+ */
 @SuppressWarnings("serial")
 public class ItemForm implements Serializable{
 	private int item_id; // 기본키
@@ -29,16 +36,12 @@ public class ItemForm implements Serializable{
 	private String content; // 게시글 내용
 	
 	@NotBlank(message = "공구상품 만료일은 필수 입력 값입니다.")
-//	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
-//	message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
 	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])",
 	message="yyyy-MM-dd 형식으로 작성해야 합니다.")
 	private String end_dt; // 공동구매 만료일
 	private String end_dt_time;
 	private int min_quantity; // 공동구매 최소수량(목표수량)
 	
-//	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
-//			message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
 	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])",
 	message="yyyy-MM-dd 형식으로 작성해야 합니다.")
 	@NotBlank(message = "공구상품 시작일은 필수 입력 값입니다.")

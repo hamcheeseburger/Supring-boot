@@ -267,8 +267,8 @@
 		SET title=#{title}, content=#{content},
 		end_dt=#{end_dt},
 		min_quantity=#{min_quantity},
-		created_dt=#{created_dt}, modified_dt=#{modified_dt},
-		item_price=#{item_price}, item_status=#{item_status},
+		modified_dt=sysdate,
+		item_price=#{item_price},
 		ship_price=#{ship_price}
 		WHERE item_id=#{item_id}
 	</insert>

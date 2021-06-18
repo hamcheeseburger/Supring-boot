@@ -42,8 +42,31 @@ public class UpdateItemController {
 		System.out.println("공구 수정 페이지");
 		Item item = itemService.getDetailItem(itemId);
 		Food food = itemService.getFood(item.getFood().getFood_id());
-		model.put("item", item);
-		model.put("foodInfo", food);
+		
+		String end_dt = item.getEnd_dt().toString();
+		String [] splited = end_dt.split(" ");
+		
+		String created_dt = item.getCreated_dt().toString();
+		String [] created_split = created_dt.split(" ");
+		
+		ItemForm itemForm = new ItemForm();
+		itemForm.setItem_id(itemId);
+		itemForm.setTitle(item.getTitle());
+		itemForm.setContent(item.getContent());
+		itemForm.setStr_item_price(String.valueOf(item.getItem_price()));
+		itemForm.setStr_ship_price(String.valueOf(item.getShip_price()));
+		
+		itemForm.setCreated_dt(created_split[0]);
+		itemForm.setCreated_dt_time(created_split[1]);
+		itemForm.setEnd_dt(splited[0]);
+		itemForm.setEnd_dt_time(splited[1]);
+		
+		itemForm.setStr_min_quantity(String.valueOf(item.getMin_quantity()));
+		itemForm.setImages(item.getImages());
+		itemForm.setFood(food);
+		
+		model.put("item", itemForm);
+//		model.put("foodInfo", food);
 		
 		return "/Item/updateItemForm";
 	}
@@ -197,51 +220,44 @@ public class UpdateItemController {
 	
 	//DB수정
 	@RequestMapping("/item/updateItem")
-	public String updateItem( @RequestParam(value="itemId") int item_id,
-			@RequestParam("title") String title,
-			@RequestParam("item_price") int price,
-			@RequestParam("ship_price") int ship_price,
-			@RequestParam("created_dt") String created_dt,
-			@RequestParam("end_dt") String end_dt,
-			@RequestParam("min_quantity") int minQuantity,
-			@RequestParam("content") String content,
-			//@RequestParam("images") MultipartFile file,
+	public String updateItem(@Valid @ModelAttribute("item") ItemForm itemForm, BindingResult errors,
 			ModelMap model) throws Exception {
-		System.out.println("공구 수정 시작, 넘어온 id값: " + item_id);
+				
+		String end_dt_time = itemForm.getEnd_dt_time();
 		
-		System.out.println( "," + title + "," + price + "," + ship_price +","
-				+ created_dt + "," + created_dt + "," + end_dt + "," + minQuantity + "," + content);
+		if(end_dt_time.equals("")) {
+			end_dt_time = "00:00";
+		}
 		
-		Item item = itemService.getDetailItem(item_id);
-		System.out.println("itemID: " + item.getItem_id());
-		System.out.println("itemTitle: " + item.getTitle());
-		System.out.println("itemPrice: " + item.getItem_price());
-		System.out.println("itemContent: " + item.getContent());
+		Timestamp end_time = null;
+		Date endParseDate = null;
 		
-		Timestamp create_time = null, end_time = null, modify_time = null;
 		//공구 날짜 Timestamp 변환
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		    Date createdParsedDate = (Date) dateFormat.parse(created_dt);
-		    Date endParseDate = (Date) dateFormat.parse(end_dt);
-		    Date modifyParseDate = new Date();
-		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		    Date createdParsedDate = (Date) dateFormat.parse(itemForm.getCreated_dt() + " " +itemForm.getCreated_dt_time());
+		    endParseDate = (Date) dateFormat.parse(itemForm.getEnd_dt() + " " + end_dt_time);
+		    
+		    if(createdParsedDate.after(endParseDate)) {
+		    	errors.rejectValue("end_dt", "timeError", "마감일이 시작일보다 빠릅니다.");
+		    }
+		    	   
 		    end_time = new java.sql.Timestamp(endParseDate.getTime());
-		    modify_time = new java.sql.Timestamp(modifyParseDate.getTime());
 		} catch(Exception e) { }
 		
-		item.setTitle(title);
-		item.setItem_price(price);
-		item.setShip_price(ship_price);
-		item.setCreated_dt(create_time);
+		if(errors.hasErrors()) {
+			return "/Item/updateItemForm";
+		}
+		
+		Item item = new Item();
+		item.setItem_id(itemForm.getItem_id());
+		item.setTitle(itemForm.getTitle());
+		item.setItem_price(Integer.valueOf(itemForm.getStr_item_price()));
+		item.setShip_price(Integer.valueOf(itemForm.getStr_ship_price()));
 		item.setEnd_dt(end_time);
-		item.setMin_quantity(minQuantity);
-		item.setModified_dt(modify_time);
-		item.setContent(content);
-		System.out.println("itemID: " + item.getItem_id());
-		System.out.println("itemTitle: " + item.getTitle());
-		System.out.println("itemPrice: " + item.getItem_price());
-		System.out.println("itemContent: " + item.getContent());
+		item.setMin_quantity(Integer.valueOf(itemForm.getStr_min_quantity()));
+		item.setContent(itemForm.getContent());
+		
 		itemService.updateItem(item);
 		
 		return "redirect:/admin/itemList";

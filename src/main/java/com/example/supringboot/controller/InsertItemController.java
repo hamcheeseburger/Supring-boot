@@ -162,8 +162,6 @@ public class InsertItemController {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
 		
-
-		
 		//이미지 처리
 		System.out.println("이미지 처리 시작");
 		ArrayList<Image> imageList = new ArrayList<Image>();

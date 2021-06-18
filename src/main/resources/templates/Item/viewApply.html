@@ -4,7 +4,6 @@
 	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
-<title>공동구매 신청 내역</title>
 
 <script th:inlne="jacascript"> 
 	var name = "[[${detail.item.food.name}]]";
@@ -55,9 +54,9 @@
 									<img src="/img/no_image.png" width="200px" height="auto" />
 								</td>
 								<td>
-									수량: &nbsp;&nbsp;<b th:text="${detail.quantity + '개'}"></b><br><br>
-									가격: &nbsp;&nbsp;<b th:text="${itemTotalPrice + '원'}"></b><br><br>
-									배송비: &nbsp;&nbsp;<b th:text="${detail.item.ship_price + '원'}"></b><br><br>
+									수량 : &nbsp;&nbsp;<b th:text="${detail.quantity + '개'}"></b><br><br>
+									가격 : &nbsp;&nbsp;<b th:text="${itemTotalPrice + '원'}"></b><br><br>
+									배송비 : &nbsp;&nbsp;<b th:text="${detail.item.ship_price + '원'}"></b><br><br>
 								</td>
 							</tr>
 							
@@ -66,13 +65,13 @@
 							</td></tr>
 							<tr>
 								<td>
-									신청자 이름: &nbsp;&nbsp;<b th:text="${detail.user.name}">신청자 이름</b><br><br>
-									연락처: &nbsp;&nbsp;<b th:text="${detail.user.phone}">연락처</b><br><br>
-									이메일: &nbsp;&nbsp;<b th:text="${detail.user.email}">이메일</b><br><br>
-									수령인: &nbsp;&nbsp;<b th:text="${detail.receiver_name}"></b><br><br>
-									우편번호: &nbsp;&nbsp;<b th:text="${detail.ship_zip}"></b><br><br>
-									배송 주소1: &nbsp;&nbsp;<b th:text="${detail.ship_addr1}"></b><br><br>
-									배송 주소2: &nbsp;&nbsp;<b th:text="${detail.ship_addr2}"></b>
+									신청자 이름 : &nbsp;&nbsp;<b th:text="${detail.user.name}">신청자 이름</b><br><br>
+									연락처 : &nbsp;&nbsp;<b th:text="${detail.user.phone}">연락처</b><br><br>
+									이메일 : &nbsp;&nbsp;<b th:text="${detail.user.email}">이메일</b><br><br>
+									수령인 : &nbsp;&nbsp;<b th:text="${detail.receiver_name}"></b><br><br>
+									우편번호 : &nbsp;&nbsp;<b th:text="${detail.ship_zip}"></b><br><br>
+									배송 주소1 : &nbsp;&nbsp;<b th:text="${detail.ship_addr1}"></b><br><br>
+									배송 주소2 : &nbsp;&nbsp;<b th:text="${detail.ship_addr2}"></b>
 								</td>
 							</tr>
 							
@@ -81,9 +80,9 @@
 							</td></tr>
 							<tr>
 								<td colspan="2">
-									카드타입: &nbsp;&nbsp;<b th:text="${detail.card_type}"></b><br><br>
-									카드번호: &nbsp;&nbsp;<b th:text="${detail.card_num}"></b><br><br>
-									유효기간: &nbsp;&nbsp;<b th:text="${detail.card_exp_dt}"></b>
+									카드타입 : &nbsp;&nbsp;<b th:text="${detail.card_type}"></b><br><br>
+									카드번호 : &nbsp;&nbsp;<b th:text="${detail.card_num}"></b><br><br>
+									유효기간 : &nbsp;&nbsp;<b th:text="${detail.card_exp_dt}"></b>
 								</td>
 							</tr>
 								

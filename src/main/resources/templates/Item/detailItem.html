@@ -4,7 +4,6 @@
 	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
-<title>공동구매 식품 상세보기</title>
 
 <script th:inlne="jacascript">
 	var isApply = "[[${isApply}]]";
@@ -18,6 +17,10 @@
 <style>
 	.detail {
 		font-size: 20px;
+	}
+	
+	#color {
+		color:black;
 	}
 </style>
 
@@ -37,10 +40,29 @@
 							<p th:if="${detail.images.size == 0 or detail.images[0].base64Image == null}">
 								<img src="/img/no_image.png" alt="..." width="400px" height="auto" />
 							</p>
-							<p th:if="${detail.images.size != 0 and detail.images[0].base64Image != null}">
-								<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" 
-									style="width:400px; height:auto;" alt="액박이미지" />
-							</p>
+							
+							<div th:if="${detail.images.size != 0 and detail.images[0].base64Image != null}"
+								class="carousel slide" id="carouselExampleIndicators" data-ride="carousel" style="width:400px">
+				                <ol class="carousel-indicators" th:each="image, iNum : ${detail.images}">
+				                    <li th:if="${iNum.index == 0}" class="active" data-target="#carouselExampleIndicators" data-slide-to="${iNum.index}"></li>
+				                    <li th:if="${iNum.index != 0}" data-target="#carouselExampleIndicators" data-slide-to="${iNum.index}"></li>
+				                </ol>
+				                <div class="carousel-inner" th:each="image : ${detail.images}">
+				                    <div class="carousel-item active">
+				                        <img class="d-block w-100" th:src="@{'data:image/jpeg;base64,'+${image.base64Image}}" alt="..." />
+				                    </div>
+				                    
+				                </div>
+				                
+				                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" >
+				                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				                    <span class="sr-only">Previous</span>
+				                </a>
+				                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="color:#343a40">
+				                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				                    <span class="sr-only">Next</span>
+				                </a>
+				            </div>
 						</td>
 						
 						<td>
@@ -64,32 +86,31 @@
 							마감일<br/>
 							<b class="detail" th:text="${#dates.format(detail.end_dt, 'yyyy/MM/dd  HH:mm')}"></b><br/><br/>
 							
-							<form name="wish" id="insertWish" method="post" th:if="${detail.item_status == 'ongoing'}">
+							<form name="wish" id="wishAndApply" method="post" th:if="${detail.item_status == 'ongoing'}">
 								<span>수량 선택</span> &nbsp;&nbsp;&nbsp;
 								<input type="number" id="amount" name="amount" value="1" min="1" style="width:80px;"/>
 								<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 								<br/><br/>
 								
-								<!-- <input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" 
-									th:if="${detail.item_status == 'ongoing'}" /> -->
-								
-								<input type="submit" value="찜하기" th:attr="onclick=|wishButton('${detail.item_id}')|"   />
+								<input type="submit" value="찜하기" th:attr="onclick=|wishButton('${detail.item_id}')|"
+									class="btn btn-default waves-effect waves-light"   />
 									
-								<input type="submit" value="공구 신청" th:attr="onclick=|registerButton('${detail.item_id}')|" />
+								<input type="submit" value="신청하기" th:attr="onclick=|registerButton('${detail.item_id}')|"
+									class="btn btn-default waves-effect waves-light" />
 								
 								<input type='hidden' id='hiddeninput' name='previousUrl'/>
 								
 								<br/><br/>
-								<!--<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
-											session.userSession.account.user_id == detail.user_id}" 
-									type="submit" value="수정" onclick="javascript: form.action='/item/updateItemForm';" />-->
+
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
 											session.userSession.account.user_id == detail.user_id}" 
-									type="button" value="수정하기" 
+									type="button" value="수정하기"
+									class="btn btn-primary waves-effect waves-light"
 									th:onclick="'location.href=\''+ @{/item/updateItemForm(itemId=${detail.item_id})} + '\''"/>
 									
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
 											session.userSession.account.user_id == detail.user_id}"
+									class="btn btn-danger waves-effect waves-light"
 									type="submit" value="삭제하기" onclick="javascript: form.action='/item/deleteItem';" />
 								
 							</form>
@@ -163,7 +184,7 @@
 			function wishButton(item_id) {
 				console.log(item_id);
 				console.log("wishButton");
-				var form = document.getElementById("insertWish");
+				var form = document.getElementById("wishAndApply");
 				var uri = /*[[ @{/wish/add} ]]*/ null;
 				var hidden = document.getElementById("hiddeninput");
 
@@ -174,18 +195,20 @@
 			}
 			
 			function registerButton(item_id) {
-				var form = document.getElementById("insertWish");
+				var form = document.getElementById("wishAndApply");
 				var uri = /*[[ @{/item/applyForm} ]]*/ null;
 				var hidden = document.getElementById("hiddeninput");
 
 				hidden.setAttribute('value', '/item/detail?itemId=' + item_id);
 
 				form.setAttribute('action', uri);
+				
 				form.submit();
 			}
+			
 		</script>
+		
 	</div>
-	
 
 </body>
 </html>

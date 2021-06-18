@@ -4,11 +4,10 @@
 	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
-<title>공동구매 식품 목록</title>
 
 <style>
 	.btn-group button {
-	    background-color: #6c757d;
+	    background-color: #6E6E6E;
 	    border: 1px solid black;
 	    color: white;
 	    padding: 10px 24px;
@@ -28,7 +27,7 @@
 	}
 	
 	.btn-group button:hover {
-	    background-color: #8C8A8F;
+	    background-color: #989898;
 	}
 </style>
 
@@ -43,11 +42,11 @@
 			<div class="container">
 				<div class="btn-group">
 					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=all)} + '\''"
-						th:style="${status == 'all' ? 'background-color: #8C8A8F;' : ''}">전체</button>
+						th:style="${status == 'all' ? 'background-color: #989898;' : ''}">전체</button>
 					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=going)} + '\''"
-						th:style="${status == 'going' ? 'background-color: #8C8A8F;' : ''}">진행중인 공구</button>
+						th:style="${status == 'going' ? 'background-color: #989898;' : ''}">진행중인 공구</button>
 					<button type="button" th:onclick="'location.href=\''+ @{/item/list(status=end)} + '\''"
-						th:style="${status == 'end' ? 'background-color: #8C8A8F;' : ''}">지난 공구</button>
+						th:style="${status == 'end' ? 'background-color: #989898;' : ''}">지난 공구</button>
 				</div>
 				
                <!--  <a th:href="@{/item/list}" class="nav-link"><b>카테고리</b></a> -->

@@ -4,7 +4,6 @@
 	layout:decorate="~{mainlayout}">
 <head>
 <meta charset="UTF-8">
-<title>공동구매 신청</title>
 
 <style>
 	.applyTitle {
@@ -46,20 +45,20 @@
 										<img src="/img/no_image.png" width="200px" height="auto" />
 									</td>
 									<td>
-										수량: &nbsp;&nbsp;<b th:text="*{order.quantity + '개'}"></b><br><br>
-										가격: &nbsp;&nbsp;<b th:text="*{itemTotalPrice + '원'}"></b><br><br>
-										배송비: &nbsp;&nbsp;<b th:text="*{order.item.ship_price + '원'}"></b><br><br>
+										수량 : &nbsp;&nbsp;<b th:text="*{order.quantity + '개'}"></b><br><br>
+										가격 : &nbsp;&nbsp;<b th:text="*{itemTotalPrice + '원'}"></b><br><br>
+										배송비 : &nbsp;&nbsp;<b th:text="*{order.item.ship_price + '원'}"></b><br><br>
 									</td>
 								</tr>
 								
 								<tr><td class="applyTitle" style="padding-top:50px;" colspan="2">
-									<div class="titleBox">신청 정보</div>
+									<div class="titleBox">신청 정보 입력</div>
 								</td></tr>
 								<tr>
 									<td>
-										신청자 이름: &nbsp;&nbsp;<b th:text="*{order.user.name}">신청자 이름</b><br><br>
-										연락처: &nbsp;&nbsp;<b th:text="*{order.user.phone}">연락처</b><br><br>
-										이메일: &nbsp;&nbsp;<b th:text="*{order.user.email}">이메일</b><br><br>
+										신청자 이름 : &nbsp;&nbsp;<b th:text="*{order.user.name}">신청자 이름</b><br><br>
+										연락처 : &nbsp;&nbsp;<b th:text="*{order.user.phone}">연락처</b><br><br>
+										이메일 : &nbsp;&nbsp;<b th:text="*{order.user.email}">이메일</b><br><br>
 										수령인 <input class="form-control" id="name" type="text" th:field="*{order.receiver_name}" /> 
 											<b th:if="${#fields.hasErrors('order.receiver_name')}"
 												th:errorclass="error" th:errors="*{order.receiver_name}"></b><br><br>
@@ -69,17 +68,17 @@
 											th:errorclass="error" th:errors="*{order.ship_zip}"></b><br><br>
 										배송 주소1 <input class="form-control"
 											id="ship_addr1" type="text" th:field="*{order.ship_addr1}" />
-									<b th:if="${#fields.hasErrors('order.ship_addr1')}"
-										th:errorclass="error" th:errors="*{order.ship_addr1}"></b><br><br>
-									배송 주소2 <input class="form-control"
-										id="ship_addr2" type="text" th:field="*{order.ship_addr2}" />
-									<b th:if="${#fields.hasErrors('order.ship_addr2')}"
-										th:errorclass="error" th:errors="*{order.ship_addr2}"></b>
+										<b th:if="${#fields.hasErrors('order.ship_addr1')}"
+											th:errorclass="error" th:errors="*{order.ship_addr1}"></b><br><br>
+										배송 주소2 <input class="form-control"
+											id="ship_addr2" type="text" th:field="*{order.ship_addr2}" />
+										<b th:if="${#fields.hasErrors('order.ship_addr2')}"
+											th:errorclass="error" th:errors="*{order.ship_addr2}"></b>
 									</td>
 								</tr>
 									
 								<tr><td class="applyTitle" style="padding-top:50px;" colspan="2">
-									<div class="titleBox">결제 수단</div>
+									<div class="titleBox">결제 수단 입력</div>
 								</td></tr>
 								<tr>
 									<td colspan="2">
@@ -105,13 +104,13 @@
 								<tr>
 									<td style="font-size:16px; padding-top:15px; padding-bottom: 10px;" 
 										th:if="*{order.item.item_status == 'ongoing'}" >
-										결제 예정 금액: &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
+										결제 예정 금액 : &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
 									</td>
 								</tr>
 								<tr>
 									<td style="font-size:16px; padding-top:15px; padding-bottom: 10px;" 
 										th:if="*{order.item.item_status != 'ongoing'}" >
-										결제 금액: &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
+										결제 금액 : &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
 									</td>
 								</tr>
 							</table>

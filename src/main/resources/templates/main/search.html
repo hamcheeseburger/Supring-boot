@@ -46,6 +46,9 @@ layout:decorate="~{mainlayout}">
             <div align="center" th:if="${#lists.size(itemList) == 0}">
             	<b>검색결과가 없습니다.</b>
             </div>
+            <div th:if="${#lists.size(itemList) != 0}" align="center" style="padding:10px;">
+               	<a th:href="@{/item/list(searchType='all', searchKeyword=${keyword})}">전체보기</a>
+              </div>
         </section>
         <hr class="my-0" />
         <!-- Portfolio Section-->

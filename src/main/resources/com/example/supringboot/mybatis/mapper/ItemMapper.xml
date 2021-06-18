@@ -56,7 +56,7 @@
 			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				where f.cat_id = c.cat_id
 					and (f.name like '%' ||  #{searchKeyword} || '%' or c.cat_name like '%' ||  #{searchKeyword} || '%' or i.title like '%' ||  #{searchKeyword} || '%')
-					ORDER BY i.item_id) )
+					ORDER BY i.item_id desc) )
 			
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -126,7 +126,7 @@
 				where f.cat_id = c.cat_id
 					and (f.name like '%' ||  #{searchKeyword} || '%' or c.cat_name like '%' ||  #{searchKeyword} || '%' or i.title like '%' ||  #{searchKeyword} || '%')
 					and i.item_status='ongoing'
-					ORDER BY i.item_id) )
+					ORDER BY i.item_id desc) )
 			
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -165,7 +165,7 @@
 				where f.cat_id = c.cat_id
 					and (f.name like '%' ||  #{searchKeyword} || '%' or c.cat_name like '%' ||  #{searchKeyword} || '%' or i.title like '%' ||  #{searchKeyword}|| '%')
 					and i.item_status!='ongoing'
-					ORDER BY i.item_id) )
+					ORDER BY i.item_id desc) )
 			
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -325,7 +325,7 @@
 			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				where f.cat_id = c.cat_id
 					and (name like '%' ||  #{keyword} || '%' or cat_name like '%' ||  #{keyword} || '%' or title like '%' ||  #{keyword} || '%')
-					ORDER BY i.item_id) where rownum <= 4
+					ORDER BY i.item_id desc) where rownum <= 4
 		]]>
 	</select>
 

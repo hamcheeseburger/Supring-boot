@@ -29,17 +29,21 @@ public class ItemForm implements Serializable{
 	private String content; // 게시글 내용
 	
 	@NotBlank(message = "공구상품 만료일은 필수 입력 값입니다.")
-	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
-	message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
+//	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
+//	message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
+	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])",
+	message="yyyy-MM-dd 형식으로 작성해야 합니다.")
 	private String end_dt; // 공동구매 만료일
-	
+	private String end_dt_time;
 	private int min_quantity; // 공동구매 최소수량(목표수량)
 	
-	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
-			message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
+//	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])\\s([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$",
+//			message="yyyy-MM-dd HH:mm 형식으로 작성해야 합니다.")
+	@Pattern(regexp="^(19|20)\\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])",
+	message="yyyy-MM-dd 형식으로 작성해야 합니다.")
 	@NotBlank(message = "공구상품 시작일은 필수 입력 값입니다.")
 	private String created_dt; // 공동구매 시작일
-	
+	private String created_dt_time;
 	private String modified_dt; // 내용 수정일
 	private String item_status; // 공동구매 상태 (진행중: ongoing, 실패:fail, 성공:success)
 	
@@ -196,6 +200,21 @@ public class ItemForm implements Serializable{
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
+
+	public String getEnd_dt_time() {
+		return end_dt_time;
+	}
+
+	public void setEnd_dt_time(String end_dt_time) {
+		this.end_dt_time = end_dt_time;
+	}
+
+	public String getCreated_dt_time() {
+		return created_dt_time;
+	}
+
+	public void setCreated_dt_time(String created_dt_time) {
+		this.created_dt_time = created_dt_time;
+	}
+
 }

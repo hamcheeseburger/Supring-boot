@@ -392,8 +392,9 @@ WHERE ROWNUM <= #{recordsPerPage}
 	
 	<select id="searchPostFromMain" parameterType="String" resultMap="searchPostFromMainResultMap">
 		<![CDATA[select * from 
-			(select p.post_id, p.title, p.food_name, p.content, a.user_id, a.name, a.login_id, im.image_id, im.image from Post p, Image im, Account a
-			where p.post_id = im.post_id and p.user_id = a.user_id and (p.food_name like '%' ||  #{keyword} || '%' or p.title like '%' ||  #{keyword} || '%') ORDER BY p.post_id)
+			(select p.post_id, p.title, p.food_name, p.content, a.user_id, a.name, a.login_id, im.image_id, im.image, p.trade_status, p.trade_type
+			 from Post p, Image im, Account a
+			where p.post_id = im.post_id and p.user_id = a.user_id and (p.food_name like '%' ||  #{keyword} || '%' or p.title like '%' ||  #{keyword} || '%') ORDER BY p.post_id DESC)
 			where rownum <= 4]]>
 	</select>
 </mapper>

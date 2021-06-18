@@ -106,9 +106,21 @@ public class InsertItemController {
 		System.out.println("상품금액: " + itemForm.getItem_price());
 		System.out.println("배송비: " +itemForm.getShip_price());
 		System.out.println("공구시작일: " + itemForm.getCreated_dt());
+		System.out.println("시작일 시간 : " + itemForm.getCreated_dt_time());
 		System.out.println("공구마감일: " + itemForm.getEnd_dt());
+		System.out.println("마감일 시간 : " + itemForm.getEnd_dt_time());
 		System.out.println("목표수량: " + itemForm.getMin_quantity());
 		System.out.println("상세: " + itemForm.getContent());
+		
+		String created_dt_time = itemForm.getCreated_dt_time();
+		String end_dt_time = itemForm.getEnd_dt_time();
+		
+		if(created_dt_time.equals("")) {
+			created_dt_time = "00:00";
+		}
+		if(end_dt_time.equals("")) {
+			end_dt_time = "00:00";
+		}
 		
 		Food food = itemService.getFood(itemForm.getFood_id());
 		itemForm.setFood(food);
@@ -139,9 +151,9 @@ public class InsertItemController {
 		
 		//공구 날짜 Timestamp 변환
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		    Date createdParsedDate = (Date) dateFormat.parse(itemForm.getCreated_dt());
-		    endParseDate = (Date) dateFormat.parse(itemForm.getEnd_dt());
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		    Date createdParsedDate = (Date) dateFormat.parse(itemForm.getCreated_dt() + " " +created_dt_time);
+		    endParseDate = (Date) dateFormat.parse(itemForm.getEnd_dt() + " " + end_dt_time);
 		    Date modifyParseDate = new Date();
 		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
 		    end_time = new java.sql.Timestamp(endParseDate.getTime());
@@ -167,6 +179,7 @@ public class InsertItemController {
 		Item item = new Item(0, food, user_id, Integer.parseInt( itemForm.getStr_item_price() ), Integer.parseInt( itemForm.getStr_ship_price() ),
 				itemForm.getTitle(), itemForm.getContent(), end_time, Integer.parseInt(itemForm.getStr_min_quantity()),
 				create_time, modify_time, "ongoing", imageList, 0);
+		item.setCreated_dt(item.getCreated_dt());
 		
 		if(item.getImages() != null)
 			item.setImages(imageList);

@@ -28,9 +28,9 @@
 		SELECT i.item_id, i.user_id, i.item_price, i.title, i.end_dt, 
 		i.min_quantity, i.created_dt, i.item_status, (SELECT SUM (quantity) FROM Order_reg Where item_id=i.item_id) as numOfRegister,
 		im.image, im.image_id, f.name, f.food_id
-		FROM Item i, Image im, food f
-		WHERE i.user_id=#{user_id} and i.item_id = im.item_id and i.food_id = f.food_id
-		ORDER BY i.item_status DESC, i.created_dt DESC
+		FROM Item i RIGHT OUTER JOIN Image im ON i.item_id = im.item_id, food f
+		WHERE i.user_id=#{user_id} and i.food_id = f.food_id
+		ORDER BY i.item_id DESC
 	</select>
 	
 	<select id="getOngoingItemListByAdmin" parameterType="int" resultMap="adminItemImage">
@@ -39,7 +39,7 @@
 		im.image, im.image_id, f.name, f.food_id
 		FROM Item i, Image im, food f
 		WHERE i.user_id=#{user_id} and i.item_id = im.item_id and i.food_id = f.food_id and i.item_status='ongoing'
-		ORDER BY i.item_status DESC, i.created_dt DESC
+		ORDER BY i.item_id DESC
 	</select>
 	
 	<select id="getExpiredItemListByAdmin" parameterType="int" resultMap="adminItemImage">

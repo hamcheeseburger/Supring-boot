@@ -74,8 +74,11 @@ layout:decorate="~{mainlayout}" > <!-- layout:decorate="~{post/layout/basic}" --
 	<div class="form-inline form-group">
 		<label for="date" class="col-sm-2 control-label">기간</label>
 		<div class="col-sm-10">
-			<input class="form-control" th:field="*{created_dt}" type="text" name="created_dt" placeholder="공구시작일"> ~ 
-			<input class="form-control" th:field="*{end_dt}" type="text" placeholder="공구마감일" name="end_dt">
+			<input class="form-control" th:field="*{created_dt}" type="date" name="created_dt" placeholder="공구시작일">
+			<input class="form-control" th:field="*{created_dt_time}" type="time" name="created_dt_time" placeholder="공구시작일">
+			 ~ 
+			<input class="form-control" th:field="*{end_dt}" type="date" placeholder="공구마감일" name="end_dt">
+			<input class="form-control" th:field="*{end_dt_time}" type="time" name="end_dt_time" placeholder="공구시작일">
 			<b th:errors="*{created_dt}"></b> <b th:errors="*{end_dt}"></b>
       	</div>
 	</div>

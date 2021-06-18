@@ -85,7 +85,8 @@ layout:decorate="~{mainlayout}">
                               </a>
                             <div class="card-body">
                                 <h4 class="card-title"><b><a th:href="@{/item/detail(itemId=${item3.item_id})}" th:text="${item3.title}">Project One</a></b></h4>
-                                <p class="card-text" th:text="${item3.content}"></p>
+                                <div align="right" style="font-size:11px"><a th:text="${item3.item_status_korean}"></a></div>
+                                <p id="row_content" class="card-text" th:text="${item3.content}"></p>
                                 <b th:text="${item3.percentage} + '% 달성'"></b>
                             </div>
                         </div>
@@ -115,7 +116,8 @@ layout:decorate="~{mainlayout}">
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title"><b><a th:href="@{/post/viewPost(post_id=${post3.post_id})}" th:text="${post3.title}">Project One</a></b></h4>
-                                <p class="card-text" th:text="${post3.content}"></p><br />
+                                <div align="right" style="font-size:11px"><a th:text="${post3.trade_status_string}"></a></div>
+                                <p id="row_content" class="card-text" th:text="${post3.content}"></p><br />
                             	<b class="card-text" style="color:gray;" th:text="${post3.user.name} + '(' + ${post3.user.login_id} + ')'"></b>
                             </div>
                         </div>

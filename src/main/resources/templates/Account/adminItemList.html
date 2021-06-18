@@ -26,7 +26,7 @@
                             	<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
                             </a>
                             <div class="card-body">
-                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
+                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4><br/>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
                                 달성율 : <b class="card-text" th:text="${item.percentage} + '% (' + ${item.numOfRegister} + '/' + ${item.min_quantity} + ')'"></b> <br/>
@@ -34,9 +34,12 @@
                                 
                                 
                                 등록일 : <strong class="card-text" th:text="${#dates.format(item?.created_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
-                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
-                                <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>
-								<div align="right"><a th:href="@{/item/deleteItem(itemId=${item.item_id})}">삭제</a></div>
+                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/><br/>
+                                <button class="btn btn-default waves-effect waves-light" 
+                                	th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자 명단</button>
+                                <button class="btn btn-default waves-effect waves-light" style="float:right;"
+                                	th:onclick="'location.href=\''+ @{/item/deleteItem(itemId=${item.item_id})} + '\''">삭제</button>
+								<!-- <div align="right"><a th:href="@{/item/deleteItem(itemId=${item.item_id})}">삭제</a></div> -->
                             </div>
                         </div>
                         
@@ -52,7 +55,7 @@
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
                     <div th:each="item : ${expiredItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 'card h-100'}">
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 'success'}">
                             
                             <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}" th:href="@{/item/detail(itemId=${item.item_id})}">
                             	<img class="card-img-top" src="/img/no_image.png" alt="..." />
@@ -61,7 +64,7 @@
                             	<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" />
                             </a>
                             <div class="card-body">
-                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4>
+                                <h4 class ="card-title"><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}"></a></h4><br/>
                                 식품명 : <strong class="card-text" th:text="${item.food.name}" ></strong> <br/>
                                 식품가격 : <strong class="card-text" th:text="${item.item_price}" ></strong> <br/>
                                 달성율 : <b class="card-text" th:text="${item.percentage} + '% (' + ${item.numOfRegister} + '/' + ${item.min_quantity} + ')'"></b> <br/>
@@ -69,8 +72,9 @@
                                 
                                 
                                 등록일 : <strong class="card-text" th:text="${#dates.format(item?.created_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
-                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/>
-                                <button class="btn btn-secondary" th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자명단</button>
+                                마감일 : <strong class="card-text" th:text="${#dates.format(item?.end_dt, 'yyyy/MM/dd  HH:mm')}"></strong> <br/><br/>
+                                <button class="btn btn-default waves-effect waves-light"
+                                	th:onclick="'javascript:getRegisterList(' + ${item.item_id} + ');'">신청자 명단</button>
 
                             </div>
                         </div>

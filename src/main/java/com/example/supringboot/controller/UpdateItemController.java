@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
@@ -25,7 +28,7 @@ import com.example.supringboot.service.ItemService;
 
 @Controller
 public class UpdateItemController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(UpdateItemController.class);
 	@Autowired
 	private ItemService itemService;
 	
@@ -246,9 +249,14 @@ public class UpdateItemController {
 	
 	
 	@RequestMapping("/item/deleteItem")
-	public String deleteItem (@RequestParam(value="itemId") int item_id) {
+	public String deleteItem (@RequestParam(value="itemId") int item_id, RedirectAttributes model) {
 		System.out.println("delete컨트롤러");
-		itemService.deleteItem(item_id);
+		int result = itemService.deleteItem(item_id);
+		logger.info("삭제결과 : " + result);
+		if(result == 0) {
+			model.addAttribute("deleteException", 0);
+		}
+		
 		return "redirect:/admin/itemList";
 	}
 	

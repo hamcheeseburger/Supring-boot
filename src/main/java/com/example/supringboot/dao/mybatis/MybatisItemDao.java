@@ -52,7 +52,13 @@ public class MybatisItemDao implements ItemDao {
 
 	@Override
 	public int deleteItem(int item_id) {
-		return itemMapper.deleteItem(item_id);
+		int result = 0;
+		try {
+			result = itemMapper.deleteItem(item_id);
+		} catch(Exception e) {
+			System.out.println("Exception");
+		} 
+		return result;
 	}
 
 	@Override

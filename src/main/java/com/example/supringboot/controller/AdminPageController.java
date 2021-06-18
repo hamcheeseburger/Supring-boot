@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +36,10 @@ public class AdminPageController {
 	}
 	
 	@GetMapping("/admin/itemList")
-	public ModelAndView getItemList(HttpServletRequest request) {
+	public ModelAndView getItemList(@RequestParam(required=false) Integer deleteException, HttpServletRequest request) {
+
+		logger.info("deleteException : " + deleteException);
+		
 		ModelAndView modelAndView = new ModelAndView(adminPageView);
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
@@ -47,6 +51,9 @@ public class AdminPageController {
 		modelAndView.addObject("ongoingItemList", hashmap.get("ongoingItemList"))
 			.addObject("expiredItemList", hashmap.get("expiredItemList"))
 			.addObject("selection", 0);
+		if(deleteException != null) {
+			modelAndView.addObject("deleteException", deleteException);
+		}
 		
 		return modelAndView;
 	}

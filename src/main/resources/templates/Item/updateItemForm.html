@@ -4,147 +4,150 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{mainlayout}" >
 <head>
 <meta charset="UTF-8">
-<title>공구상품 수정</title>
+<title>Supring Shop</title>
 </head>
 <body>
 	<div layout:fragment="custom-content"> 
 	<section class="py-5">
 	<div class="container">
 
-<h1 align="center">공동 구매 상품 확인</h1>
-
-<form class="form-horizontal" enctype="multipart/form-data" method="POST" th:object="${item}" action="#" th:action="@{/item/updateItem(itemId=${item.item_id})}">
-	<input type="hidden" th:value="*{item_id}" th:field="*{item_id}"/>
+	<h2 align="center">공동 구매 식품 확인</h2>
 	
-	<div class="form-inline form-group">
-		<label for="file" class="col-sm-2 control-label">등록 이미지</label>
-		<div class="col-sm-10" id="preview">
-			
-			<p th:if="${item.images == null or item.images.size == 0}">사진 없음</p>
-			<p th:if="${item.images != null and item.images.size != 0}">
-				<input type="hidden" th:value="${item.images[0].image_id}" th:field="${item.images[0].image_id}"/>
-				<a href="#"> <img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /> </a>
-			</p>
-      	</div>
-	</div>
-	
-			<div class="form-inline form-group">
-				<label for="file" class="col-sm-2 control-label">이미지 첨부</label>
-				<div class="col-sm-10">
-					<input id="file" type="file" accept="image/*" th:field="*{file}"
-						class="form-control" />
-					
-				</div>
+	<form class="form-horizontal" enctype="multipart/form-data" method="POST" th:object="${item}"
+			th:action="@{/item/updateItem(itemId=${item.item_id})}">
+		<input type="hidden" th:value="*{item_id}" th:field="*{item_id}"/>
+		
+		<div class="form-inline form-group">
+			<label for="file" class="col-sm-2 control-label">등록 이미지</label>
+			<div class="col-sm-10" id="preview">
+				
+				<p th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
+					<img src="/img/no_image.png" width="300px" height="auto" />
+				</p>
+				<p th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
+					<input type="hidden" th:value="${item.images[0].image_id}" th:field="${item.images[0].image_id}"/>
+					<img th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" 
+						width="300px" height="auto" />
+				</p>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="file" class="col-sm-2 control-label">이미지 첨부</label>
+			<div class="col-sm-10">
+				<input id="file" type="file" accept="image/*" th:field="*{file}"
+					class="form-control" />
+						
 			</div>
-			
-	
-	<div class="form-inline form-group">
-		<label for="title" class="col-sm-2 control-label">상품 제목</label>
-		<div class="col-sm-10">
-			<input class="form-control" th:field="${item.title}" type="text" name="title">
-			<b th:errors="${item.title}"></b>
-      	</div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<label for="item_price" class="col-sm-2 control-label">상품 금액</label>
-		<div class="col-sm-10">
-			<input class="form-control" th:field="${item.str_item_price}" type="text" name="str_item_price">
-			<b th:errors="${item.str_item_price}"></b>
-      	</div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<label for="ship_price" class="col-sm-2 control-label">배송비</label>
-		<div class="col-sm-10">
-			<input class="form-control" th:field="${item.str_ship_price}" type="text" name="str_ship_price">
-      		<b th:errors="*{str_ship_price}"></b>
-      	</div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<label for="date" class="col-sm-2 control-label">기간</label>
-		<div class="col-sm-10"> <!-- th:field="${item.end_dt}"-->
-<!-- 			<input class="form-control" th:value="${#dates.format(item.created_dt_timestamp, 'yyyy-MM-dd HH:mm')}" type="text" name="created_dt" readonly placeholder="공구시작일"> ~  -->
-			
-			<input class="form-control" th:value="${item.created_dt}" type="date" placeholder="공구마감일" name="created_dt" readonly>
-			<input class="form-control" th:value="${item.created_dt_time}" type="time" placeholder="공구마감일" name="created_dt_time" readonly>
-			~
-			<input class="form-control" th:value="${item.end_dt}" type="date" placeholder="공구마감일" name="end_dt">
-			<input class="form-control" th:value="${item.end_dt_time}" type="time" placeholder="공구마감일" name="end_dt_time">
-			<b th:errors="*{end_dt}"></b> <b th:errors="*{end_dt_time}"></b>
-      	</div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<label for="min_quantity" class="col-sm-2 control-label">목표 수량</label>
-		<div class="col-sm-10">
-			<input class="form-control" th:field="${item.str_min_quantity}" type="number" min="1" max="100" name="str_min_quantity">
-			 <b th:errors="*{str_min_quantity}"></b>
-      	</div>
-	</div>
-	
-	<div class="form-inline form-group">
-		<label for="ship_price" class="col-sm-2 control-label">상세 설명</label>
-		<div class="col-sm-10">
-			<textarea class="form-control" th:field="${item.content}" name="content" cols="50" rows="15"></textarea>
-      	</div>
-	</div>
-	<!-- 영양 정보 칸 -->
-	<div class="form-inline form-group">
-		<label class="col-sm-2 control-label">영양 정보</label>
-		<div class="col-sm-10">
-	
-			<!--<div class="form-inline form-group">
-				<label class="col-sm-2 control-label">1회 제공량</label>
-				<div class="form-inline form-group">
-					<p class="form-control" th:text="${foodInfo.serving_size} + ${foodInfo.serving_size_unit}" />
-      			</div>
-      		</div>-->
-      		<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						1회 제공량 
-						<input type="text" class="form-control" th:field ="*{food.serving_size}" readonly/>
-						<input type="text" class="form-control" th:field ="*{food.serving_size_unit}" readonly/>
-      			</div>
-      		</div><br>
-      	 	<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						열량(kcal) <input type="text" class="form-control" th:field ="*{food.calories}" readonly/>
-      			</div>
-      		</div><br>
-      		<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						단백질 <input type="text" class="form-control" th:field ="*{food.protein}" readonly/>
-      			</div>
-      		</div><br>
-      		<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						지방 <input type="text" class="form-control" th:field ="*{food.grease}" readonly/>
-      			</div>
-      		</div><br>
-      		<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						탄수화물 <input type="text" class="form-control" th:field="*{food.carbohydrate}" readonly/>
-      			</div>
-      		</div><br>
-      		<div class="form-inline form-group">
-				<div class="form-inline form-group">
-						당류 <input type="text" class="form-control" th:field="*{food.sugars}" readonly/>
-      			</div>
-      		</div>		   		
-      	</div>
-	</div>
-	<br/>
-	<input type="hidden" value="notChanged" id="fileChanged" name="fileChanged" />
-	<div class="form-inline form-group">
-		<div align="center" class="col-sm-10">
-			<input class="form-control" type="submit" value="수정하기">
-			<input class="form-control" th:onclick="'location.href=\''+ @{/item/deleteItem(itemId=${item.item_id})} + '\''"  type="button" value="삭제하기">
-			<input class="form-control" th:onclick="'location.href=\''+ @{/admin/itemList} + '\''"  type="button" value="목록보기">
-      	</div>
-	</div>
-</form>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="title" class="col-sm-2 control-label">식품명</label>
+			<div class="col-sm-10">
+				<input class="form-control" th:field="${item.title}" type="text" name="title">
+				<b th:errors="${item.title}"></b>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="item_price" class="col-sm-2 control-label">식품 금액</label>
+			<div class="col-sm-10">
+				<input class="form-control" th:field="${item.str_item_price}" type="text" name="str_item_price">
+				<b th:errors="${item.str_item_price}"></b>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="ship_price" class="col-sm-2 control-label">배송비</label>
+			<div class="col-sm-10">
+				<input class="form-control" th:field="${item.str_ship_price}" type="text" name="str_ship_price">
+	      		<b th:errors="*{str_ship_price}"></b>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="date" class="col-sm-2 control-label">기간</label>
+			<div class="col-sm-10"> <!-- th:field="${item.end_dt}"-->
+	<!-- 			<input class="form-control" th:value="${#dates.format(item.created_dt_timestamp, 'yyyy-MM-dd HH:mm')}" type="text" name="created_dt" readonly placeholder="공구시작일"> ~  -->
+				
+				<input class="form-control" th:value="${item.created_dt}" type="date" name="created_dt" readonly>
+				<input class="form-control" th:value="${item.created_dt_time}" type="time" name="created_dt_time" readonly>
+				~
+				<input class="form-control" th:value="${item.end_dt}" type="date" name="end_dt">
+				<input class="form-control" th:value="${item.end_dt_time}" type="time" name="end_dt_time">
+				<b th:errors="*{end_dt}"></b> <b th:errors="*{end_dt_time}"></b>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-inline form-group">
+			<label for="min_quantity" class="col-sm-2 control-label">목표 수량</label>
+			<div class="col-sm-10">
+				<input class="form-control" th:field="${item.str_min_quantity}" type="number" min="1" max="100" name="str_min_quantity">
+				 <b th:errors="*{str_min_quantity}"></b>
+	      	</div>
+		</div>
+		
+		<div class="form-inline form-group">
+			<label for="ship_price" class="col-sm-2 control-label">상세 설명</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" th:field="${item.content}" name="content" cols="50" rows="15" style="height:200px;"></textarea>
+	      	</div>
+		</div>
+		<!-- 영양 정보 칸 -->
+		<div class="form-inline form-group">
+			<label class="col-sm-2 control-label">영양 정보</label>
+			<div class="col-sm-10">
+				<table>
+					<tr><td style="padding-right:25px; padding-bottom:15px;">1회 제공량</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field ="*{food.serving_size}" readonly/>
+							<input type="text" class="form-control" th:field ="*{food.serving_size_unit}" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-right:25px; padding-bottom:15px;">열량(kcal)</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field ="*{food.calories}" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-right:25px; padding-bottom:15px;">단백질</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field ="*{food.protein}" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-right:25px; padding-bottom:15px;">지방</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field ="*{food.grease}" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-right:25px; padding-bottom:15px;">탄수화물</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field="*{food.carbohydrate}" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-right:25px; padding-bottom:15px;">당류</td>
+						<td style="padding-bottom:15px;">
+							<input type="text" class="form-control" th:field="*{food.sugars}" readonly/>
+						</td>
+					</tr>
+					
+				</table>	   		
+	      	</div>
+		</div>
+		<br/>
+		<input type="hidden" value="notChanged" id="fileChanged" name="fileChanged" />
+		<div class="form-inline form-group">
+			<div align="center" class="col-sm-10">
+				<input class="form-control" type="submit" value="수정하기">
+				<input class="form-control" th:onclick="'location.href=\''+ @{/item/deleteItem(itemId=${item.item_id})} + '\''"  type="button" value="삭제하기">
+				<input class="form-control" th:onclick="'location.href=\''+ @{/admin/itemList} + '\''"  type="button" value="목록보기">
+	      	</div>
+		</div>
+	</form>
 
 	</div>
 	</section>

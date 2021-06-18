@@ -19,7 +19,7 @@ import com.example.supringboot.service.PostService;
 public class ViewPostController {
 	private static final Logger logger = LoggerFactory.getLogger(GetAllPostController.class);
 
-	@Value("post/viewPost")
+	@Value("post/viewPost2")
 	private String postDetailView;
 	
 	@Autowired

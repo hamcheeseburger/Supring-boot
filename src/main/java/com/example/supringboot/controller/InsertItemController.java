@@ -177,7 +177,7 @@ public class InsertItemController {
 		System.out.println("insert item_id : " + item.getItem_id());
 		itemService.startScheduler(item.getItem_id(), endParseDate);
 		
-		return "redirect:/item/adminList"; //admin_List로 리다이렉트 하기
+		return "redirect:/admin/itemList"; //admin_List로 리다이렉트 하기
 	}
 	
 }

@@ -157,6 +157,62 @@ public class ItemServiceImpl implements ItemService{
 		
 		return itemList;
 	}
+	
+	
+	//키워드 검색을 통한 공구식품 목록
+	@Override
+	public ArrayList<Item> getItemListByKeyword(Item item) {
+		ArrayList<Item> itemList = null;
+		int totalCount = itemDao.searchItemTotalCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getAllItemListByKeyword(item);
+		}
+		
+		return itemList;
+	}
+		
+	@Override
+	public ArrayList<Item> getGoingItemByKeyword(Item item) {
+		ArrayList<Item> itemList = null;
+		item.setItem_status("ongoing");
+		int totalCount = itemDao.searchItemTotalCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getGoingItemListByKeyword(item);
+		}
+		
+		return itemList;
+	}
+
+	@Override
+	public ArrayList<Item> getEndItemByKeyword(Item item) {
+		ArrayList<Item> itemList = null;
+		item.setItem_status("notongoing");
+		int totalCount = itemDao.searchItemTotalCount(item);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(item);
+		paginationInfo.setTotalRecordCount(totalCount);
+		
+		item.setPaginationInfo(paginationInfo);
+		
+		if(totalCount > 0) {
+			itemList = itemDao.getEndItemListByKeyword(item);
+		}
+		
+		return itemList;
+	}
+	
 	@Override
 	public ArrayList<Category> selectAllCategory() {
 		// TODO Auto-generated method stub
@@ -206,5 +262,9 @@ public class ItemServiceImpl implements ItemService{
 	public Item getDetailItem(int item_id) {
 		return itemDao.getDetailItem(item_id);
 	}
+
+	
+
+
 	
 }

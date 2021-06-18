@@ -1,6 +1,7 @@
 package com.example.supringboot.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.supringboot.domain.Category;
@@ -26,12 +27,15 @@ public interface ItemDao {
 	
 	// 모든 공구식품 목록 조회
 	public ArrayList<Item> getAllItemList(Item item);
+	public ArrayList<Item> getAllItemListByKeyword(Item item);
 	
 	// 진행중인 공구식품 목록 조회
 	public ArrayList<Item> getGoingItemList(Item item);
+	public ArrayList<Item> getGoingItemListByKeyword(Item item);
 	
 	// 성공 또는 실패한 공구식품 목록 조회 -> 마감일 지난 공구식품
 	public ArrayList<Item> getEndItemList(Item item);
+	public ArrayList<Item> getEndItemListByKeyword(Item item);
 	
 	// 특정 공구식품 정보조회
 	public Item getDetailItem(int item_id);
@@ -56,4 +60,6 @@ public interface ItemDao {
 	public int selectGoingItemCount(Item item);
 	
 	public int selectEndItemCount(Item item);
+	
+	public int searchItemTotalCount(Item item);
 }

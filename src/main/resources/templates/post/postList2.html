@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{post/layout/basic}">
+
+<head>
+    <!--    thymeleaf layout dialect가 contents페이지의 head태그를 layout의 head태그에 자동으로 추가해준다. -->
+    <!--    필요힌 css, script 추가영역 -->
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		
+		<title>this is a post list page</title>
+				  
+		<th:block layout:fragment="add-css">
+		<style>
+		#row_content { width:170px; padding:0 ; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+		</style>
+		</th:block>
+</head>
+  
+							<th:block layout:fragment="search">
+								<div th:replace="post/fragments/common :: search"></div>
+								<div class="btn_wrap text-right">
+									<a th:href="@{/post/createPost}"
+										class="btn btn-primary waves-effect waves-light">Write</a>
+										
+								</div><br/>
+							</th:block>
+
+								
+					
+						<!-- //.clearfix -->
+
+						<!--  <th:block layout:fragment="content"></th:block> -->
+
+						<th:block layout:fragment="content">
+							<div class="table-responsive clearfix">
+								<!--  
+								<div class="container" th:unless="${not #lists.isEmpty( postList )}">
+									<b class="mb-4">조회된 결과가 없습니다.</b>
+								</div>
+								-->
+							
+								
+								<div th:if="${postList}" class="py-5 bg-light">
+									<div class="container">
+						                <div class="row">
+						                	<div th:if="${postList.size() == 0}">
+						                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+						                	</div>
+						                    <div th:each="row : ${postList}" class="col-lg-4 col-sm-6 mb-4">
+						                        <div class="card h-100"
+						                        	th:style="${row.trade_status == 1 ? 'cursor: pointer; opacity: .3;' : 'cursor: pointer;'}" th:onclick="'location.href=\''+ @{/post/viewPost(post_id=${row.post_id})} + '\''" 
+						                        	>
+						                        
+						                            
+						                             <a th:if="${row.images.size == 0 or row.images[0].base64Image == null}">
+						                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+						                            </a>
+						                            
+													<a href="#" th:if="${row.images.size != 0 and row.images[0].base64Image != null}">
+														<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${row.images[0].base64Image}}" 
+														width="300px" height="300px"  alt="이미지 없음"
+														th:href="|@{/post/viewPost}${params.makeQueryString(params.currentPageNo)}&post_id=${row.post_id}|" />
+													</a>
+						                            <div class="card-body">
+						                            	<br/>
+						                            	<b class="card-text" style="color:gray;" th:text="${row.trade_type} == 'trade' ? '교환' : '거래' "></b><br/>
+						                           		<h4 class="card-title">
+						                           			<b>	<br/>
+							                           			<a style="font-size:15px;" th:href="|@{/post/viewPost}${params.makeQueryString(params.currentPageNo)}&post_id=${row.post_id}|" 
+							                           			th:text="${row.title}">제목</a>
+						                           			</b>
+						                           		</h4>
+						                       			
+						                           		
+						                          		<p id="row_content" style="font-size:14px;"class="card-text" th:text="${row.content}" ></b> 
+						                          		<p style="font-size:15px; font-weight: bold; color:gray;"class="card-text" th:text="${row.user.name}+ '(' + ${row.user.login_id} + ')'">
+						                          			작성자
+						                          		</p> 
+						                          		<br/>
+						                       			 <!-- <b class="card-text" style="color:gray;" th:text="${row.user.name}">작성자</b> -->
+						                     
+						                            </div>
+						                        </div>
+						                        
+						                    </div>
+						                </div>
+						  			</div>
+						  			</div>
+							
+							
+							
+								
+
+								
+
+
+
+								<th:block layout:fragment="paging">
+									<nav th:replace="post/fragments/common :: pagination"></nav>
+								</th:block>
+							</div>
+						</th:block>
+						
+						<th:block layout:fragment="script">
+								<script th:inline="javascript">
+									/*<![CDATA[*/
+						
+									function movePage(uri, queryString) {
+										location.href = uri + queryString;
+									}
+									function searchBoard(form) {
+										/*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+										if (isEmpty(form) == true) {
+											var searchKeyword = document.getElementById("mainSearchKeyword");
+											if (isEmpty(searchKeyword.value) == true) {
+												alert("키워드를 입력해 주세요.");
+												searchKeyword.focus();
+												return false;
+											}
+
+											form = document.getElementById("searchForm");
+											form.searchKeyword.value = searchKeyword.value;
+											form.submit();
+										}
+										/* [- 드롭다운으로 검색했을 때 -] */
+										if (isEmpty(form.searchKeyword.value) == true) {
+											alert("키워드를 입력해 주세요.");
+											form.searchKeyword.focus();
+											return false;
+										}
+									}
+									/*[- end of function -]*/
+									/*]]>*/
+								</script>
+							</th:block>
+
+</html>

@@ -249,7 +249,7 @@ public class UpdateItemController {
 	public String deleteItem (@RequestParam(value="itemId") int item_id) {
 		System.out.println("delete컨트롤러");
 		itemService.deleteItem(item_id);
-		return "redirect:/item/adminList";
+		return "redirect:/admin/itemList";
 	}
 	
 }

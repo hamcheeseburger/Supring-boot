@@ -16,11 +16,17 @@ Version 2.0
 /*-----------------------------------------------------------------------
 1. Globally Applied Styles
 */
+
+.bg-light {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+
 html,
 body {
   position: relative;
   height: 100%;
-  background: #f5f7fa;
+  background: rgb(255, 255, 255);
   color: #505458;
 }
 #wrapper {
@@ -47,6 +53,17 @@ body {
     top: 0px !important;
   }
 }
+
+.bg-dark {
+/*   background-color: #5eae53 !important; */
+	background-color:#f7a000 !important;
+}
+
+.nav-item {
+	
+	color : #ffffff;
+}
+
 img {
   max-width: 100%;
   height: auto;

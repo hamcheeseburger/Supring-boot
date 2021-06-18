@@ -49,9 +49,9 @@
 	<select id="getAllItemByKeyword" parameterType="Item" resultMap="itemResult">
 		SELECT * FROM     
 			(SELECT * FROM
-				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister
+				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister, item_status
 			FROM
- (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+ (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, i.item_status, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 			from Item i INNER JOIN Food f ON i.food_id=f.food_id
 			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				where f.cat_id = c.cat_id
@@ -118,9 +118,9 @@
 	<select id="getGoingItemListByKeyword" resultMap="itemResult">
 		SELECT * FROM     
 			(SELECT * FROM
-				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister
+				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister, item_status
 			FROM
- (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+ (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, i.item_status, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 			from Item i INNER JOIN Food f ON i.food_id=f.food_id
 			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				where f.cat_id = c.cat_id
@@ -157,9 +157,9 @@
 	<select id="getEndItemListByKeyword" resultMap="itemResult">
 		SELECT * FROM     
 			(SELECT * FROM
-				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister
+				(SELECT ROWNUM AS SEQ, item_id, title, content, name, image, cat_name, min_quantity, numOfRegister, item_status
 			FROM
- (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
+ (select i.item_id, i.title, i.content, f.name, im.image, c.cat_name, i.min_quantity, i.item_status, (SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 			from Item i INNER JOIN Food f ON i.food_id=f.food_id
 			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				where f.cat_id = c.cat_id

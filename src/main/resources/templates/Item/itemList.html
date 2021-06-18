@@ -103,13 +103,9 @@
 		</div>
 		<div th:if="${itemList}" class="py-5 bg-light">
 			<div class="container">
-				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b> </h2>
-				<h2 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h2>
-				<h2 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h2>
-
-				<h3 align="left" th:if="${status=='going'}"> <b>진행중인 '같이 먹어요' 목록</b></h3>
-				<h3 align="left" th:if="${status=='end'}"> <b>마감일 지난 '같이 먹어요' 목록</b></h3>
-				<h3 align="left" th:if="${status=='all'}"> <b>'같이 먹어요' 목록</b></h3>
+				<h2 align="left" th:if="${status=='going'}"> <b>진행중인 공구</b> </h2>
+				<h2 align="left" th:if="${status=='end'}"> <b>지난 공구</b></h2>
+				<h2 align="left" th:if="${status=='all'}"> <b>전체</b></h2>
 				<br/>
 			
 			<form class="form-horizontal" method="GET" name="searchByKeyword" th:action="@{/item/list}">
@@ -140,7 +136,7 @@
                             <div class="card-body">
                                 <h5 class ="card-title"><a th:text="${item.food.name}"></a></h5>
                                 <div align="right" style="font-size:11px"><a th:text="${item.item_status_korean}"></a></div>
-                                <h4><b style="size:15px;"class="card-text" th:text="${item.title}" ></b></h4>
+                                <h4 class="card-text"><b style="size:15px;"class="card-text" th:text="${item.title}" ></b></h4>
                                 가격 : <b class="card-text" th:text="${item.item_price}" ></b> <br/>
                                 <b class="card-text" th:text="${item.percentage} + '% 달성'"></b> <br/>
                             </div>

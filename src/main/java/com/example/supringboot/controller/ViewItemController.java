@@ -33,6 +33,7 @@ public class ViewItemController {
 			@RequestParam(required=false, defaultValue="going", name="status") String status,
 			@ModelAttribute("params") Item item, Model model) {
 		System.out.println("cat_id : " + cat_id);
+		System.out.println("status : " + status);
 		
 		ModelAndView mav = new ModelAndView("/Item/itemList");
 		

@@ -57,7 +57,7 @@
 						(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 						INNER JOIN food f ON i.food_id = f.food_id
-				WHERE i.title like '%' || #{keyword} || '%' )
+				WHERE i.title like '%' || #{keyword} || '%' 
 				ORDER BY i.created_dt DESC, i.item_id DESC)
 			) )
 			<!-- <![CDATA[
@@ -153,12 +153,11 @@
 							(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 					INNER JOIN food f ON i.food_id = f.food_id 
-				WHERE i.item_status != 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC
-				and i.title like '%' || #{keyword} || '%' )
+				WHERE i.title like '%' || #{keyword} || '%' AND i.item_status != 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
 			) )
-			<!--<![CDATA[
+			<!-- <![CDATA[
 			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
-			]]>-->
+			]]> -->
 	</select>
 	
 	<!-- 추가 -->

@@ -35,6 +35,10 @@ public class ViewItemController {
 			@RequestParam(required=false, defaultValue="going", name="status") String status,
 			@ModelAttribute("params") Item item, Model model) {
 		
+		if(cat_id != -1) {
+			item.setCat_id(cat_id);
+		}
+		
 		String keyword = item.getSearchKeyword();
 		
 		System.out.println("cat_id : " + cat_id);

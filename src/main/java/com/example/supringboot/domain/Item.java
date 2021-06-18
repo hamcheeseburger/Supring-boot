@@ -24,7 +24,7 @@ public class Item extends Common implements Serializable {
 	ArrayList<Image> images; // 식품 이미지들
 	private int numOfRegister; // 신청수
 	private int percentage;
-	private int cat_id;
+//	private int cat_id;
 	private String item_status_korean;
 	
 	public Item() {
@@ -164,13 +164,13 @@ public class Item extends Common implements Serializable {
 		this.percentage = percentage;
 	}
 
-	public int getCat_id() {
-		return cat_id;
-	}
-
-	public void setCat_id(int cat_id) {
-		this.cat_id = cat_id;
-	}
+//	public int getCat_id() {
+//		return cat_id;
+//	}
+//
+//	public void setCat_id(int cat_id) {
+//		this.cat_id = cat_id;
+//	}
 
 	public String getItem_status_korean() {
 		return item_status_korean;

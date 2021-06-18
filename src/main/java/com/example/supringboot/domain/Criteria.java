@@ -16,7 +16,8 @@ public class Criteria {
 
 	/** 검색 키워드 */
 	private String searchKeyword;
-
+	
+	private int cat_id;
 	/** 검색 유형 */
 	private String searchType;
 
@@ -70,6 +71,14 @@ public class Criteria {
 		this.searchType = searchType;
 	}
 	
+	public int getCat_id() {
+		return cat_id;
+	}
+
+	public void setCat_id(int cat_id) {
+		this.cat_id = cat_id;
+	}
+
 	public String makeQueryString(int pageNo) {
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
@@ -78,6 +87,7 @@ public class Criteria {
 				.queryParam("pageSize", pageSize)
 				.queryParam("searchType", searchType)
 				.queryParam("searchKeyword", searchKeyword)
+				.queryParam("cat_id", cat_id)
 				.build()
 				.encode();
 
@@ -88,41 +98,50 @@ public class Criteria {
 		System.out.println("[makeQueryString] " + queryString);
 		UriComponents uriComponents;
 		
-		String key = "";
-		String value = "";
+//		String key = "";
+//		String value = "";
+//		
+//		if(queryString != null) {
+//			String [] splited = queryString.split("&");
+//			String [] query = splited[splited.length - 1].split("=");
+////			cat_id는 맨뒤 파라미터로 전달 되므로..
+//			if(query.length == 2) {
+//				key = query[0];
+//				value = query[1];
+//			}
+//		}
+//		
+//		if(queryString != null && key.equals("cat_id")) {
+//			uriComponents = UriComponentsBuilder.newInstance()
+//						.queryParam("currentPageNo", pageNo)
+//						.queryParam("recordsPerPage", recordsPerPage)
+//						.queryParam("pageSize", pageSize)
+//						.queryParam("searchType", searchType)
+//						.queryParam("searchKeyword", searchKeyword)
+//						.queryParam("cat_id", cat_id)
+//						.build()
+//						.encode();
+//			
+//		}else {
+//			uriComponents = UriComponentsBuilder.newInstance()
+//					.queryParam("currentPageNo", pageNo)
+//					.queryParam("recordsPerPage", recordsPerPage)
+//					.queryParam("pageSize", pageSize)
+//					.queryParam("searchType", searchType)
+//					.queryParam("searchKeyword", searchKeyword)
+//					.build()
+//					.encode();
+//		}
 		
-		if(queryString != null) {
-			String [] splited = queryString.split("&");
-			String [] query = splited[splited.length - 1].split("=");
-//			cat_id는 맨뒤 파라미터로 전달 되므로..
-			if(query.length == 2) {
-				key = query[0];
-				value = query[1];
-			}
-		}
-		
-		if(queryString != null && key.equals("cat_id")) {
-			uriComponents = UriComponentsBuilder.newInstance()
-						.queryParam("currentPageNo", pageNo)
-						.queryParam("recordsPerPage", recordsPerPage)
-						.queryParam("pageSize", pageSize)
-						.queryParam("searchType", searchType)
-						.queryParam("searchKeyword", searchKeyword)
-						.queryParam("cat_id", value)
-						.build()
-						.encode();
-			
-		}else {
-			uriComponents = UriComponentsBuilder.newInstance()
-					.queryParam("currentPageNo", pageNo)
-					.queryParam("recordsPerPage", recordsPerPage)
-					.queryParam("pageSize", pageSize)
-					.queryParam("searchType", searchType)
-					.queryParam("searchKeyword", searchKeyword)
-					.build()
-					.encode();
-		}
-		
+		uriComponents = UriComponentsBuilder.newInstance()
+		.queryParam("currentPageNo", pageNo)
+		.queryParam("recordsPerPage", recordsPerPage)
+		.queryParam("pageSize", pageSize)
+		.queryParam("searchType", searchType)
+		.queryParam("searchKeyword", searchKeyword)
+		.queryParam("cat_id", cat_id)
+		.build()
+		.encode();
 
 		return uriComponents.toUriString();
 	}

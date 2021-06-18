@@ -238,10 +238,10 @@
 			SELECT ITEM_SEQ.nextval AS item_id FROM DUAL
 		</selectKey>
 		insert into item (item_id, food_id, user_id, title, content, end_dt,
-		min_quantity, created_dt, modified_dt,
+		min_quantity, created_dt, 
 		item_price, item_status, ship_price)
 		values (#{item_id}, #{food.food_id}, #{user_id}, #{title}, #{content},
-		#{end_dt}, #{min_quantity}, #{created_dt}, #{modified_dt},
+		#{end_dt}, #{min_quantity}, #{created_dt},
 		#{item_price}, #{item_status}, #{ship_price})
 	</insert>
 

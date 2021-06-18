@@ -122,10 +122,26 @@ public class InsertItemController {
 			end_dt_time = "00:00";
 		}
 		
+		Timestamp create_time = null, end_time = null;
+		Date endParseDate = null;
+		
+		//공구 날짜 Timestamp 변환
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		    Date createdParsedDate = (Date) dateFormat.parse(itemForm.getCreated_dt() + " " +created_dt_time);
+		    endParseDate = (Date) dateFormat.parse(itemForm.getEnd_dt() + " " + end_dt_time);
+		    
+		    if(createdParsedDate.after(endParseDate)) {
+		    	errors.rejectValue("created_dt", "timeError", "마감일이 시작일보다 빠릅니다.");
+		    }
+		    	   
+		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
+		    end_time = new java.sql.Timestamp(endParseDate.getTime());
+		} catch(Exception e) { }
+		
+		
 		Food food = itemService.getFood(itemForm.getFood_id());
 		itemForm.setFood(food);
-		
-		//new ItemFormValidator().validate(itemForm, errors);
 		
 		//검증 오류 발생 시
 		if(errors.hasErrors()) {
@@ -146,19 +162,7 @@ public class InsertItemController {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int user_id = userSession.getAccount().getUser_id();
 		
-		Timestamp create_time = null, end_time = null, modify_time = null;
-		Date endParseDate = null;
-		
-		//공구 날짜 Timestamp 변환
-		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		    Date createdParsedDate = (Date) dateFormat.parse(itemForm.getCreated_dt() + " " +created_dt_time);
-		    endParseDate = (Date) dateFormat.parse(itemForm.getEnd_dt() + " " + end_dt_time);
-		    Date modifyParseDate = new Date();
-		    create_time = new java.sql.Timestamp(createdParsedDate.getTime());
-		    end_time = new java.sql.Timestamp(endParseDate.getTime());
-		    modify_time = new java.sql.Timestamp(modifyParseDate.getTime());
-		} catch(Exception e) { }
+
 		
 		//이미지 처리
 		System.out.println("이미지 처리 시작");
@@ -178,7 +182,7 @@ public class InsertItemController {
 		
 		Item item = new Item(0, food, user_id, Integer.parseInt( itemForm.getStr_item_price() ), Integer.parseInt( itemForm.getStr_ship_price() ),
 				itemForm.getTitle(), itemForm.getContent(), end_time, Integer.parseInt(itemForm.getStr_min_quantity()),
-				create_time, modify_time, "ongoing", imageList, 0);
+				create_time, null, "ongoing", imageList, 0);
 		item.setCreated_dt(item.getCreated_dt());
 		
 		if(item.getImages() != null)

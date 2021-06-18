@@ -1300,6 +1300,10 @@ Version 1.0
 	background-color: rgb(226, 226, 226);
 }
 
+.success {
+	background-color: #e8f7f7;
+}
+
 .table-purchases a {
   color: #ccc;
 }

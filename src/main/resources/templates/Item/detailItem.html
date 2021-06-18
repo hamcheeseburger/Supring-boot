@@ -34,10 +34,10 @@
 				<table>
 					<tr>
 						<td style="padding-right:50px;">
-							<p th:if="${detail.images.size == 0}">
+							<p th:if="${detail.images.size == 0 or detail.images[0].base64Image == null}">
 								<img src="/img/no_image.png" alt="..." width="400px" height="auto" />
 							</p>
-							<p th:if="${detail.images.size != 0}">
+							<p th:if="${detail.images.size != 0 and detail.images[0].base64Image != null}">
 								<img th:src="@{'data:image/jpeg;base64,'+${detail.images[0].base64Image}}" 
 									style="width:400px; height:auto;" alt="액박이미지" />
 							</p>
@@ -46,6 +46,7 @@
 						<td>
 							식품명<br/>
 							<b class="detail" th:text="${detail.food.name}"></b>
+							<span th:text="${'&nbsp;&nbsp;' + category.cat_name}" style="color:#A4A4A4;"></span>
 							<br/><br/>
 							가격<br/>
 							<b class="detail" th:text="${detail.item_price + '원'}"></b><br/><br/>
@@ -63,21 +64,18 @@
 							마감일<br/>
 							<b class="detail" th:text="${#dates.format(detail.end_dt, 'yyyy/MM/dd  HH:mm')}"></b><br/><br/>
 							
-							<form name="wish" id="insertWish" method="post">
+							<form name="wish" id="insertWish" method="post" th:if="${detail.item_status == 'ongoing'}">
 								<span>수량 선택</span> &nbsp;&nbsp;&nbsp;
-								<input type="number" id="amount" name="amount" value="1" min="1" th:if="${detail.item_status == 'ongoing'}" 
-									style="width:80px;"/>
+								<input type="number" id="amount" name="amount" value="1" min="1" style="width:80px;"/>
 								<input type="hidden" id="itemId" name="itemId" th:value="${detail.item_id}" />
 								<br/><br/>
 								
 								<!-- <input type="submit" value="찜하기" onclick="javascript: form.action='/wish/add';" 
 									th:if="${detail.item_status == 'ongoing'}" /> -->
 								
-								<input type="submit" value="찜하기" th:attr="onclick=|wishButton('${detail.item_id}')|"  
-									th:if="${detail.item_status == 'ongoing'}" />
+								<input type="submit" value="찜하기" th:attr="onclick=|wishButton('${detail.item_id}')|"   />
 									
-								<input th:if="${detail.item_status == 'ongoing'}"
-									type="submit" value="공구 신청" th:attr="onclick=|registerButton('${detail.item_id}')|" />
+								<input type="submit" value="공구 신청" th:attr="onclick=|registerButton('${detail.item_id}')|" />
 								
 								<input type='hidden' id='hiddeninput' name='previousUrl'/>
 								

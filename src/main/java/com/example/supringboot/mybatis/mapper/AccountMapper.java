@@ -24,11 +24,11 @@ public interface AccountMapper {
 	ArrayList<Order_reg> selectOrderRegWithUserId(@Param("user_id") int user_id) throws DataAccessException;
 //	성공한 공구신청목록
 	ArrayList<Order_reg> selectOrderWithUserId(@Param("user_id") int user_id) throws DataAccessException;
-//	내가 판매 및 교환 등록한 식품 조회
+//	내가 판매 및 교환 등록한 식품 조회 (거래중)
 	ArrayList<Post> selectPostsWithUserId(@Param("user_id") int user_id) throws DataAccessException;
 // 	내가 게시한 댓글 목록                                             
 	ArrayList<Comment> selectCommentsWithUserId(@Param("user_id") int user_id) throws DataAccessException;
-
-	
+//	내가 판매 및 교환 등록한 식품 조회 (거래완료)
+	ArrayList<Post> selectCompletePostWithUserId(@Param("user_id") int user_id) throws DataAccessException;
 
 }

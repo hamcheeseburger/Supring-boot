@@ -5,138 +5,125 @@
 <head>
 <meta charset="UTF-8">
 <title>공동구매 신청</title>
+
+<style>
+	.applyTitle {
+		padding-bottom: 15px;
+		font-size: 16px;
+	}
+	.titleBox {
+		padding: 5px;
+		background-color: #D8D8D8;
+		width: 500px;
+		font-weight: bold;
+	}
+</style>
+
 </head>
 <body>
 
 	<div layout:fragment="custom-content" align="center">
-		<h3>공동구매 신청하기</h3>
 		<div class="container">
-			<div class="col-lg-8 mb-4">
-				<form id="applyForm" action="#" th:action="@{/item/apply/success}" th:object="${applyForm}" method="post">
-					<div class="control-group form-group">
-						<div th:if="${applyForm.order.item.images.size != 0}">
-							<img th:src="@{'data:image/jpeg;base64,'+${applyForm.order.item.images[0].base64Image}}" width="300px" height="300px"  alt="이미지 없음" />
-						</div>
-						<div th:unless="${applyForm.order.item.images.size != 0}">
-							<p>사진 없음</p>
-						</div>	
-					</div>
+			<h3>공동구매 신청하기</h3>
+			<section class="py-5">
+				<form id="applyForm" th:action="@{/item/apply}" th:object="${applyForm}" method="post">
 					<div class="control-group form-group">
 						<div class="controls">
-							<label>식품 이름:</label> 
-							<b th:text="*{order.item.food.name}">식품 이름</b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>수량:</label>
-							<b th:text="*{order.quantity}">수량</b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>가격:</label> 
-							<b th:text="*{itemTotalPrice}">가격</b>
-						</div>
-					</div>
-					<div class="form-group">
-			           <label>배송비: </label> 
-			            <b th:text="${applyForm.order.item.ship_price}"></b>
-			       </div>
-					
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>신청자 이름: </label> <b th:text="*{order.user.name}">신청자 이름</b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>연락처: </label>
-							<b th:text="*{order.user.phone}">연락처</b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>이메일: </label>
-							<b th:text="*{order.user.email}">이메일</b>
-						</div>
-					</div>
-					
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>수령인: </label>
-
-							<input class="form-control" id="name" type="text" th:field="*{order.receiver_name}" /> 
-							<b th:if="${#fields.hasErrors('order.receiver_name')}"
-								th:errorclass="error" th:errors="*{order.receiver_name}"></b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>배송 주소1:</label> <input class="form-control"
-								id="ship_addr1" type="text" th:field="*{order.ship_addr1}" />
-							<b th:if="${#fields.hasErrors('order.ship_addr1')}"
-								th:errorclass="error" th:errors="*{order.ship_addr1}"></b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>배송 주소2:</label> <input class="form-control"
-								id="ship_addr2" type="text" th:field="*{order.ship_addr2}" />
-							<b th:if="${#fields.hasErrors('order.ship_addr2')}"
-								th:errorclass="error" th:errors="*{order.ship_addr2}"></b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>우편번호:</label> <input class="form-control" id="ship_zip"
-								type="text" th:field="*{order.ship_zip}" />
-							<b th:if="${#fields.hasErrors('order.ship_zip')}"
-								th:errorclass="error" th:errors="*{order.ship_zip}"></b>
-						</div>
-					</div>
-					
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>카드타입:</label>
-							<select th:field="*{order.card_type}" th:name="*{order.card_type}" >
-								<option th:each="type : ${creditCardTypes}" th:value="${type}"
-								th:text="${type}"></option>
-							</select>
-							<b th:if="${#fields.hasErrors('order.card_type')}"
-								th:errorclass="error" th:errors="*{order.card_type}"></b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>카드번호:</label> <input class="form-control" id="card_num"
-								type="text" th:field="*{order.card_num}" />
-							<b th:if="${#fields.hasErrors('order.card_num')}"
-								th:errorclass="error" th:errors="*{order.card_num}"></b>
-						</div>
-					</div>
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>유효기간:</label> <input class="form-control" id="card_exp_dt"
-								type="text" th:field="*{order.card_exp_dt}" /> <b
-								th:if="${#fields.hasErrors('order.card_exp_dt')}"
-								th:errorclass="error" th:errors="*{order.card_exp_dt}"></b>
+							<table>
+								<tr>
+									<td class="applyTitle" colspan="2">
+										<div class="titleBox" th:text="*{order.item.food.name + ' 정보'}"></div>
+									</td>
+								</tr>
+								<tr>
+									<td th:if="*{order.item.images.size != 0 and order.item.images[0].base64Image != null}" 
+										style="width:250px; padding-right:50px;">
+										<img th:src="@{'data:image/jpeg;base64,'+*{order.item.images[0].base64Image}}" 
+												width="200px" height="auto" alt="이미지 없음" />
+									</td>
+									<td th:if="*{order.item.images.size == 0 or order.item.images[0].base64Image == null}" 
+										style="width:250px; padding-right:50px" >
+										<img src="/img/no_image.png" width="200px" height="auto" />
+									</td>
+									<td>
+										수량: &nbsp;&nbsp;<b th:text="*{order.quantity + '개'}"></b><br><br>
+										가격: &nbsp;&nbsp;<b th:text="*{itemTotalPrice + '원'}"></b><br><br>
+										배송비: &nbsp;&nbsp;<b th:text="*{order.item.ship_price + '원'}"></b><br><br>
+									</td>
+								</tr>
+								
+								<tr><td class="applyTitle" style="padding-top:50px;" colspan="2">
+									<div class="titleBox">신청 정보</div>
+								</td></tr>
+								<tr>
+									<td>
+										신청자 이름: &nbsp;&nbsp;<b th:text="*{order.user.name}">신청자 이름</b><br><br>
+										연락처: &nbsp;&nbsp;<b th:text="*{order.user.phone}">연락처</b><br><br>
+										이메일: &nbsp;&nbsp;<b th:text="*{order.user.email}">이메일</b><br><br>
+										수령인 <input class="form-control" id="name" type="text" th:field="*{order.receiver_name}" /> 
+											<b th:if="${#fields.hasErrors('order.receiver_name')}"
+												th:errorclass="error" th:errors="*{order.receiver_name}"></b><br><br>
+										우편번호 <input class="form-control" id="ship_zip"
+											type="text" th:field="*{order.ship_zip}" />
+										<b th:if="${#fields.hasErrors('order.ship_zip')}"
+											th:errorclass="error" th:errors="*{order.ship_zip}"></b><br><br>
+										배송 주소1 <input class="form-control"
+											id="ship_addr1" type="text" th:field="*{order.ship_addr1}" />
+									<b th:if="${#fields.hasErrors('order.ship_addr1')}"
+										th:errorclass="error" th:errors="*{order.ship_addr1}"></b><br><br>
+									배송 주소2 <input class="form-control"
+										id="ship_addr2" type="text" th:field="*{order.ship_addr2}" />
+									<b th:if="${#fields.hasErrors('order.ship_addr2')}"
+										th:errorclass="error" th:errors="*{order.ship_addr2}"></b>
+									</td>
+								</tr>
+									
+								<tr><td class="applyTitle" style="padding-top:50px;" colspan="2">
+									<div class="titleBox">결제 수단</div>
+								</td></tr>
+								<tr>
+									<td colspan="2">
+										카드타입&nbsp;&nbsp;
+										<select th:field="*{order.card_type}" th:name="*{order.card_type}" >
+											<option th:each="type : ${creditCardTypes}" th:value="${type}"
+											th:text="${type}"></option>
+										</select>
+										<b th:if="${#fields.hasErrors('order.card_type')}"
+											th:errorclass="error" th:errors="*{order.card_type}"></b><br><br>
+										카드번호 <input class="form-control" id="card_num"
+											type="text" th:field="*{order.card_num}" />
+										<b th:if="${#fields.hasErrors('order.card_num')}"
+											th:errorclass="error" th:errors="*{order.card_num}"></b><br><br>
+										유효기간
+										<input class="form-control" id="card_exp_dt" type="text"
+											th:field="*{order.card_exp_dt}" />
+										<b th:if="${#fields.hasErrors('order.card_exp_dt')}"
+											th:errorclass="error" th:errors="*{order.card_exp_dt}"></b><br><br>
+									</td>
+								</tr>
+								
+								<tr>
+									<td style="font-size:16px; padding-top:15px; padding-bottom: 10px;" 
+										th:if="*{order.item.item_status == 'ongoing'}" >
+										결제 예정 금액: &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
+									</td>
+								</tr>
+								<tr>
+									<td style="font-size:16px; padding-top:15px; padding-bottom: 10px;" 
+										th:if="*{order.item.item_status != 'ongoing'}" >
+										결제 금액: &nbsp;&nbsp;<b th:text="*{order.ord_price} + '원'"></b>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					
-					<div class="control-group form-group">
-						<div class="controls">
-							<label>총 금액:</label> 
-							<b th:text="*{order.ord_price}">총 금액</b>
-						</div>
-					</div>
-					
-					<div id="success"></div>
-					<!-- For success/fail messages-->
-					<button class="btn btn-primary" id="sendMessageButton"
-						type="submit">신청하기</button>
+					<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''"
+						class="btn btn-default waves-effect waves-light">뒤로가기</button>
+					<button class="btn btn-primary" id="sendMessageButton" type="submit">신청하기</button>
 				</form>
-			</div>
+			</section>
+				
 		</div>
 	</div>
 </body>

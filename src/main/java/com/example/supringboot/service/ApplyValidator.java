@@ -26,7 +26,6 @@ public class ApplyValidator implements Validator {
 		errors.setNestedPath("order");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "card_num", "CCN_REQUIRED", "카드 번호를 입력하세요.");
 		
-		// 핸드폰 형식이 이상할 시에 변경
 		String newCardNumFormat = card_num_format(order.getOrder().getCard_num());
 		if(newCardNumFormat.length() > 0 && newCardNumFormat.length() != 19) {
 			errors.rejectValue("card_num", "invalid_card_num", "카드 번호 형식이 올바르지 않습니다. ex) 0000-0000-0000-0000");

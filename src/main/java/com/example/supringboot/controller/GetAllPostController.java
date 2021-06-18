@@ -23,7 +23,7 @@ import org.springframework.ui.Model;
 public class GetAllPostController {
 	private static final Logger logger = LoggerFactory.getLogger(GetAllPostController.class);
 	
-	@Value("post/postList")
+	@Value("post/postList2")
 	private String postListView;
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class GetAllPostController {
 			Model model, HttpServletRequest request) {
 		ArrayList<Post> postList = postService.getPostList(post);
 		model.addAttribute("postList", postList);
-
+		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
 		int user_id = -1;

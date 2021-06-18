@@ -7502,6 +7502,10 @@ button.bg-dark:focus {
 	background-color: rgb(226, 226, 226);
 }
 
+.success {
+	color: #e8f7f7;
+}
+
 .h-auto {
   height: auto !important;
 }

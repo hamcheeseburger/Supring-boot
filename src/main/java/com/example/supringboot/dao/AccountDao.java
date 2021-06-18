@@ -21,4 +21,6 @@ public interface AccountDao {
 	public ArrayList<Post> selectMyPosts(int user_id);
 //	내가 게시한 댓글 목록 (User 객체 삽입 안됨)
 	public ArrayList<Comment> selectMyComments(int user_id);
+	
+	public ArrayList<Post> selectCompletePostWithUserId(int user_id);
 }

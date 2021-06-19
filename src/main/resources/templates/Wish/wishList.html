@@ -41,7 +41,7 @@
 						<td colspan="6"><b>찜한 목록이 비어있습니다.</b></td>
 					</tr>
 					
-					<tr id="title">
+					<tr th:if="${map.wishListCount != 0}" id="title">
 						<td class="titlePad">&nbsp;</td>
 						<td class="titlePad">식품명</td>
 						<td class="titlePad">수량</td>
@@ -87,13 +87,13 @@
 					</tr>
 					
 					<tr>
-						<td id="price" colspan="6" align="right" 
+						<td th:if="${map.wishListCount != 0}" id="price" colspan="6" align="right" 
 							th:text="${'총 금액: ' + map.totalPrice} + '원'">
 							<b>합계</b>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6" align="right" style="padding-top:10px;">
+						<td th:if="${map.wishListCount != 0}" colspan="6" align="right" style="padding-top:10px;">
 							<button type="button" th:onclick="'location.href=\''+ @{/wish/remove/all} + '\''"
 								class="btn btn-default waves-effect waves-light">모두 삭제</button>
 						</td>

@@ -105,7 +105,7 @@
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&
 											session.userSession.account.user_id == detail.user_id}" 
 									type="button" value="수정하기"
-									class="btn btn-primary waves-effect waves-light"
+									class="btn btn-primary-blue waves-effect waves-light"
 									th:onclick="'location.href=\''+ @{/item/updateItemForm(itemId=${detail.item_id})} + '\''"/>
 									
 								<input th:if="${session.userSession != null && session.userSession.account.admin == true &&

@@ -55,7 +55,7 @@
                 		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
                 	</div>
                     <div th:each="item : ${expiredItemList}" class="col-lg-4 col-sm-6 mb-4">
-                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 'success'}">
+                        <div class="card h-100" th:classappend="${item.item_status == 'fail' ? 'fail' : 'card h-100'}">
                             
                             <a th:if="${item.images.size == 0 or item.images[0].base64Image == null}" th:href="@{/item/detail(itemId=${item.item_id})}">
                             	<img class="card-img-top" src="/img/no_image.png" alt="..." />

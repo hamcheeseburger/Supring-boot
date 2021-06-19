@@ -56,7 +56,7 @@ public class ApplyValidator implements Validator {
 	}
 
 	public String card_num_format(String number) { 
-		String regEx = "(\\d{4})(\\d{4})(\\d{4})"; 
+		String regEx = "(\\d{4})(\\d{4})(\\d{4})(\\d{4})"; 
 		return number.replaceAll(regEx, "$1-$2-$3-$4");
 	}
 	

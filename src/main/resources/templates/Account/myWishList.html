@@ -7,11 +7,12 @@
 <body>
 <section th:fragment="wishList" class="py-5 bg-light">
 			<h3>&nbsp; 내가 찜한 식품</h3>
+			<div align="center" th:if="${map.wishListCount == 0}">
+                		<strong class="mb-4">찜한 목록이 비어있습니다.</strong>
+               </div>
             <div class="container">
                 <div class="row">
-                	<div th:if="${map.wishListCount == 0}">
-                		<strong class="mb-4">찜한 목록이 비어있습니다.</strong>
-                	</div>
+                	
                     <div th:each="wish : ${map.wishList}" class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100">
                         	<div th:if="${#lists.isEmpty(wish.item.images)}">

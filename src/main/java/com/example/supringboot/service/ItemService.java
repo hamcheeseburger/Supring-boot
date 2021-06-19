@@ -55,5 +55,5 @@ public interface ItemService {
 		
 	// 특정 공구식품 상세 보기
 	Item getDetailItem(int item_id);
-	
+	ArrayList<Item> selectTop4Item();
 }

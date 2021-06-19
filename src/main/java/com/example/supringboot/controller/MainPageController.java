@@ -55,7 +55,7 @@ public class MainPageController {
 		
 		ArrayList<Post> postList = postDao.searchPostFromMain(keyword);
 		ArrayList<Item> itemList = itemDao.searchItemFromMain(keyword);
-		
+
 		modelAndView.addObject("postList", postList)
 		.addObject("itemList", itemList)
 		.addObject("keyword", keyword);

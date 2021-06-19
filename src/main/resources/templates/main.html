@@ -68,6 +68,37 @@ layout:decorate="~{mainlayout}">
             </div>
             </div>
         </header>
+        
+
+        <!-- Portfolio Section-->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h4 class="mb-4"><b>'같이 먹어요' 실시간 인기글</b></h4>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 mb-4" th:each="item : ${top4ItemList}">
+                            <div class="card h-100" style="cursor: pointer;" th:onclick="'location.href=\''+ @{/item/detail(itemId=${item.item_id})} + '\''">
+                            <a th:href="@{/item/detail(itemId=${item.item_id})}">
+                			
+                			<a th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
+                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            </a>
+                            <a href="#" th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
+                			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
+                              </a>	
+                            <div class="card-body">
+                                <h4 class="card-title"><b><a th:href="@{/item/detail(itemId=${item.item_id})}" th:text="${item.title}">Project One</a></b></h4>
+                                <div align="right" style="font-size:11px"><a th:text="${item.item_status_korean}"></a></div>
+                                <p id="row_content" class="card-text" th:text="${item.content}"></p>
+                                <b th:text="${item.percentage} + '% 달성'"></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        
+        <hr class="my-0" />
         <!-- Page Content-->
         <section class="py-5">
             <div class="container">
@@ -129,6 +160,7 @@ layout:decorate="~{mainlayout}">
                	<a th:href="@{/post/getPostList}">전체보기</a>
               </div>
         </section>
+        
         <hr class="my-0" />
         <!-- Features Section-->
         <section class="py-5">

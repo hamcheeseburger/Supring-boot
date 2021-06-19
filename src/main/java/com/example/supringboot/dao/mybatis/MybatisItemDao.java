@@ -176,4 +176,10 @@ public class MybatisItemDao implements ItemDao {
 	public int searchItemTotalCount(Item item) {
 		return itemMapper.searchItemTotalCount(item);
 	}
+
+	@Override
+	public ArrayList<Item> selectTop4Item() {
+		// TODO Auto-generated method stub
+		return itemMapper.selectTop4Item();
+	}
 }

@@ -288,8 +288,10 @@ public class ItemServiceImpl implements ItemService{
 		return itemDao.getDetailItem(item_id);
 	}
 
-	
+	@Override
+	public ArrayList<Item> selectTop4Item() {
+		// TODO Auto-generated method stub
+		return itemDao.selectTop4Item();
+	}
 
-
-	
 }

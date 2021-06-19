@@ -10,7 +10,7 @@
             <div class="container">
                 <h4><b>거래중</b></h4>
                 <div align="center" th:if="${#lists.isEmpty(postList)}">
-                	<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                	<p class="mb-4">목록이 존재하지 않습니다.</p>
                 </div>
                 <div class="row">
        
@@ -38,7 +38,7 @@
                 <div class="container">
                 <h4><b>거래 완료</b></h4>
                 <div align="center" th:if="${#lists.isEmpty(completePostList)}">
-                		<strong class="mb-4">목록이 존재하지 않습니다.</strong>
+                		<p class="mb-4">목록이 존재하지 않습니다.</p>
                 </div>
                 <div class="row">
                 	

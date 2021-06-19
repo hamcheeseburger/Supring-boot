@@ -35,7 +35,7 @@ layout:decorate="~{mainlayout}">
 							
                             <div class="card-body">
                                 <h6 class="card-title"><b th:text="${item.title}"></b></h6><br />
-                                <p class="card-text" th:text="${item.content}"></p>
+                                <p id="row_content" class="card-text" th:text="${item.content}"></p>
                               	<b class="card-text" th:text="${item.percentage} + '% 달성'"></b>
                             </div>
                         </div>
@@ -67,7 +67,7 @@ layout:decorate="~{mainlayout}">
                             <div class="card-body">
                                 <h6 class="card-title"><b th:text="${post.title}"></b></h6>
        
-                            	<p class="card-text" th:text="${post.content}"></p><br />
+                            	<p id="row_content" class="card-text" th:text="${post.content}"></p><br />
                             	<b class="card-text" style="color:gray;" th:text="${post.user.name} + '(' + ${post.user.login_id} + ')'"></b>
                             </div>
                         </div>

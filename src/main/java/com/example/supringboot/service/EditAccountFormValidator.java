@@ -33,6 +33,8 @@ public class EditAccountFormValidator implements Validator{
 		String updatePassword = accountForm.getUpdatePassword();
 		String newPassword = accountForm.getNewPassword();
 		String newPasswordCheck = accountForm.getNewPasswordCheck();
+		
+
 		if(!updatePassword.equals("")) {
 			System.out.println("[NEWACCOUNTVALIDATOR] : " + updatePassword);
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPassword", "required", "새로운 비밀번호를 입력하세요.");
@@ -43,6 +45,8 @@ public class EditAccountFormValidator implements Validator{
 				errors.rejectValue("newPasswordCheck", "newPasswordNotMatch", "새로운 비밀번호가 일치하지 않습니다.");
 			}
 		
+		} else if(!newPassword.equals("") || !newPasswordCheck.equals("")) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "updatePassword", "required", "현재 비밀번호를 입력하세요.");
 		}
 		
 		// 핸드폰 형식이 이상할 시에 변경

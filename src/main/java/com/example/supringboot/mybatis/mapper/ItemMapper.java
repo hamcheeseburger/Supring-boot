@@ -73,4 +73,6 @@ public interface ItemMapper {
 	public int selectEndItemCount(Item item) throws DataAccessException;
 	
 	public int searchItemTotalCount(Item item)  throws DataAccessException;
+
+	public ArrayList<Item> selectTop4Item() throws DataAccessException;
 }

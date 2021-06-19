@@ -27,16 +27,21 @@
                                 <h4 class="card-title"><a th:text="${wish.item.food.name}"></a></h4><br/>
                                 <h4><b><a th:href="@{/item/detail(itemId=${wish.item.item_id})}" th:text="${wish.item.title}"></a></b></h4>
                                 가격 : <strong class="card-text" th:text="${wish.item.item_price} + '원'" ></strong> <br/>
+                                배송비 : <strong class="card-text" th:text="${wish.item.ship_price} + '원'" ></strong> <br/>
                                 수량 : <form name="update" id="updateWish" method="post" action="#" th:action="@{/account/wish/update}">
 									<input type="number" id="amount" name="amount" th:value="${wish.amount}" min="1"
 										style="width:80px;" />
 									<input type="hidden" id="likedId" name="likedId" th:value="${wish.liked_id}" />
-									<input type="submit" value="수정" />
+									<input type="submit" value="수정" 
+									style="border:0; outline:0; background-color:inherit; color:#045FB4;" />
 								</form> <br>
                                 
                                 총가격 : <strong class="card-text" th:text="${wish.likedPrice} + '원'"></strong> <br/>
-                          
-                                <a href="#" th:href="@{/account/wish/remove(likedId=${wish.liked_id})}">삭제</a>
+                          		
+                          		<button class="btn btn-default" style="margin-top:20px;"
+                          			th:onclick="'location.href=\''+ @{/account/wish/remove(likedId=${wish.liked_id})} + '\''">
+                          			삭제
+                          		</button>
                             </div>
                         </div>
                         

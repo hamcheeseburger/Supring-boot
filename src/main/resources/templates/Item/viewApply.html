@@ -106,7 +106,7 @@
 				<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''"
 					class="btn btn-default waves-effect waves-light">뒤로가기</button>
 				<button type="button" th:if="${detail.item.item_status == 'ongoing'}"
-					th:onclick="'location.href=\''+ @{/item/apply/updateForm(applyId=${detail.order_reg_id})} + '\''"
+					th:onclick="'location.href=\''+ @{/item/apply/update(applyId=${detail.order_reg_id})} + '\''"
 					class="btn btn-primary waves-effect waves-light">
 					수정하기
 				</button>

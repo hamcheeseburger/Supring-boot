@@ -38,17 +38,6 @@ public class MybatisWishDao implements WishDao {
 			return false;
 		}
 	}
-	
-	@Override
-	public boolean cancelDetailLikedItem(int user_id, int item_id) {
-		int result = wishMapper.cancelDetailLikedItem(user_id, item_id);
-
-		if (result == 1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	// 찜한 식품 확인
 	@Override

@@ -166,13 +166,6 @@ public class MyPageController {
 		// 찜한 식품 전체 금액
 		int totalPrice = wishService.totalMoney(user_id);
 		
-		if (list.isEmpty()) {
-			System.out.println("비어있음");
-		} else {
-			System.out.println("식품 이름: " + list.get(0).getItem().getFood().getName());	
-			System.out.println("totalPrice: " + totalPrice);
-		}
-		
 		map.put("wishList", list);
 		map.put("wishListCount", list.size());
 		map.put("totalPrice", totalPrice);

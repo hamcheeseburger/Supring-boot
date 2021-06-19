@@ -25,7 +25,7 @@
 		<div class="container">
 			<h3>공동구매 신청 수정하기</h3>
 			<section class="py-5">
-				<form id="applyForm" th:action="@{/item/apply}" th:object="${applyForm}" method="post">
+				<form id="applyForm" th:action="@{/item/apply/update}" th:object="${applyForm}" method="post">
 					<div class="control-group form-group">
 						<div class="controls">
 							<table>
@@ -117,8 +117,6 @@
 						</div>
 					</div>
 					
-					<button type="button" th:onclick="'location.href=\''+ @{/account/myOrderList} + '\''"
-						class="btn btn-default waves-effect waves-light">뒤로가기</button>
 					<button class="btn btn-primary" id="sendMessageButton" type="submit">수정하기</button>
 					
 				</form>

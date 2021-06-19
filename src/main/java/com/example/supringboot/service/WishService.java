@@ -13,9 +13,6 @@ public interface WishService {
 
 	// 공구식품 찜하기 취소하기 -> 찜한 목록 페이지에서 취소
 	boolean cancelLikedItem(int liked_id);
-	
-	// 공구식품 찜하기 취소하기 -> 식품 상세 페이지에서 취소
-	boolean cancelDetailLikedItem(int user_id, int item_id);
 
 	// 찜한 식품 모두 삭제(찜한 식품 목록 비우기)
 	public boolean deleteAllLikedItem(int user_id);

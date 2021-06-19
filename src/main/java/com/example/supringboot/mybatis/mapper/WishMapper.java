@@ -19,9 +19,6 @@ public interface WishMapper {
 
 	// 공구식품 찜하기 취소 -> 찜한 목록 페이지에서 취소
 	public int cancelLikedItem(@Param("liked_id") int liked_id) throws DataAccessException;
-	
-	// 공구식품 찜하기 취소 -> 식품 상세 페이지에서 취소
-	public int cancelDetailLikedItem(@Param("user_id") int user_id, @Param("item_id") int item_id) throws DataAccessException;
 
 	// 찜한 식품 모두 삭제(찜한 식품 목록 비우기)
 	public int deleteAllLikedItem(@Param("user_id") int user_id) throws DataAccessException;

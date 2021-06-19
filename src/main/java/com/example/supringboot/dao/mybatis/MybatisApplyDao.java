@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.supringboot.dao.ApplyDao;
 import com.example.supringboot.domain.Order_reg;
-import com.example.supringboot.mybatis.mapper.ItemMapper;
 import com.example.supringboot.mybatis.mapper.ApplyMapper;
 
 @Repository

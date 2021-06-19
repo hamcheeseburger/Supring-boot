@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -65,7 +68,7 @@ public class ApplyController {
 		return creditCardTypes;
 	}
 	
-	// 공구 신청하기 -> 공구 식품 상세페이지에서 버튼 클릭, 찜하기 목록에서 각 식품 옆에 주문하기 버튼 클릭?
+	// 공구 신청하기 -> 공구 식품 상세페이지에서 버튼 클릭
 	@RequestMapping("/item/applyForm")
 	public String orderForm(HttpServletRequest request, 
 			@ModelAttribute("applyForm") ApplyForm applyForm, ModelMap model, RedirectAttributes redirectAttr) {
@@ -154,7 +157,7 @@ public class ApplyController {
 		return viewApply;
 	}
 	
-	@RequestMapping("/item/apply/updateForm")
+	@GetMapping("/item/apply/update")
 	public ModelAndView editAccountForm(HttpServletRequest request, @RequestParam int applyId) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();
@@ -171,7 +174,7 @@ public class ApplyController {
 		return modelAndView;
 	}
 	
-	@RequestMapping("/item/apply/update")
+	@PostMapping("/item/apply/update")
 	public String applyUpdate(@ModelAttribute("applyForm") ApplyForm applyForm, BindingResult result, SessionStatus status) {
 		
 		applyValidator.validate(applyForm, result);

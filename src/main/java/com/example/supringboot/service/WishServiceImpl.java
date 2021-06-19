@@ -31,11 +31,6 @@ public class WishServiceImpl implements WishService {
 	public boolean cancelLikedItem(int liked_id) {
 		return wishDao.cancelLikedItem(liked_id);
 	}
-	
-	@Override
-	public boolean cancelDetailLikedItem(int user_id, int item_id) {
-		return wishDao.cancelDetailLikedItem(user_id, item_id);
-	}
 
 	@Override
 	public boolean deleteAllLikedItem(int user_id) {

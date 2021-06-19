@@ -85,18 +85,8 @@ public class WishController {
 		return "redirect:/wish/list";
 	}
 	
-	// 공구 식품 상세 페이지에서 삭제하기 -> 찜하기 버튼 다시 누르면 삭제
-	@RequestMapping("/wish/detail/remove")
-	public String deleteItemDetail(@RequestParam int likedId, HttpServletRequest request) {
-		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		int userId = userSession.getAccount().getUser_id();
-		
-		wishService.cancelDetailLikedItem(userId, likedId);
-		return "redirect:/item/detail"; // 삭제 후 공구 식품 상세페이지로 이동
-	}
-	
 	// 찜한 목록 다 삭제하기
-	@RequestMapping("/wish/remove/list")
+	@RequestMapping("/wish/remove/all")
 	public String deleteAllWishList(HttpServletRequest request) {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		int userId = userSession.getAccount().getUser_id();

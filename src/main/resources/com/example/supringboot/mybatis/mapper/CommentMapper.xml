@@ -55,7 +55,7 @@
 	<!-- updateComment -->
 	<update id="updateComment" parameterType="Comment">
 		UPDATE COMMT
-		SET content = #{content}, modified_dt=SYSDATE
+		SET content = #{content}, modified_dt=SYSDATE, secret = #{secret}
 		WHERE comment_id = #{comment_id}
 	</update>
 	

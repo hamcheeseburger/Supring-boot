@@ -106,4 +106,10 @@ public class MybatisWishDao implements WishDao {
 	public WishItem getOneWishItem(int liked_id) {
 		return wishMapper.getOneWishItem(liked_id);
 	}
+
+	@Override
+	public int deleteLikedByItemId(int item_id) {
+		// TODO Auto-generated method stub
+		return wishMapper.deleteLikedByItemId(item_id);
+	}
 }

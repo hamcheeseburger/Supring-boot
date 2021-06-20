@@ -5,8 +5,89 @@
 <title>Insert title here</title>
 </head>
 <body>
-<footer th:fragment="mainFooter" class="py-5 bg-dark">       
-     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
-</footer>
+<div th:fragment="mainFooter">       
+     <!-- <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div> -->
+	        
+        <hr class="my-0" />
+
+        <!-- Features Section-->
+        <section class="py-5">
+            <div class="container">
+                 <h2 style="color:#f7a000;" class="mb-4">Supring Shop's Developers</h2>
+                 <br />
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h2 class="mb-4">Minchae Kwon</h2>
+                        <h4><b>권민채</b></h4>
+                        <ul>
+                            <li><strong>동덕여대 컴퓨터학과 20180943</strong></li>
+                            <li>Front-end & Back-end</li>
+                            <li>'같이 먹어요' 기능 다수 구현</li>
+                            <li>찜하기 기능 구현</li>
+                            <li>댓글 기능 담당</li>
+                            <li><a style="color:#f7a000;" href="https://github.com/MinchaeGwon">권민채의 깃허브 링크</a></li>
+                        </ul>
+                       
+                    </div>
+                    <div class="col-lg-3"><img class="img-fluid rounded"  th:src="@{/img/minchae.jpg}" alt="..." /></div>
+                    <div class="col-lg-3">
+                        <h2 class="mb-4">Jaeim Song</h2>
+                        <h4><b>송재임</b></h4>
+                        <ul>
+                            <li><strong>동덕여대 컴퓨터학과 20170942</strong></li>
+                            <li>Front-end & Back-end</li>
+                            <li>'나누어 먹어요' 기능 담당</li>
+                            <li>댓글 기능 담당</li>
+                            <li><a style="color:#f7a000;" href="https://github.com/jaeim">송재임의 깃허브 링크</a></li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-lg-3"><img class="img-fluid rounded"  th:src="@{/img/jaeim.png}" alt="..." /></div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h2 class="mb-4">Nayeon Yoo</h2>
+                        <h4><b>유나연</b></h4>
+                        <ul>
+                            <li><strong>동덕여대 컴퓨터학과 20180983</strong></li>
+                            <li>Front-end & Back-end</li>
+                            <li>'나누어 먹어요' 기능 다수 구현</li>
+                            <li><a style="color:#f7a000;" href="https://github.com/yoouyoou">유나연의 깃허브 링크</a></li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-lg-3"><img class="img-fluid rounded"  th:src="@{/img/nayeon.jpg}" alt="..." /></div>
+                
+                	<div class="col-lg-3">
+                        <h2 class="mb-4">Hyeonji Yoo</h2>
+                        <h4><b>유현지</b></h4>
+                        <ul>
+                            <li><strong>동덕여대 컴퓨터학과 20170953</strong></li>
+                            <li>Front-end & Back-end</li>
+                            <li>마이페이지, 관리자페이지 담당</li>
+                            <li>메인화면 기능 담당</li>
+                            <li><a style="color:#f7a000;" href="https://github.com/hamcheeseburger">유현지의 깃허브 링크</a></li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-lg-3"><img class="img-fluid rounded"  th:src="@{/img/hyeonji.jpg}" alt="..." /></div>
+                </div>
+                <br />
+            </div>
+        </section>
+        <hr class="my-0" />
+        <!-- Call to Action-->
+        <aside class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                   
+                    <div class="col-md-3"><a class="btn btn-lg btn-secondary btn-block" href="https://github.com/hamcheeseburger/Supring-boot">Github Repository</a></div>
+                </div>
+            </div>
+        </aside>
+
+</div>
 </body>
 </html>

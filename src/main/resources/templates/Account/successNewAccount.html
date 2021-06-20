@@ -8,7 +8,7 @@ layout:decorate="~{mainlayout}">
 </head>
 <body>
 <div layout:fragment="custom-content" align="center">
-<h1 th:text="#{successAccountHeader}"></h1>
+<h1 ><b th:text="#{successAccountHeader}"></b></h1>
 <div style="width:500px; text-align:center">
     <div class="card-body">
        <div class="form-group">
@@ -23,8 +23,10 @@ layout:decorate="~{mainlayout}">
        </div>
 </div>
 
-<a th:href="@{/}">홈으로</a>
-<a th:href="@{/}">로그인</a>
+<button class="btn btn-default waves-effect waves-light" 
+                                	th:onclick="'location.href=\''+ @{/} + '\''">홈으로</button>
+<button class="btn btn-default waves-effect waves-light" 
+                                	th:onclick="'location.href=\''+ @{/account/signOnForm} + '\''">로그인</button>
 </div>
 
 

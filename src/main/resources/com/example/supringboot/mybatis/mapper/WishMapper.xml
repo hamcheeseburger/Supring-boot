@@ -55,7 +55,12 @@
 		DELETE FROM liked
 		WHERE user_id = #{user_id} AND item_id = #{item_id}
 	</delete>
-
+	
+	<delete id="deleteLikedByItemId" parameterType="int">
+		DELETE FROM liked
+		WHERE item_id = #{item_id}
+	</delete>
+	
 	<!-- 모든 공구식품 찜하기 취소하기 -->
 	<delete id="deleteAllLikedItem" parameterType="int">
 		DELETE FROM liked

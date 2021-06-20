@@ -72,7 +72,7 @@
 							<br/><br/>
 							<div class="btn_wrap text-center">
 								<a th:href="@{/post/getPostList}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-								<a th:if="${user} == ${post.user.user_id}" th:href="@{/post/updatePost( post_id=${post.post_id} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
+								<a th:if="${user} == ${post.user.user_id}" th:href="@{/post/updatePost( post_id=${post.post_id} )}" class="btn btn-primary-blue waves-effect waves-light">수정하기</a>
 								<button th:if="${user} == ${post.user.user_id}" type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deletePost([[ ${post.post_id} ]])">삭제하기</button>
 							</div>
 						</td>
@@ -206,7 +206,7 @@
 									if (user != -1 && user == comment.user['user_id']) {
 										commentsHtml += `
 											<div align="right">
-												<a href="javascript:void(0)" onclick="updateCommentForm('${comment['comment_id']}', '${comment.user['name']}', '${comment['content']}')" >수정 &nbsp;</a>
+												<a href="javascript:void(0)" onclick="updateCommentForm('${comment['comment_id']}', '${comment.user['name']}', '${comment['content']}', '${comment['secret']}')" >수정 &nbsp;</a>
 												<a href="javascript:void(0)" onclick="deleteComment('${comment['comment_id']}')" >삭제</a>
 											</div>
 										`;
@@ -228,11 +228,21 @@
 					});
 				}
 				
-				function updateCommentForm(comment_id, name, content) {
+				function updateCommentForm(comment_id, name, content, secret) {
 					var update = "";
 					update += '<div id="cid' + comment_id + '">';
 					update += '<span class="name">' + name + '</span>';
 					update += '<span class="desc" >';
+
+					update += '<div class="custom-control custom-checkbox">'
+					if (secret == 'true') {
+		          		update += '<input type="checkbox" name="secretCheck2" class="custom-control-input" id="secretCheck2" checked >';
+					} else {
+		          		update += '<input type="checkbox" name="secretCheck2" class="custom-control-input" id="secretCheck2" >';
+					}
+					update += '<label class="custom-control-label" for="secretCheck2">비밀댓글</label>';
+	        		update += '</div>';
+ 					
 					update += '<textarea name="editContent" id="editContent" class="form-control" style="height:45px;">';
 					update += content;
 					update += '</textarea>';
@@ -250,9 +260,11 @@
 				}
 				
 				function updateComment(comment_id) {
+					var secret = document.getElementById("secretCheck2");
+					
 					var uri = /*[[ @{/comment/update} ]]*/ null;
 					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-					var params = {"comment_id": comment_id, "content": $('#editContent').val()};
+					var params = {"comment_id": comment_id, "content": $('#editContent').val(), "secret" : secret.checked};
 					
 					$.ajax({
 						url: uri,

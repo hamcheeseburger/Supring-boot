@@ -31,4 +31,6 @@ public interface WishDao {
 	
 	// 특정 찜한 식품 가져오기
 	public WishItem getOneWishItem(int liked_id);
+	
+	public int deleteLikedByItemId(int item_id);
 }

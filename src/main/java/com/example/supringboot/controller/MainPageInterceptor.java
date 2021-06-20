@@ -30,9 +30,10 @@ public class MainPageInterceptor implements HandlerInterceptor {
 //		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 		ArrayList<Item> item3List = (ArrayList<Item>) itemService.getItemLatest3Rows();
 		ArrayList<Post> post3List = postService.getPostLatest3Rows();
-		
+		ArrayList<Item> top4ItemList = itemService.selectTop4Item();
 		modelAndView.addObject("post3List", post3List)
-		.addObject("item3List", item3List);
+		.addObject("item3List", item3List)
+		.addObject("top4ItemList", top4ItemList);
 	}
 	
 }

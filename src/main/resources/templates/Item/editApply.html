@@ -90,12 +90,13 @@
 										<b th:if="${#fields.hasErrors('order.card_type')}"
 											th:errorclass="error" th:errors="*{order.card_type}"></b><br><br>
 										카드번호 <input class="form-control" id="card_num"
-											type="text" th:field="*{order.card_num}" />
+											type="text" th:field="*{order.card_num}"
+											placeholder="0000-0000-0000-0000" />
 										<b th:if="${#fields.hasErrors('order.card_num')}"
 											th:errorclass="error" th:errors="*{order.card_num}"></b><br><br>
 										유효기간
 										<input class="form-control" id="card_exp_dt" type="text"
-											th:field="*{order.card_exp_dt}" />
+											th:field="*{order.card_exp_dt}" placeholder="MM/yy" />
 										<b th:if="${#fields.hasErrors('order.card_exp_dt')}"
 											th:errorclass="error" th:errors="*{order.card_exp_dt}"></b><br><br>
 									</td>

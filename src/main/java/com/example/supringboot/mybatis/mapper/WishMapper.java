@@ -37,4 +37,6 @@ public interface WishMapper {
 	
 	// 특정 찜한 식품 가져오기
 	public WishItem getOneWishItem(@Param("liked_id") int liked_id) throws DataAccessException;
+
+	public int deleteLikedByItemId(int item_id) throws DataAccessException;
 }

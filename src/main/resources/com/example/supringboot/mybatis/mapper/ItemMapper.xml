@@ -40,7 +40,7 @@
 						(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 						INNER JOIN food f ON i.food_id = f.food_id
-				ORDER BY i.created_dt DESC, i.item_id DESC)
+				ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -75,7 +75,7 @@
 					f.name, f.cat_id, im.image_id, im.image
 				FROM Item i INNER JOIN Food f ON i.food_id = f.food_id LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				WHERE f.cat_id=#{cat_id} and c.cat_id=f.cat_id and i.item_status='ongoing'
-				ORDER BY i.created_dt DESC, i.item_id DESC)
+				ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -108,7 +108,7 @@
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 					INNER JOIN food f ON i.food_id = f.food_id 
 							
-				WHERE i.item_status = 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
+				WHERE i.item_status = 'ongoing'	ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -147,7 +147,7 @@
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 					INNER JOIN food f ON i.food_id = f.food_id 
 							
-				WHERE i.item_status != 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
+				WHERE i.item_status != 'ongoing'	ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -359,5 +359,17 @@ WHERE i.food_id = f.food_id and f.cat_id = c.cat_id and i.item_status = 'ongoing
 		SELECT count(*)
 		FROM ITEM
 		WHERE item_status != 'ongoing'
+	</select>
+	
+	<select id="selectTop4Item" resultMap="searchItemFromMainResultMap">
+		<![CDATA[
+			select * from
+(select rownum as seq, item_id, title, content, item_status, name, image, cat_name, min_quantity, per, numOfRegister
+from (select item_id, title, content, item_status, name, image, cat_name, min_quantity, ((numOfRegister / min_quantity) * 100) as per, numOfRegister
+from (select i.item_id, i.title, i.content, i.item_status, f.name, im.image, c.cat_name, i.min_quantity, NVL((SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id), 0) as numOfRegister
+			from Item i INNER JOIN Food f ON i.food_id=f.food_id
+			LEFT JOIN Image im ON i.item_id = im.item_id, Category c
+				where f.cat_id = c.cat_id and i.item_status = 'ongoing') ORDER BY per DESC )) WHERE seq <= 4
+		]]>
 	</select>
 </mapper>

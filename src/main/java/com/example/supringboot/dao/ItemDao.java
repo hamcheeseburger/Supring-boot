@@ -62,4 +62,6 @@ public interface ItemDao {
 	public int selectEndItemCount(Item item);
 	
 	public int searchItemTotalCount(Item item);
+	
+	public ArrayList<Item> selectTop4Item();
 }

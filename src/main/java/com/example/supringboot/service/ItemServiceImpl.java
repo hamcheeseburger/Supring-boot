@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -16,6 +18,7 @@ import org.springframework.validation.FieldError;
 
 import com.example.supringboot.dao.ImageDao;
 import com.example.supringboot.dao.ItemDao;
+import com.example.supringboot.dao.WishDao;
 import com.example.supringboot.domain.Category;
 import com.example.supringboot.domain.Food;
 import com.example.supringboot.domain.Item;
@@ -23,6 +26,7 @@ import com.example.supringboot.domain.PaginationInfo;
 import com.example.supringboot.mybatis.mapper.ImageMapper;
 
 @Service
+@Transactional
 public class ItemServiceImpl implements ItemService{
 
 	@Autowired
@@ -33,6 +37,9 @@ public class ItemServiceImpl implements ItemService{
 	
 	@Autowired
 	private ImageMapper imMapper;
+	
+	@Autowired
+	private WishDao wishDao;
 	
 	@Autowired		// applicationContext.xml에 정의된 scheduler 객체를 주입 받음
 	private ThreadPoolTaskScheduler scheduler;
@@ -82,7 +89,10 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
+	@Transactional
 	public int deleteItem(int item_id) {
+		wishDao.deleteLikedByItemId(item_id);
+		
 		return itemDao.deleteItem(item_id);
 	}
 
@@ -288,8 +298,10 @@ public class ItemServiceImpl implements ItemService{
 		return itemDao.getDetailItem(item_id);
 	}
 
-	
+	@Override
+	public ArrayList<Item> selectTop4Item() {
+		// TODO Auto-generated method stub
+		return itemDao.selectTop4Item();
+	}
 
-
-	
 }

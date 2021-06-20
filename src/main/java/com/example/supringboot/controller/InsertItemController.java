@@ -187,9 +187,6 @@ public class InsertItemController {
 			item.setImages(imageList);
 		
 		itemService.insertItem(item);
-		System.out.println("디비등록완료");
-		
-		System.out.println("insert item_id : " + item.getItem_id());
 		itemService.startScheduler(item.getItem_id(), endParseDate);
 		
 		return "redirect:/admin/itemList"; //admin_List로 리다이렉트 하기

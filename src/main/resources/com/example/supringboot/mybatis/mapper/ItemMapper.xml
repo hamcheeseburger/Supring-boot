@@ -40,7 +40,7 @@
 						(SELECT SUM (quantity) FROM Order_reg WHERE item_id=i.item_id) as numOfRegister
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 						INNER JOIN food f ON i.food_id = f.food_id
-				ORDER BY i.created_dt DESC, i.item_id DESC)
+				ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			 WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -75,7 +75,7 @@
 					f.name, f.cat_id, im.image_id, im.image
 				FROM Item i INNER JOIN Food f ON i.food_id = f.food_id LEFT JOIN Image im ON i.item_id = im.item_id, Category c
 				WHERE f.cat_id=#{cat_id} and c.cat_id=f.cat_id and i.item_status='ongoing'
-				ORDER BY i.created_dt DESC, i.item_id DESC)
+				ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -108,7 +108,7 @@
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 					INNER JOIN food f ON i.food_id = f.food_id 
 							
-				WHERE i.item_status = 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
+				WHERE i.item_status = 'ongoing'	ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}
@@ -147,7 +147,7 @@
 				FROM item i LEFT JOIN image im ON i.item_id = im.item_id
 					INNER JOIN food f ON i.food_id = f.food_id 
 							
-				WHERE i.item_status != 'ongoing'	ORDER BY i.created_dt DESC, i.item_id DESC)
+				WHERE i.item_status != 'ongoing'	ORDER BY i.item_id DESC)
 			)
 			<![CDATA[
 			WHERE SEQ > #{paginationInfo.firstRecordIndex} ) WHERE ROWNUM <= #{recordsPerPage}

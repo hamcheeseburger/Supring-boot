@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.example.supringboot.dao.ItemDao;
 import com.example.supringboot.domain.Category;
@@ -49,14 +50,14 @@ public class MybatisItemDao implements ItemDao {
 	public int updateItem(Item item) {
 		return itemMapper.updateItem(item);
 	}
-
+	
 	@Override
 	public int deleteItem(int item_id) {
 		int result = 0;
 		try {
 			result = itemMapper.deleteItem(item_id);
 		} catch(Exception e) {
-			System.out.println("Exception");
+			e.printStackTrace();
 		} 
 		return result;
 	}

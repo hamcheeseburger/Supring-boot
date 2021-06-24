@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,9 +60,9 @@ public class AdminPageController {
 	}
 	
 //	Modal로 띄워서 표현할 것 이기 때문에(ajax 통신) json 형태로 response하도록 하였음
-	@GetMapping("/admin/itemRegisterList")
+	@GetMapping("/admin/itemRegisterList/{item_id}")
 	@ResponseBody
-	public List<Order_reg> getItemRegisterList(@RequestParam int item_id) {
+	public List<Order_reg> getItemRegisterList(@PathVariable int item_id) {
 		logger.info("getItemRegisterList: " + item_id);
 		
 		ArrayList<Order_reg> registerList = supringService.getAdminRegisterList(item_id);

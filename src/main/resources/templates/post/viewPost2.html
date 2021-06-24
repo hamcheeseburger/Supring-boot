@@ -33,7 +33,7 @@
 					<tr> <!--  -->
 						<td style="padding-right:50px;">				
 							<p th:if="${post.images.size == 0 or post.images[0].base64Image == null}">
-								<img class="card-img-top" src="/img/no_image.png" style="width:400px; height:auto;" alt="..." />
+								<img class="card-img-top" th:src="@{/img/no_image.png}" style="width:400px; height:auto;" alt="..." />
 							</p>
 							<p th:if="${post.images.size != 0 and post.images[0].base64Image != null}">
 								<img th:src="@{'data:image/jpeg;base64,'+${post.images[0].base64Image}}" 

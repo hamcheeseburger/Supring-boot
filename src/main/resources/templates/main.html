@@ -80,7 +80,7 @@ layout:decorate="~{mainlayout}">
                             <a th:href="@{/item/detail(itemId=${item.item_id})}">
                 			
                 			<a th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
-                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            	<img class="card-img-top" th:src="@{/img/no_image.png}" alt="..." />
                             </a>
                             <a href="#" th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
                 			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item.images[0].base64Image}}" alt="액박이미지" /></a>
@@ -109,7 +109,7 @@ layout:decorate="~{mainlayout}">
                             <a th:href="@{/item/detail(itemId=${item3.item_id})}">
                 			
                 			<a th:if="${item3.images.size == 0 or item3.images[0].base64Image == null}">
-                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+                            	<img class="card-img-top" th:src="@{/img/no_image.png}"alt="..." />
                             </a>
                             <a href="#" th:if="${item3.images.size != 0 and item3.images[0].base64Image != null}">
                 			<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${item3.images[0].base64Image}}" alt="액박이미지" /></a>

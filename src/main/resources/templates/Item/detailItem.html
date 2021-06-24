@@ -38,7 +38,7 @@
 					<tr>
 						<td style="padding-right:50px;">
 							<p th:if="${detail.images.size == 0 or detail.images[0].base64Image == null}">
-								<img src="/img/no_image.png" alt="..." width="400px" height="auto" />
+								<img th:src="@{/img/no_image.png}" alt="..." width="400px" height="auto" />
 							</p>
 							
 							<div th:if="${detail.images.size != 0 and detail.images[0].base64Image != null}"

@@ -59,7 +59,7 @@
 						                        
 						                            
 						                             <a th:if="${row.images.size == 0 or row.images[0].base64Image == null}">
-						                            	<img class="card-img-top" src="/img/no_image.png" alt="..." />
+						                            	<img class="card-img-top" th:src="@{/img/no_image.png}" alt="..." />
 						                            </a>
 						                            
 													<a href="#" th:if="${row.images.size != 0 and row.images[0].base64Image != null}">

@@ -22,7 +22,7 @@ layout:decorate="~{mainlayout}" >
 			<div class="col-sm-10" id="preview">
 				
 				<p th:if="${item.images.size == 0 or item.images[0].base64Image == null}">
-					<img src="/img/no_image.png" width="300px" height="auto" />
+					<img th:src="@{/img/no_image.png}" width="300px" height="auto" />
 				</p>
 				<p th:if="${item.images.size != 0 and item.images[0].base64Image != null}">
 					<input type="hidden" th:value="${item.images[0].image_id}" th:field="${item.images[0].image_id}"/>

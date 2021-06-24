@@ -95,8 +95,8 @@ public class PostAndCommentAndImageTest {
 	}
 	
 	
-	@Test
-//	@Ignore
+//	@Test
+	@Ignore
 	void getAllPostList() {
 		Post post = new Post();
 		ArrayList<Post> list = postdao.getAllPostList(post);
